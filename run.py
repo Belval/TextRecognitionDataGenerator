@@ -73,7 +73,7 @@ def parse_arguments():
         type=int,
         nargs="?",
         help="Define the height of the produced images",
-        default=64,
+        default=32,
     )
     parser.add_argument(
         "-t",

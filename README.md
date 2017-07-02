@@ -37,7 +37,6 @@ Yes, the script picks a font at random from the *fonts* directory. Simply add / 
 It only supports .ttf for now.
 
 ## What is left to do?
-- Use the `--format` option instead of hard-coded values
 - Save as .png or add it as an option
 - Support generating skewed text
 - Better background generation 

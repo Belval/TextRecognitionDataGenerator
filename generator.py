@@ -7,7 +7,7 @@ from PIL import Image, ImageFont, ImageDraw
 
 def create_and_save_sample(index, text, font, out_dir, height):
     image_font = ImageFont.truetype(font=os.path.join('fonts', font), size=32)
-    text_height, text_width = image_font.getsize(text)
+    text_width, text_height = image_font.getsize(text)
     # We create our background a bit bigger than the text
     messy_background = create_messy_background(text_height + 10, text_width + 10)
 
@@ -16,8 +16,15 @@ def create_and_save_sample(index, text, font, out_dir, height):
 
     draw.text((5, 5), text, fill=random.randint(0, 80), font=image_font)
 
+    # Create the name for our image
     image_name = '{}_{}.jpg'.format(text, str(index))
-    messy_background.save(os.path.join(out_dir, image_name))
+
+    # Resizing the image to desired format
+    new_width = float(text_width + 10) * (float(height) / float(text_height + 10))
+    final_image = messy_background.resize((int(new_width), height), Image.ANTIALIAS)
+
+    # Save the image
+    final_image.save(os.path.join(out_dir, image_name))
 
 def create_messy_background(height, width):
     """
@@ -25,9 +32,9 @@ def create_messy_background(height, width):
     """
 
     # We create an all white image
-    image = np.ones((width, height)) * 255
+    image = np.ones((height, width)) * 255
 
     # We had gaussian noise
     cv2.randn(image, 235, 10)
-    
+
     return Image.fromarray(image).convert('L')
