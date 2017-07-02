@@ -80,7 +80,8 @@ def parse_arguments():
         "--thread_count",
         type=int,
         nargs="?",
-        help="Define the number of thread to use for image generation"
+        help="Define the number of thread to use for image generation",
+        default=1,
     )
     parser.add_argument(
         "-e",
