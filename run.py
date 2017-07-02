@@ -82,6 +82,14 @@ def parse_arguments():
         nargs="?",
         help="Define the number of thread to use for image generation"
     )
+    parser.add_argument(
+        "-e",
+        "--extension",
+        type=str,
+        nargs="?",
+        help="Define the extension to save the image with",
+        default="jpg",
+    )
     return parser.parse_args()
 
 def load_dict(lang):
@@ -141,7 +149,8 @@ def main():
             strings,
             [fonts[random.randrange(0, len(fonts))] for _ in range(0, len(strings))],
             [args.output_dir] * len(strings),
-            [args.format] * len(strings)
+            [args.format] * len(strings),
+            [args.extension] * len(strings),
         )
     )
     p.terminate()

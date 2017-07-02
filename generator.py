@@ -5,7 +5,7 @@ import numpy as np
 
 from PIL import Image, ImageFont, ImageDraw
 
-def create_and_save_sample(index, text, font, out_dir, height):
+def create_and_save_sample(index, text, font, out_dir, height, extension):
     image_font = ImageFont.truetype(font=os.path.join('fonts', font), size=32)
     text_width, text_height = image_font.getsize(text)
     # We create our background a bit bigger than the text
@@ -17,7 +17,7 @@ def create_and_save_sample(index, text, font, out_dir, height):
     draw.text((5, 5), text, fill=random.randint(0, 80), font=image_font)
 
     # Create the name for our image
-    image_name = '{}_{}.jpg'.format(text, str(index))
+    image_name = '{}_{}.{}'.format(text, str(index), extension)
 
     # Resizing the image to desired format
     new_width = float(text_width + 10) * (float(height) / float(text_height + 10))
