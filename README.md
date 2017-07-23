@@ -16,7 +16,7 @@ Numpy
 ```
 
 ## How does it work?
-`python run.py`
+`python run.py -w 5`
 
 You get 1000 randomly generated images with random text on them like:
 
@@ -25,6 +25,14 @@ You get 1000 randomly generated images with random text on them like:
 ![3](samples/3.jpg "3")
 ![4](samples/4.jpg "4")
 ![5](samples/5.jpg "5")
+
+You can also add the `-k` and `-rk` (`python run.py -w 5 -k 5 -rk 1`) arguments to add skewing to the generated text like:
+
+![6](samples/6.jpg "6")
+![7](samples/7.jpg "7")
+![8](samples/8.jpg "8")
+![9](samples/9.jpg "9")
+![10](samples/10.jpg "10")
 
 The text is chosen at random in a dictionary file (that can be found in the *dicts* folder) and drawn on a white background made with Gaussian noise. The resulting image is saved as [text]_[index].jpg
 
@@ -37,6 +45,5 @@ Yes, the script picks a font at random from the *fonts* directory. Simply add / 
 It only supports .ttf for now.
 
 ## What is left to do?
-- Support generating skewed text
 - Better background generation 
 - More customization parameters (mostly regarding background) 

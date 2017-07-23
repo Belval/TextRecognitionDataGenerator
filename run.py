@@ -1,5 +1,5 @@
 import argparse
-import os
+import os, errno
 import random
 
 from PIL import Image, ImageFont
@@ -65,7 +65,7 @@ def parse_arguments():
         type=int,
         nargs="?",
         help="Define if the produced string will have variable word count (with --length being the maximum)",
-        default=1
+        default=0
     )
     parser.add_argument(
         "-f",
@@ -73,7 +73,7 @@ def parse_arguments():
         type=int,
         nargs="?",
         help="Define the height of the produced images",
-        default=32,
+        default=64,
     )
     parser.add_argument(
         "-t",
@@ -91,6 +91,24 @@ def parse_arguments():
         help="Define the extension to save the image with",
         default="jpg",
     )
+    parser.add_argument(
+        "-k",
+        "--skew_angle",
+        type=int,
+        nargs="?",
+        help="Define skewing angle of the generated text. In positive degrees",
+        default=0,
+    )
+
+    parser.add_argument(
+        "-rk",
+        "--random_skew",
+        type=int,
+        nargs="?",
+        help="When set to something else than 0, the skew angle will be randomized between the value set with -k and it's opposite",
+        default=0,
+    )
+
     return parser.parse_args()
 
 def load_dict(lang):
@@ -133,6 +151,13 @@ def main():
     # Argument parsing
     args = parse_arguments()
 
+    # Create the directory if it does not exist.
+    try:
+        os.makedirs(args.output_dir)
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            raise
+
     # Creating word list
     lang_dict = load_dict(args.language)
 
@@ -142,16 +167,20 @@ def main():
     # Creating synthetic sentences (or word)
     strings = create_strings(args.length, bool(args.random), args.count, lang_dict)
 
+    string_count = len(strings)
+
     p = Pool(args.thread_count)
     p.starmap(
         create_and_save_sample,
         zip(
-            [i for i in range(0, len(strings))],
+            [i for i in range(0, string_count)],
             strings,
-            [fonts[random.randrange(0, len(fonts))] for _ in range(0, len(strings))],
-            [args.output_dir] * len(strings),
-            [args.format] * len(strings),
-            [args.extension] * len(strings),
+            [fonts[random.randrange(0, len(fonts))] for _ in range(0, string_count)],
+            [args.output_dir] * string_count,
+            [args.format] * string_count,
+            [args.extension] * string_count,
+            [args.skew_angle] * string_count,
+            [args.random_skew] * string_count
         )
     )
     p.terminate()
