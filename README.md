@@ -41,8 +41,8 @@ You can also add the `-k` and `-rk` (`python run.py -w 5 -k 5 -rk 1`) arguments 
 The text is chosen at random in a dictionary file (that can be found in the *dicts* folder) and drawn on a white background made with Gaussian noise. The resulting image is saved as [text]_[index].jpg
 
 **New**
-- Sentences from Wikipedia can be used instead of random words with `python run.py -wk 1` (requires and Internet connection)
-- Sentences can be picked from a file passed as a parameter with `python run.py -i ./lines.txt`
+- Sentences from Wikipedia can be used instead of random words with `python run.py -wk 1` (requires an Internet connection)
+- Sentences can be picked from a file passed as a parameter with `python run.py -i ./texts/random_1.txt`
 
 There are a lot of parameters that you can tune to get the results you want, therefore I recommand checking out `python run.py -h` for more informations. 
 
