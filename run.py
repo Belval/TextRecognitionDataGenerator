@@ -1,7 +1,10 @@
 import argparse
 import os, errno
 import random
+import re
+import requests
 
+from bs4 import BeautifulSoup
 from PIL import Image, ImageFont
 from generator import create_and_save_sample
 from multiprocessing import Pool
@@ -20,19 +23,27 @@ def parse_arguments():
         default="out/",
     )
     parser.add_argument(
+        "-i",
+        "--input-file",
+        type=str,
+        nargs="?",
+        help="When set, this argument uses a specified text file as source for the text",
+        default=""
+    )
+    parser.add_argument(
         "-l",
         "--language",
         type=str,
         nargs="?",
-        help="The language to use, should be fra (Français), eng (English), esp (Español), or deu (Deutsch).",
-        default="eng"
+        help="The language to use, should be fr (Français), en (English), es (Español), or de (Deutsch).",
+        default="en"
     )
     parser.add_argument(
         "-c",
         "--count",
         type=int,
         nargs="?",        
-        help="Define the language to be used to data generation.",
+        help="The number of images to be created.",
         default=1000
     )
     parser.add_argument(
@@ -40,7 +51,7 @@ def parse_arguments():
         "--include_numbers",
         type=int,
         nargs="?",        
-        help="Define if the text should contain numbers.",
+        help="Define if the text should contain numbers. (NOT IMPLEMENTED)",
         default=1
     )
     parser.add_argument(
@@ -48,7 +59,7 @@ def parse_arguments():
         "--include_symbols",
         type=int,
         nargs="?",        
-        help="Define if the text should contain symbols.",
+        help="Define if the text should contain symbols. (NOT IMPLEMENTED)",
         default=1
     )
     parser.add_argument(
@@ -56,7 +67,7 @@ def parse_arguments():
         "--length",
         type=int,
         nargs="?",        
-        help="Define how many words should be included in each generated sample.",
+        help="Define how many words should be included in each generated sample. If the text source is Wikipedia, this is the MINIMUM length",
         default=1
     )
     parser.add_argument(
@@ -99,13 +110,20 @@ def parse_arguments():
         help="Define skewing angle of the generated text. In positive degrees",
         default=0,
     )
-
     parser.add_argument(
         "-rk",
         "--random_skew",
         type=int,
         nargs="?",
         help="When set to something else than 0, the skew angle will be randomized between the value set with -k and it's opposite",
+        default=0,
+    )
+    parser.add_argument(
+        "-wk",
+        "--use-wikipedia",
+        type=int,
+        nargs="?",
+        help="Use Wikipedia as the source text for the generation, using this paremeter ignores -r, -n, -s",
         default=0,
     )
 
@@ -128,9 +146,28 @@ def load_fonts():
 
     return [font for font in os.listdir('fonts')]
 
-def create_strings(length, allow_variable, count, lang_dict):
+def create_strings_from_file(filename, count):
     """
-        Create a string by picking X random word in the dictionnary
+        Create all strings by reading lines in specified files
+    """
+
+    strings = []
+
+    with open(filename, 'r') as f:
+        lines = [l.strip()[0:200] for l in f.readlines()]
+        if len(lines) == 0:
+            raise Exception("No lines could be read in file")
+        while len(strings) < count:
+            if len(lines) > count - len(strings):
+                strings.extend(lines[0:count - len(strings)])                
+            else:
+                strings.extend(lines)
+
+    return strings
+
+def create_strings_from_dict(length, allow_variable, count, lang_dict):
+    """
+        Create all strings by picking X random word in the dictionnary
     """
 
     dict_len = len(lang_dict)
@@ -142,6 +179,37 @@ def create_strings(length, allow_variable, count, lang_dict):
             current_string += ' '
         strings.append(current_string[:-1])
     return strings
+
+def create_strings_from_wikipedia(minimum_length, count, lang):
+    """
+        Create all string by randomly picking Wikipedia articles and taking sentences from them.
+    """
+    sentences = []
+
+    while len(sentences) < count:
+        # We fetch a random page
+        page = requests.get('https://{}.wikipedia.org/wiki/Special:Random'.format(lang))
+
+        soup = BeautifulSoup(page.text, 'html.parser')
+        
+        for script in soup(["script", "style"]):
+            script.extract() 
+
+        # Only take a certain length
+        lines = list(filter(
+            lambda s:
+                len(s.split(' ')) > minimum_length
+                and not "Wikipedia" in s
+                and not "wikipedia" in s,
+            [
+                ' '.join(re.findall(r"[\w']+", s.strip()))[0:200] for s in soup.get_text().splitlines()
+            ]
+        ))
+
+        # Remove the last lines that talks about contributing
+        sentences.extend(lines[0:max([1, len(lines) - 5])])
+
+    return sentences[0:count]
 
 def main():
     """
@@ -165,7 +233,15 @@ def main():
     fonts = load_fonts()
 
     # Creating synthetic sentences (or word)
-    strings = create_strings(args.length, bool(args.random), args.count, lang_dict)
+    strings = []
+    
+    if bool(args.use_wikipedia):
+        strings = create_strings_from_wikipedia(args.length, args.count, args.language)
+    elif args.input_file != None:
+        strings = create_strings_from_file(args.input_file, args.count)
+    else:
+        strings = create_strings_from_dict(args.length, bool(args.random), args.count, lang_dict)
+                
 
     string_count = len(strings)
 

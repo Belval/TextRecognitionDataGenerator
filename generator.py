@@ -36,7 +36,7 @@ def create_and_save_sample(index, text, font, out_dir, height, extension, skewin
     final_image = messy_background.resize((int(new_width), height), Image.ANTIALIAS)
 
     # Save the image
-    final_image.save(os.path.join(out_dir, image_name))
+    final_image.convert('RGB').save(os.path.join(out_dir, image_name))
 
 def create_messy_background(height, width):
     """
