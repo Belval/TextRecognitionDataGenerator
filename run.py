@@ -84,7 +84,7 @@ def parse_arguments():
         type=int,
         nargs="?",
         help="Define the height of the produced images",
-        default=64,
+        default=32,
     )
     parser.add_argument(
         "-t",
@@ -237,7 +237,7 @@ def main():
     
     if bool(args.use_wikipedia):
         strings = create_strings_from_wikipedia(args.length, args.count, args.language)
-    elif args.input_file != None:
+    elif args.input_file != '':
         strings = create_strings_from_file(args.input_file, args.count)
     else:
         strings = create_strings_from_dict(args.length, bool(args.random), args.count, lang_dict)
