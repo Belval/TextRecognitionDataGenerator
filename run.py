@@ -13,7 +13,7 @@ def parse_arguments():
     """
         Parse the command line arguments of the program.
     """
-    
+
     parser = argparse.ArgumentParser(description='Generate synthetic text data for text recognition.')
     parser.add_argument(
         "output_dir",
@@ -24,7 +24,7 @@ def parse_arguments():
     )
     parser.add_argument(
         "-i",
-        "--input-file",
+        "--input_file",
         type=str,
         nargs="?",
         help="When set, this argument uses a specified text file as source for the text",
@@ -42,41 +42,38 @@ def parse_arguments():
         "-c",
         "--count",
         type=int,
-        nargs="?",        
+        nargs="?",
         help="The number of images to be created.",
         default=1000
     )
     parser.add_argument(
         "-n",
         "--include_numbers",
-        type=int,
-        nargs="?",        
+        action="store_true",
         help="Define if the text should contain numbers. (NOT IMPLEMENTED)",
-        default=1
+        default=False
     )
     parser.add_argument(
         "-s",
         "--include_symbols",
-        type=int,
-        nargs="?",        
+        action="store_true",
         help="Define if the text should contain symbols. (NOT IMPLEMENTED)",
-        default=1
+        default=False
     )
     parser.add_argument(
         "-w",
         "--length",
         type=int,
-        nargs="?",        
+        nargs="?",
         help="Define how many words should be included in each generated sample. If the text source is Wikipedia, this is the MINIMUM length",
         default=1
     )
     parser.add_argument(
         "-r",
         "--random",
-        type=int,
-        nargs="?",
+        action="store_true",
         help="Define if the produced string will have variable word count (with --length being the maximum)",
-        default=0
+        default=False
     )
     parser.add_argument(
         "-f",
@@ -113,18 +110,16 @@ def parse_arguments():
     parser.add_argument(
         "-rk",
         "--random_skew",
-        type=int,
-        nargs="?",
+        action="store_true",
         help="When set to something else than 0, the skew angle will be randomized between the value set with -k and it's opposite",
-        default=0,
+        default=False,
     )
     parser.add_argument(
         "-wk",
-        "--use-wikipedia",
-        type=int,
-        nargs="?",
+        "--use_wikipedia",
+        action="store_true",
         help="Use Wikipedia as the source text for the generation, using this paremeter ignores -r, -n, -s",
-        default=0,
+        default=False,
     )
 
     return parser.parse_args()
@@ -159,7 +154,7 @@ def create_strings_from_file(filename, count):
             raise Exception("No lines could be read in file")
         while len(strings) < count:
             if len(lines) > count - len(strings):
-                strings.extend(lines[0:count - len(strings)])                
+                strings.extend(lines[0:count - len(strings)])
             else:
                 strings.extend(lines)
 
@@ -191,9 +186,9 @@ def create_strings_from_wikipedia(minimum_length, count, lang):
         page = requests.get('https://{}.wikipedia.org/wiki/Special:Random'.format(lang))
 
         soup = BeautifulSoup(page.text, 'html.parser')
-        
+
         for script in soup(["script", "style"]):
-            script.extract() 
+            script.extract()
 
         # Only take a certain length
         lines = list(filter(
@@ -234,14 +229,14 @@ def main():
 
     # Creating synthetic sentences (or word)
     strings = []
-    
-    if bool(args.use_wikipedia):
+
+    if args.use_wikipedia:
         strings = create_strings_from_wikipedia(args.length, args.count, args.language)
     elif args.input_file != '':
         strings = create_strings_from_file(args.input_file, args.count)
     else:
-        strings = create_strings_from_dict(args.length, bool(args.random), args.count, lang_dict)
-                
+        strings = create_strings_from_dict(args.length, args.random, args.count, lang_dict)
+
 
     string_count = len(strings)
 

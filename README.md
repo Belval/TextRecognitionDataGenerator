@@ -30,7 +30,7 @@ You get 1000 randomly generated images with random text on them like:
 ![4](samples/4.jpg "4")
 ![5](samples/5.jpg "5")
 
-You can also add the `-k` and `-rk` (`python run.py -w 5 -k 5 -rk 1`) arguments to add skewing to the generated text like:
+You can also add the `-k` and `-rk` (`python run.py -w 5 -k 5 -rk`) arguments to add skewing to the generated text like:
 
 ![6](samples/6.jpg "6")
 ![7](samples/7.jpg "7")
@@ -44,7 +44,7 @@ The text is chosen at random in a dictionary file (that can be found in the *dic
 - Sentences from Wikipedia can be used instead of random words with `python run.py -wk 1` (requires an Internet connection)
 - Sentences can be picked from a file passed as a parameter with `python run.py -i ./texts/random_1.txt`
 
-There are a lot of parameters that you can tune to get the results you want, therefore I recommand checking out `python run.py -h` for more informations. 
+There are a lot of parameters that you can tune to get the results you want, therefore I recommand checking out `python run.py -h` for more informations.
 
 ## Can I add my own font?
 
@@ -57,7 +57,7 @@ It only supports .ttf for now.
 If anything is missing, unclear, or simply not working, open an issue on the repository.
 
 ## What is left to do?
-- Better background generation 
+- Better background generation
 - More customization parameters (mostly regarding background)
 - Implement `--include_symbols`
 - Implemetn `--include_numbers`
