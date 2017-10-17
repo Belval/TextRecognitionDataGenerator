@@ -3,14 +3,14 @@ import os
 import random
 import numpy as np
 
-from PIL import Image, ImageFont, ImageDraw
+from PIL import Image, ImageFont, ImageDraw, ImageFilter
 
-def create_and_save_sample(index, text, font, out_dir, height, extension, skewing_angle, random_skew):
+def create_and_save_sample(index, text, font, out_dir, height, extension, skewing_angle, random_skew, blur, random_blur):
     image_font = ImageFont.truetype(font=os.path.join('fonts', font), size=32)
     text_width, text_height = image_font.getsize(text)
 
     txt_img = Image.new('L', (text_width, text_height), 255)
-    
+
     txt_draw = ImageDraw.Draw(txt_img)
 
     txt_draw.text((0, 0), text, fill=random.randint(1, 80), font=image_font)
@@ -33,7 +33,13 @@ def create_and_save_sample(index, text, font, out_dir, height, extension, skewin
 
     # Resizing the image to desired format
     new_width = float(text_width + 10) * (float(height) / float(text_height + 10))
-    final_image = messy_background.resize((int(new_width), height), Image.ANTIALIAS)
+    image_on_background = messy_background.resize((int(new_width), height), Image.ANTIALIAS)
+
+    final_image = image_on_background.filter(
+        ImageFilter.GaussianBlur(
+            radius=(blur if not random_blur else random.randint(0, blur))
+        )
+    )
 
     # Save the image
     final_image.convert('RGB').save(os.path.join(out_dir, image_name))

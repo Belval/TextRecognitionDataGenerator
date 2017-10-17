@@ -111,7 +111,7 @@ def parse_arguments():
         "-rk",
         "--random_skew",
         action="store_true",
-        help="When set to something else than 0, the skew angle will be randomized between the value set with -k and it's opposite",
+        help="When set, the skew angle will be randomized between the value set with -k and it's opposite",
         default=False,
     )
     parser.add_argument(
@@ -119,6 +119,21 @@ def parse_arguments():
         "--use_wikipedia",
         action="store_true",
         help="Use Wikipedia as the source text for the generation, using this paremeter ignores -r, -n, -s",
+        default=False,
+    )
+    parser.add_argument(
+        "-b",
+        "--blur",
+        type=int,
+        nargs="?",
+        help="Apply gaussian blur to the resulting sample. Should be an integer defining the blur radius",
+        default=0,
+    )
+    parser.add_argument(
+        "-rb",
+        "--random_blur",
+        action="store_true",
+        help="When set, the blur radius will be randomized between 0 and -b.",
         default=False,
     )
 
@@ -251,7 +266,9 @@ def main():
             [args.format] * string_count,
             [args.extension] * string_count,
             [args.skew_angle] * string_count,
-            [args.random_skew] * string_count
+            [args.random_skew] * string_count,
+            [args.blur] * string_count,
+            [args.random_blur] * string_count,
         )
     )
     p.terminate()

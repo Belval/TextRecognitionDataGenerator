@@ -38,6 +38,13 @@ You can also add the `-k` and `-rk` (`python run.py -w 5 -k 5 -rk`) arguments to
 ![9](samples/9.jpg "9")
 ![10](samples/10.jpg "10")
 
+And add `-b` and `-rb` to get gaussian blur on the generated image with a user-defined radius (here 0, 1, 2, 4):
+
+![11](samples/11.jpg "0")
+![12](samples/12.jpg "1")
+![13](samples/13.jpg "2")
+![14](samples/14.jpg "4")
+
 The text is chosen at random in a dictionary file (that can be found in the *dicts* folder) and drawn on a white background made with Gaussian noise. The resulting image is saved as [text]_[index].jpg
 
 **New**
