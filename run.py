@@ -122,7 +122,7 @@ def parse_arguments():
         default=False,
     )
     parser.add_argument(
-        "-b",
+        "-bl",
         "--blur",
         type=int,
         nargs="?",
@@ -130,11 +130,20 @@ def parse_arguments():
         default=0,
     )
     parser.add_argument(
-        "-rb",
+        "-rbl",
         "--random_blur",
         action="store_true",
-        help="When set, the blur radius will be randomized between 0 and -b.",
+        help="When set, the blur radius will be randomized between 0 and -bl.",
         default=False,
+    )
+
+    parser.add_argument(
+        "-b",
+        "--background",
+        type=int,
+        nargs="?",
+        help="Define what kind of background to use. 0: Gaussian Noise, 1: Plain white, 2: Quasicrystal",
+        default=0,
     )
 
     return parser.parse_args()
@@ -269,6 +278,7 @@ def main():
             [args.random_skew] * string_count,
             [args.blur] * string_count,
             [args.random_blur] * string_count,
+            [args.background] * string_count,
         )
     )
     p.terminate()
