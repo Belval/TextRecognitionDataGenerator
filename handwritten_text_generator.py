@@ -149,4 +149,6 @@ class HandwrittenTextGenerator(object):
                 image = Image.frombytes('RGB', canvas.get_width_height(), canvas.tostring_rgb()).convert('L')
                 images.append(cls.__crop_white_borders(image))
 
+                plt.close()
+
             return cls.__join_images(images)
