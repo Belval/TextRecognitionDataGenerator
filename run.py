@@ -6,7 +6,7 @@ import requests
 
 from bs4 import BeautifulSoup
 from PIL import Image, ImageFont
-from generator import create_and_save_sample
+from data_generator import FakeTextDataGenerator
 from multiprocessing import Pool
 
 def parse_arguments():
@@ -136,7 +136,6 @@ def parse_arguments():
         help="When set, the blur radius will be randomized between 0 and -bl.",
         default=False,
     )
-
     parser.add_argument(
         "-b",
         "--background",
@@ -144,6 +143,12 @@ def parse_arguments():
         nargs="?",
         help="Define what kind of background to use. 0: Gaussian Noise, 1: Plain white, 2: Quasicrystal",
         default=0,
+    )
+    parser.add_argument(
+        "-hw",
+        "--handwritten",
+        action="store_true",
+        help="Define if the data will be \"handwritten\" by an RNN"
     )
 
     return parser.parse_args()
@@ -266,7 +271,7 @@ def main():
 
     p = Pool(args.thread_count)
     p.starmap(
-        create_and_save_sample,
+        FakeTextDataGenerator.generate,
         zip(
             [i for i in range(0, string_count)],
             strings,
@@ -279,6 +284,7 @@ def main():
             [args.blur] * string_count,
             [args.random_blur] * string_count,
             [args.background] * string_count,
+            [args.handwritten] * string_count,
         )
     )
     p.terminate()
