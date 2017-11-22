@@ -42,7 +42,8 @@ class HandwrittenTextGenerator(object):
 
     @classmethod
     def __sample_text(cls, sess, args_text, translation):
-        print(args_text)
+        # Original creator said it helps (https://github.com/Grzego/handwriting-generation/issues/3)
+        args_text += ' '
 
         fields = ['coordinates', 'sequence', 'bias', 'e', 'pi', 'mu1', 'mu2', 'std1', 'std2',
                   'rho', 'window', 'kappa', 'phi', 'finish', 'zero_states']
@@ -79,6 +80,9 @@ class HandwrittenTextGenerator(object):
             coords += [coord]
             stroke_data += [[mu1[0, g], mu2[0, g], std1[0, g], std2[0, g], rho[0, g], coord[2]]]
 
+            if finish[0, 0] > 0.8:
+                break
+
         coords = np.array(coords)
         coords[-1, 2] = 1.
 
@@ -96,6 +100,22 @@ class HandwrittenTextGenerator(object):
         return Image.fromarray(image_data_new)
 
     @classmethod
+    def __join_images(cls, images):
+        widths, heights = zip(*(i.size for i in images))
+
+        total_width = sum(widths) - 35 * len(images)
+        max_height = max(heights)
+
+        compound_image = Image.new('L', (total_width, max_height))
+
+        x_offset = 0
+        for im in images:
+            compound_image.paste(im, (x_offset,0))
+            x_offset += (im.size[0] - 35)
+
+        return compound_image
+
+    @classmethod
     def generate(cls, text):
         with open(os.path.join('handwritten_model', 'translation.pkl'), 'rb') as file:
             translation = pickle.load(file)
@@ -107,25 +127,26 @@ class HandwrittenTextGenerator(object):
         with tf.Session(config=config) as sess:
             saver = tf.train.import_meta_graph('handwritten_model/model-29.meta')
             saver.restore(sess, 'handwritten_model/model-29')
+            images = []
+            for word in text.split(' '):
+                phi_data, window_data, kappa_data, stroke_data, coords = cls.__sample_text(sess, word, translation)
 
-            phi_data, window_data, kappa_data, stroke_data, coords = cls.__sample_text(sess, text, translation)
+                strokes = np.array(stroke_data)
+                strokes[:, :2] = np.cumsum(strokes[:, :2], axis=0)
+                minx, maxx = np.min(strokes[:, 0]), np.max(strokes[:, 0])
+                miny, maxy = np.min(strokes[:, 1]), np.max(strokes[:, 1])
 
-            strokes = np.array(stroke_data)
-            strokes[:, :2] = np.cumsum(strokes[:, :2], axis=0)
-            minx, maxx = np.min(strokes[:, 0]), np.max(strokes[:, 0])
-            miny, maxy = np.min(strokes[:, 1]), np.max(strokes[:, 1])
+                fig, ax = plt.subplots(1, 1)
+                fig.patch.set_visible(False)
+                ax.axis('off')
 
-            fig, ax = plt.subplots(1, 1)
-            fig.patch.set_visible(False)
-            ax.axis('off')
+                for i, stroke in enumerate(cls.__split_strokes(cls.__cumsum(np.array(coords)))):
+                    plt.plot(stroke[:, 0], -stroke[:, 1], color='#080808')
 
-            for i, stroke in enumerate(cls.__split_strokes(cls.__cumsum(np.array(coords)))):
-                plt.plot(stroke[:, 0], -stroke[:, 1], color='#080808')
+                canvas = plt.get_current_fig_manager().canvas
+                canvas.draw()
 
-            canvas = plt.get_current_fig_manager().canvas
-            canvas.draw()
+                image = Image.frombytes('RGB', canvas.get_width_height(), canvas.tostring_rgb()).convert('L')
+                images.append(cls.__crop_white_borders(image))
 
-            image = Image.frombytes('RGB', canvas.get_width_height(), canvas.tostring_rgb()).convert('L')
-            image_cropped = cls.__crop_white_borders(image)
-
-            return cls.__crop_white_borders(image)
+            return cls.__join_images(images)

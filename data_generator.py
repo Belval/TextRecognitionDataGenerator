@@ -5,7 +5,10 @@ import random
 from PIL import Image, ImageFilter
 
 from computer_text_generator import ComputerTextGenerator
-from handwritten_text_generator import HandwrittenTextGenerator
+try:
+    from handwritten_text_generator import HandwrittenTextGenerator
+except ImportError as e:
+    print('Missing modules for handwritten text generation.')
 from background_generator import BackgroundGenerator
 
 class FakeTextDataGenerator(object):
@@ -23,8 +26,8 @@ class FakeTextDataGenerator(object):
         # Somehow the handwritten text always has a little bit of angle.
         # this fixes it.
         if is_handwritten:
-            random_angle -= 8
-            skewing_angle -= 8
+            random_angle = 0
+            skewing_angle = 0
 
         rotated_img = image.rotate(skewing_angle if not random_skew else random_angle, expand=1)
 
