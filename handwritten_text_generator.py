@@ -6,6 +6,7 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import matplotlib.mlab as mlab
+import seaborn
 from PIL import Image
 from collections import namedtuple
 
@@ -41,6 +42,8 @@ class HandwrittenTextGenerator(object):
 
     @classmethod
     def __sample_text(cls, sess, args_text, translation):
+        print(args_text)
+
         fields = ['coordinates', 'sequence', 'bias', 'e', 'pi', 'mu1', 'mu2', 'std1', 'std2',
                   'rho', 'window', 'kappa', 'phi', 'finish', 'zero_states']
         vs = namedtuple('Params', fields)(
@@ -64,7 +67,7 @@ class HandwrittenTextGenerator(object):
                                                   feed_dict={
                                                       vs.coordinates: coord[None, None, ...],
                                                       vs.sequence: sequence,
-                                                      vs.bias: 1.0
+                                                      vs.bias: 1.
                                                   })
             phi_data += [phi[0, :]]
             window_data += [window[0, :]]
@@ -82,16 +85,25 @@ class HandwrittenTextGenerator(object):
         return phi_data, window_data, kappa_data, stroke_data, coords
 
     @classmethod
+    def __crop_white_borders(cls, image):
+        image_data = np.asarray(image)
+        non_empty_columns = np.where(image_data.min(axis=0)<255)[0]
+        non_empty_rows = np.where(image_data.min(axis=1)<255)[0]
+        cropBox = (min(non_empty_rows), max(non_empty_rows), min(non_empty_columns), max(non_empty_columns))
+
+        image_data_new = image_data[cropBox[0]:cropBox[1]+1, cropBox[2]:cropBox[3]+1]
+
+        return Image.fromarray(image_data_new)
+
+    @classmethod
     def generate(cls, text):
         with open(os.path.join('handwritten_model', 'translation.pkl'), 'rb') as file:
             translation = pickle.load(file)
-        rev_translation = {v: k for k, v in translation.items()}
-        charset = [rev_translation[i] for i in range(len(rev_translation))]
-        charset[0] = ''
 
         config = tf.ConfigProto(
             device_count={'GPU': 0}
         )
+        tf.reset_default_graph()
         with tf.Session(config=config) as sess:
             saver = tf.train.import_meta_graph('handwritten_model/model-29.meta')
             saver.restore(sess, 'handwritten_model/model-29')
@@ -107,9 +119,13 @@ class HandwrittenTextGenerator(object):
             fig.patch.set_visible(False)
             ax.axis('off')
 
-            for stroke in cls.__split_strokes(cls.__cumsum(np.array(coords))):
+            for i, stroke in enumerate(cls.__split_strokes(cls.__cumsum(np.array(coords)))):
                 plt.plot(stroke[:, 0], -stroke[:, 1], color='#080808')
+
             canvas = plt.get_current_fig_manager().canvas
             canvas.draw()
 
-            return Image.frombytes('RGB', canvas.get_width_height(), canvas.tostring_rgb()).convert('L')
+            image = Image.frombytes('RGB', canvas.get_width_height(), canvas.tostring_rgb()).convert('L')
+            image_cropped = cls.__crop_white_borders(image)
+
+            return cls.__crop_white_borders(image)
