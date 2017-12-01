@@ -1,0 +1,11 @@
+language: python
+python:
+  - "3.5"
+install:
+  - pip install pillow
+  - pip install numpy
+  - pip install requests
+  - pip install beautifulsoup4
+  - pip install opencv-python
+script:
+  - python3 tests/tests.py

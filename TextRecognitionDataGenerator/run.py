@@ -6,7 +6,7 @@ import requests
 
 from bs4 import BeautifulSoup
 from PIL import Image, ImageFont
-from data_generator import FakeTextDataGenerator
+from TextRecognitionDataGenerator.data_generator import FakeTextDataGenerator
 from multiprocessing import Pool
 
 def parse_arguments():
@@ -168,7 +168,7 @@ def load_fonts():
         Load all fonts in the fonts directory
     """
 
-    return [font for font in os.listdir('fonts')]
+    return [os.path.join('fonts', font) for font in os.listdir('fonts')]
 
 def create_strings_from_file(filename, count):
     """

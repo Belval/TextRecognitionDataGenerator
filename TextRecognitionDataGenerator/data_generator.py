@@ -4,37 +4,28 @@ import random
 
 from PIL import Image, ImageFilter
 
-from computer_text_generator import ComputerTextGenerator
+from TextRecognitionDataGenerator.computer_text_generator import ComputerTextGenerator
 try:
-    from handwritten_text_generator import HandwrittenTextGenerator
+    from TextRecognitionDataGenerator.handwritten_text_generator import HandwrittenTextGenerator
 except ImportError as e:
     print('Missing modules for handwritten text generation.')
-from background_generator import BackgroundGenerator
+from TextRecognitionDataGenerator.background_generator import BackgroundGenerator
 
 class FakeTextDataGenerator(object):
     @classmethod
-    def generate(cls, index, text, font, out_dir, height, extension, skewing_angle, random_skew, blur, random_blur, background_type, is_handwritten):
+    def generate(cls, index, text, font, out_dir, height, extension, skewing_angle, random_skew, blur, random_blur, background_type, is_handwritten, text_color=-1):
         image = None
 
         if is_handwritten:
             image = HandwrittenTextGenerator.generate(text)
         else:
-            image = ComputerTextGenerator.generate(text, font)
+            image = ComputerTextGenerator.generate(text, font, text_color)
 
         random_angle = random.randint(0-skewing_angle, skewing_angle)
-
-        # Somehow the handwritten text always has a little bit of angle.
-        # this fixes it.
-        if is_handwritten:
-            random_angle = 0
-            skewing_angle = 0
 
         rotated_img = image.rotate(skewing_angle if not random_skew else random_angle, expand=1)
 
         new_text_width, new_text_height = rotated_img.size
-
-        # We create our background a bit bigger than the text
-        background = None
 
         if background_type == 0:
             background = BackgroundGenerator.gaussian_noise(new_text_height + 10, new_text_width + 10)

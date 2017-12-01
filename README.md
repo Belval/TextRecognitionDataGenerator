@@ -1,4 +1,4 @@
-# TextRecognitionDataGenerator
+# TextRecognitionDataGenerator [![TravisCI](https://travis-ci.org/Belval/TextRecognitionDataGenerator.svg?branch=master)](https://travis-ci.org/Belval/TextRecognitionDataGenerator)
 A synthetic data generator for text recognition
 
 ## What is it for?
