@@ -81,9 +81,9 @@ It only supports .ttf for now.
 
 ## Contributing
 
-1- Create an issue describing the feature you'll be working on
-2- Code said feature
-3- Create a pull request
+1. Create an issue describing the feature you'll be working on
+2. Code said feature
+3. Create a pull request
 
 ## Feature request & issues
 
