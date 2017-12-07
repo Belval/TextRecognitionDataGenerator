@@ -79,6 +79,12 @@ Yes, the script picks a font at random from the *fonts* directory. Simply add / 
 
 It only supports .ttf for now.
 
+## Contributing
+
+1- Create an issue describing the feature you'll be working on
+2- Code said feature
+3- Create a pull request
+
 ## Feature request & issues
 
 If anything is missing, unclear, or simply not working, open an issue on the repository.
