@@ -4,12 +4,12 @@ import random
 
 from PIL import Image, ImageFilter
 
-from TextRecognitionDataGenerator.computer_text_generator import ComputerTextGenerator
+from computer_text_generator import ComputerTextGenerator
 try:
-    from TextRecognitionDataGenerator.handwritten_text_generator import HandwrittenTextGenerator
+    from handwritten_text_generator import HandwrittenTextGenerator
 except ImportError as e:
     print('Missing modules for handwritten text generation.')
-from TextRecognitionDataGenerator.background_generator import BackgroundGenerator
+from background_generator import BackgroundGenerator
 
 class FakeTextDataGenerator(object):
     @classmethod
@@ -31,8 +31,10 @@ class FakeTextDataGenerator(object):
             background = BackgroundGenerator.gaussian_noise(new_text_height + 10, new_text_width + 10)
         elif background_type == 1:
             background = BackgroundGenerator.plain_white(new_text_height + 10, new_text_width + 10)
-        else:
+        elif background_type == 2:
             background = BackgroundGenerator.quasicrystal(new_text_height + 10, new_text_width + 10)
+        else:
+            background = BackgroundGenerator.picture(new_text_height + 10, new_text_width + 10)
 
         mask = rotated_img.point(lambda x: 0 if x == 255 or x == 0 else 255, '1')
 

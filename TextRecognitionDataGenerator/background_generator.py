@@ -54,3 +54,32 @@ class BackgroundGenerator(object):
                 c = int(255 - round(255 * z / rotation_count))
                 pixels[kw, kh] = c # grayscale
         return image
+
+    @classmethod
+    def picture(cls, height, width):
+        """
+            Create a background with a picture
+        """
+
+        pictures = os.listdir('./pictures')
+
+        if len(pictures) > 0:
+            picture = Image.open('./pictures/' + pictures[random.randint(0, len(pictures) - 1)])
+
+            if picture.size[0] < width:
+                picture = picture.resize([width, int(picture.size[1] * (width / picture.size[0]))], Image.ANTIALIAS)
+            elif picture.size[1] < height:
+                picture.thumbnail([int(picture.size[0] * (height / picture.size[1])), height], Image.ANTIALIAS)
+
+            x = random.randint(0, picture.size[0] - width)
+            y = random.randint(0, picture.size[1] - height)
+            return picture.crop(
+                (
+                    x,
+                    y,
+                    x + width,
+                    y + height,
+                )
+            )
+        else:
+            raise Exception('No images where found in the pictures folder!')

@@ -6,7 +6,7 @@ import requests
 
 from bs4 import BeautifulSoup
 from PIL import Image, ImageFont
-from TextRecognitionDataGenerator.data_generator import FakeTextDataGenerator
+from data_generator import FakeTextDataGenerator
 from multiprocessing import Pool
 
 def parse_arguments():
@@ -141,7 +141,7 @@ def parse_arguments():
         "--background",
         type=int,
         nargs="?",
-        help="Define what kind of background to use. 0: Gaussian Noise, 1: Plain white, 2: Quasicrystal",
+        help="Define what kind of background to use. 0: Gaussian Noise, 1: Plain white, 2: Quasicrystal, 3: Pictures",
         default=0,
     )
     parser.add_argument(
