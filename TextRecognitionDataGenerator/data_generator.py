@@ -13,7 +13,7 @@ from background_generator import BackgroundGenerator
 
 class FakeTextDataGenerator(object):
     @classmethod
-    def generate(cls, index, text, font, out_dir, height, extension, skewing_angle, random_skew, blur, random_blur, background_type, is_handwritten, text_color=-1):
+    def generate(cls, index, text, font, out_dir, height, extension, skewing_angle, random_skew, blur, random_blur, background_type, is_handwritten, name_format, text_color=-1):
         image = None
 
         if is_handwritten:
@@ -41,7 +41,13 @@ class FakeTextDataGenerator(object):
         background.paste(rotated_img, (5, 5), mask=mask)
 
         # Create the name for our image
-        image_name = '{}_{}.{}'.format(text, str(index), extension)
+        if name_format == 0:
+            image_name = '{}_{}.{}'.format(text, str(index), extension)
+        elif name_format == 1:
+            image_name = '{}_{}.{}'.format(str(index), text, extension)
+        else:
+            print('{} is not a valid name format. Using default.'.format(name_format))
+            image_name = '{}_{}.{}'.format(text, str(index), extension)
 
         # Resizing the image to desired format
         new_width = float(new_text_width + 10) * (float(height) / float(new_text_height + 10))

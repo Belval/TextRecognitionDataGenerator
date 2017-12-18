@@ -148,7 +148,14 @@ def parse_arguments():
         "-hw",
         "--handwritten",
         action="store_true",
-        help="Define if the data will be \"handwritten\" by an RNN"
+        help="Define if the data will be \"handwritten\" by an RNN",
+    )
+    parser.add_argument(
+        "-na",
+        "--name_format",
+        type=int,
+        help="Define how the produced files will be named. 0: [TEXT]_[ID].[EXT], 1: [ID]_[TEXT].[EXT]",
+        default=0,
     )
 
     return parser.parse_args()
@@ -285,6 +292,7 @@ def main():
             [args.random_blur] * string_count,
             [args.background] * string_count,
             [args.handwritten] * string_count,
+            [args.name_format] * string_count,
         )
     )
     p.terminate()

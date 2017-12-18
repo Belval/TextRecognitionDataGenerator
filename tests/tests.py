@@ -72,6 +72,7 @@ class DataGenerator(unittest.TestCase):
             False,
             1,
             False,
+            0,
             1
         )
 
@@ -95,6 +96,7 @@ class DataGenerator(unittest.TestCase):
             False,
             1,
             False,
+            0,
             1
         )
 
@@ -118,6 +120,7 @@ class DataGenerator(unittest.TestCase):
             False,
             1,
             False,
+            0,
             1
         )
 
@@ -141,6 +144,7 @@ class DataGenerator(unittest.TestCase):
             False,
             1,
             False,
+            0,
             1
         )
 
