@@ -3,16 +3,16 @@ import sys
 import unittest
 import hashlib
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../TextRecognitionDataGenerator')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), './TextRecognitionDataGenerator')))
 
 try:
     os.mkdir('tests/out')
 except:
     pass
 
-from data_generator import FakeTextDataGenerator
-from background_generator import BackgroundGenerator
-from run import (
+from TextRecognitionDataGenerator.data_generator import FakeTextDataGenerator
+from TextRecognitionDataGenerator.background_generator import BackgroundGenerator
+from TextRecognitionDataGenerator.run import (
     create_strings_from_file,
     create_strings_from_dict,
     create_strings_from_wikipedia

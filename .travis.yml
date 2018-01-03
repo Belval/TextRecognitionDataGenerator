@@ -7,5 +7,8 @@ install:
   - pip install requests
   - pip install beautifulsoup4
   - pip install opencv-python
+  - pip install codecov
 script:
-  - python3 tests/tests.py
+  - python3 tests.py
+  - coverage run tests.py
+  - codecov
