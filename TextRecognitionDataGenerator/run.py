@@ -157,6 +157,22 @@ def parse_arguments():
         help="Define how the produced files will be named. 0: [TEXT]_[ID].[EXT], 1: [ID]_[TEXT].[EXT]",
         default=0,
     )
+    parser.add_argument(
+        "-d",
+        "--distorsion",
+        type=int,
+        nargs="?",
+        help="Define a distorsion applied to the resulting image. 0: None (Default), 1: Sine wave, 2: Cosine wave, 3: Random",
+        default=0
+    )
+    parser.add_argument(
+        "-do",
+        "--distorsion_orientation",
+        type=int,
+        nargs="?",
+        help="Define the distorsion's orientation. Only used if -d is specified. 0: Vertical (Up and down), 1: Horizontal (Left and Right), 2: Both",
+        default=0
+    )
 
     return parser.parse_args()
 
@@ -291,6 +307,8 @@ def main():
             [args.blur] * string_count,
             [args.random_blur] * string_count,
             [args.background] * string_count,
+            [args.distorsion] * string_count,
+            [args.distorsion_orientation] * string_count,
             [args.handwritten] * string_count,
             [args.name_format] * string_count,
         )

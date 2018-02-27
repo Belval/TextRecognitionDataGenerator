@@ -71,6 +71,8 @@ class DataGenerator(unittest.TestCase):
             0,
             False,
             1,
+            0,
+            0,
             False,
             0,
             1
@@ -95,6 +97,8 @@ class DataGenerator(unittest.TestCase):
             0,
             False,
             1,
+            0,
+            0,
             False,
             0,
             1
@@ -119,6 +123,8 @@ class DataGenerator(unittest.TestCase):
             0,
             False,
             1,
+            0,
+            0,
             False,
             0,
             1
@@ -143,6 +149,8 @@ class DataGenerator(unittest.TestCase):
             3,
             False,
             1,
+            0,
+            0,
             False,
             0,
             1
@@ -153,6 +161,58 @@ class DataGenerator(unittest.TestCase):
         )
 
         os.remove('tests/out/TEST TEST TEST_3.jpg')
+
+    def test_generate_data_with_sine_distorsion(self):
+        FakeTextDataGenerator.generate(
+            4,
+            'TEST TEST TEST',
+            'tests/font.ttf',
+            'tests/out/',
+            64,
+            'jpg',
+            0,
+            False,
+            3,
+            False,
+            1,
+            1,
+            2,
+            False,
+            0,
+            1
+        )
+
+        self.assertTrue(
+            md5('tests/out/TEST TEST TEST_4.jpg') == md5('tests/expected_results/TEST TEST TEST_4.jpg')
+        )
+
+        os.remove('tests/out/TEST TEST TEST_4.jpg')
+
+    def test_generate_data_with_cosine_distorsion(self):
+        FakeTextDataGenerator.generate(
+            5,
+            'TEST TEST TEST',
+            'tests/font.ttf',
+            'tests/out/',
+            64,
+            'jpg',
+            0,
+            False,
+            3,
+            False,
+            1,
+            2,
+            2,
+            False,
+            0,
+            1
+        )
+
+        self.assertTrue(
+            md5('tests/out/TEST TEST TEST_5.jpg') == md5('tests/expected_results/TEST TEST TEST_5.jpg')
+        )
+
+        os.remove('tests/out/TEST TEST TEST_5.jpg')
 
     def test_generate_data_with_white_background(self):
         BackgroundGenerator.plain_white(64, 128).save('tests/out/white_background.jpg')
