@@ -67,9 +67,16 @@ It uses a Tensorflow model trained using [this excellent project](https://github
 
 **The project does not require TensorFlow to run if you aren't using this feature**
 
+You can also add distorsion to the generated text with `-d` and `-do`
+
+![23](samples/24.jpg "0")
+![24](samples/25.jpg "1")
+![25](samples/26.jpg "2")
+
 The text is chosen at random in a dictionary file (that can be found in the *dicts* folder) and drawn on a white background made with Gaussian noise. The resulting image is saved as [text]\_[index].jpg
 
 **New**
+- You can add distorsion to the generated text
 - You can "fake" handwriting using `-hw`
 - You can add gaussian blur to the resulting image
 - Sentences from Wikipedia can be used instead of random words with `python run.py -wk 1` (requires an Internet connection)
