@@ -3,7 +3,7 @@
 A synthetic data generator for text recognition
 
 ## What is it for?
-Generating text image samples to train an OCR software
+Generating text image samples to train an OCR software. Now supporting non-latin text!
 
 ## What do I need to make it work?
 
@@ -76,6 +76,7 @@ You can also add distorsion to the generated text with `-d` and `-do`
 The text is chosen at random in a dictionary file (that can be found in the *dicts* folder) and drawn on a white background made with Gaussian noise. The resulting image is saved as [text]\_[index].jpg
 
 **New**
+- Add support for Simplified and Traditional Chinese
 - You can add distorsion to the generated text
 - You can "fake" handwriting using `-hw`
 - You can add gaussian blur to the resulting image
@@ -84,9 +85,41 @@ The text is chosen at random in a dictionary file (that can be found in the *dic
 
 There are a lot of parameters that you can tune to get the results you want, therefore I recommand checking out `python run.py -h` for more informations.
 
+## How to create images with Chinese (both simplified and traditional) text
+
+It is simple! Just do `python run.py -l cn -c 1000 -w 5`!
+
+Unfortunately I do not speak Chinese so you may have to edit `texts/cn.txt` to include some meaningful words instead of random glyphs.
+
+Here are examples of what I could make with it:
+
+Traditional:
+
+![27](samples/27.jpg "0")
+
+Simplified:
+
+![28](samples/28.jpg "1")
+
 ## Can I add my own font?
 
-Yes, the script picks a font at random from the *fonts* directory. Simply add / remove fonts until you get the desired output.
+Yes, the script picks a font at random from the *fonts* directory. 
+
+|||
+|----:|:-----|
+| fonts/latin | English, French, Spanish, German |
+| fonts/cn | Chinese |
+|||
+
+Simply add / remove fonts until you get the desired output.
+
+If you want to add a new non-latin language, the amount of work is minimal.
+
+1. Create a new folder with your language two-letters code
+2. Add a .ttf font in it
+3. Edit `run.py` to add an if statement in `load_fonts()`
+4. Add a text file in `dicts` with the same two-letters code
+5. Run the tool as you normally would but add `-l` with your two-letters code
 
 It only supports .ttf for now.
 

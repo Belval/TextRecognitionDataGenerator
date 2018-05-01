@@ -35,7 +35,7 @@ def parse_arguments():
         "--language",
         type=str,
         nargs="?",
-        help="The language to use, should be fr (Français), en (English), es (Español), or de (Deutsch).",
+        help="The language to use, should be fr (Français), en (English), es (Español), de (Deutsch), or cn (Chinese).",
         default="en"
     )
     parser.add_argument(
@@ -186,12 +186,15 @@ def load_dict(lang):
         lang_dict = d.readlines()
     return lang_dict
 
-def load_fonts():
+def load_fonts(lang):
     """
-        Load all fonts in the fonts directory
+        Load all fonts in the fonts directories
     """
 
-    return [os.path.join('fonts', font) for font in os.listdir('fonts')]
+    if lang == 'cn':
+        return [os.path.join('fonts/cn', font) for font in os.listdir('fonts/cn')]
+    else:
+        return [os.path.join('fonts/latin', font) for font in os.listdir('fonts/latin')]
 
 def create_strings_from_file(filename, count):
     """
@@ -277,7 +280,7 @@ def main():
     lang_dict = load_dict(args.language)
 
     # Create font (path) list
-    fonts = load_fonts()
+    fonts = load_fonts(args.language)
 
     # Creating synthetic sentences (or word)
     strings = []
