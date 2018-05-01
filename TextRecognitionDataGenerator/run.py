@@ -16,7 +16,7 @@ def parse_arguments():
 
     parser = argparse.ArgumentParser(description='Generate synthetic text data for text recognition.')
     parser.add_argument(
-        "output_dir",
+        "--output_dir",
         type=str,
         nargs="?",
         help="The output directory",
@@ -154,7 +154,7 @@ def parse_arguments():
         "-na",
         "--name_format",
         type=int,
-        help="Define how the produced files will be named. 0: [TEXT]_[ID].[EXT], 1: [ID]_[TEXT].[EXT]",
+        help="Define how the produced files will be named. 0: [TEXT]_[ID].[EXT], 1: [ID]_[TEXT].[EXT] 2: [ID].[EXT] + one file labels.txt containing id-to-label mappings",
         default=0,
     )
     parser.add_argument(
@@ -314,6 +314,13 @@ def main():
         )
     )
     p.terminate()
+
+    if args.name_format == 2:
+        # Create file with filename-to-label connections
+        with open(os.path.join(args.output_dir, "labels.txt"), 'w') as f:
+            for i in range(string_count):
+                file_name = str(i) + "." + args.extension
+                f.write("{} {}\n".format(file_name, strings[i]))
 
 if __name__ == '__main__':
     main()
