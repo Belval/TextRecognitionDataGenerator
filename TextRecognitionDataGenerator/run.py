@@ -3,6 +3,7 @@ import os, errno
 import random
 import re
 import requests
+import string
 
 from bs4 import BeautifulSoup
 from PIL import Image, ImageFont
@@ -16,7 +17,7 @@ def parse_arguments():
 
     parser = argparse.ArgumentParser(description='Generate synthetic text data for text recognition.')
     parser.add_argument(
-        "output_dir",
+        "--output_dir",
         type=str,
         nargs="?",
         help="The output directory",
@@ -47,17 +48,31 @@ def parse_arguments():
         default=1000
     )
     parser.add_argument(
-        "-n",
-        "--include_numbers",
+        "-rs",
+        "--random_sequences",
         action="store_true",
-        help="Define if the text should contain numbers. (NOT IMPLEMENTED)",
+        help="Use random sequences as the source text for the generation. Set '-let','-num','-sym' to use letters/numbers/symbols. If none specified, using all three.",
         default=False
     )
     parser.add_argument(
-        "-s",
+        "-let",
+        "--include_letters",
+        action="store_true",
+        help="Define if random sequences should contain letters. Only works with -rs",
+        default=False
+    )
+    parser.add_argument(
+        "-num",
+        "--include_numbers",
+        action="store_true",
+        help="Define if random sequences should contain numbers. Only works with -rs",
+        default=False
+    )
+    parser.add_argument(
+        "-sym",
         "--include_symbols",
         action="store_true",
-        help="Define if the text should contain symbols. (NOT IMPLEMENTED)",
+        help="Define if random sequences should contain symbols. Only works with -rs",
         default=False
     )
     parser.add_argument(
@@ -154,7 +169,7 @@ def parse_arguments():
         "-na",
         "--name_format",
         type=int,
-        help="Define how the produced files will be named. 0: [TEXT]_[ID].[EXT], 1: [ID]_[TEXT].[EXT]",
+        help="Define how the produced files will be named. 0: [TEXT]_[ID].[EXT], 1: [ID]_[TEXT].[EXT] 2: [ID].[EXT] + one file labels.txt containing id-to-label mappings",
         default=0,
     )
     parser.add_argument(
@@ -261,6 +276,37 @@ def create_strings_from_wikipedia(minimum_length, count, lang):
 
     return sentences[0:count]
 
+def create_strings_randomly(length, allow_variable, count, let, num, sym):
+    """
+        Create all strings by randomly sampling from a pool of characters.
+    """
+
+    # If none specified, use all three
+    if True not in (let, num, sym):
+        let, num, sym = True, True, True
+
+    pool = ''
+    if let:
+        pool += string.ascii_letters
+    if num:
+        pool += "0123456789"
+    if sym:
+        pool += "!\"#$%&'()*+,-./:;?@[\\]^_`{|}~"
+
+    min_seq_len = 2
+    max_seq_len = 10
+
+    strings = []
+    for _ in range(0, count):
+        current_string = ""
+        for _ in range(0, random.randint(1, length) if allow_variable else length):
+            seq_len = random.randint(min_seq_len, max_seq_len)
+            current_string += ''.join([random.choice(pool) for _ in range(seq_len)])
+            current_string += ' '
+        strings.append(current_string[:-1])
+    return strings
+
+
 def main():
     """
         Description: Main function
@@ -289,6 +335,12 @@ def main():
         strings = create_strings_from_wikipedia(args.length, args.count, args.language)
     elif args.input_file != '':
         strings = create_strings_from_file(args.input_file, args.count)
+    elif args.random_sequences:
+        strings = create_strings_randomly(args.length, args.random, args.count,
+                                          args.include_letters, args.include_numbers, args.include_symbols)
+        # Set a name format compatible with special characters automatically if they are used
+        if args.include_symbols or True not in (args.include_letters, args.include_numbers, args.include_symbols):
+            args.name_format = 2
     else:
         strings = create_strings_from_dict(args.length, args.random, args.count, lang_dict)
 
@@ -317,6 +369,13 @@ def main():
         )
     )
     p.terminate()
+
+    if args.name_format == 2:
+        # Create file with filename-to-label connections
+        with open(os.path.join(args.output_dir, "labels.txt"), 'w') as f:
+            for i in range(string_count):
+                file_name = str(i) + "." + args.extension
+                f.write("{} {}\n".format(file_name, strings[i]))
 
 if __name__ == '__main__':
     main()

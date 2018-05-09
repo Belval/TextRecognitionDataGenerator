@@ -90,6 +90,8 @@ class FakeTextDataGenerator(object):
             image_name = '{}_{}.{}'.format(text, str(index), extension)
         elif name_format == 1:
             image_name = '{}_{}.{}'.format(str(index), text, extension)
+        elif name_format == 2:
+            image_name = '{}.{}'.format(str(index),extension)
         else:
             print('{} is not a valid name format. Using default.'.format(name_format))
             image_name = '{}_{}.{}'.format(text, str(index), extension)
