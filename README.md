@@ -20,6 +20,14 @@ BeautifulSoup
 
  You can simply use `pip install -r requirements.txt` too.
 
+## New
+- Generate random strings with letters, numbers and symbols (Thank you @FHainzl)
+- Save the labels in a file instead of in the file name (Thank you @FHainzl)
+- Add support for Simplified and Traditional Chinese
+- You can add distorsion to the generated text
+- You can "fake" handwriting using `-hw`
+
+
 ## How does it work?
 `python run.py -w 5 -f 64`
 
@@ -74,14 +82,6 @@ You can also add distorsion to the generated text with `-d` and `-do`
 ![25](samples/26.jpg "2")
 
 The text is chosen at random in a dictionary file (that can be found in the *dicts* folder) and drawn on a white background made with Gaussian noise. The resulting image is saved as [text]\_[index].jpg
-
-**New**
-- Add support for Simplified and Traditional Chinese
-- You can add distorsion to the generated text
-- You can "fake" handwriting using `-hw`
-- You can add gaussian blur to the resulting image
-- Sentences from Wikipedia can be used instead of random words with `python run.py -wk 1` (requires an Internet connection)
-- Sentences can be picked from a file passed as a parameter with `python run.py -i ./texts/random_1.txt`
 
 There are a lot of parameters that you can tune to get the results you want, therefore I recommand checking out `python run.py -h` for more informations.
 
