@@ -51,7 +51,7 @@ def parse_arguments():
         "-rs",
         "--random_sequences",
         action="store_true",
-        help="Use random sequences as the source text for the generation. Set '-let','-n','-s' to use letters/numbers/symbols. If none specified, using all three.",
+        help="Use random sequences as the source text for the generation. Set '-let','-num','-sym' to use letters/numbers/symbols. If none specified, using all three.",
         default=False
     )
     parser.add_argument(
