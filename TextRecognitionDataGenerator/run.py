@@ -62,14 +62,14 @@ def parse_arguments():
         default=False
     )
     parser.add_argument(
-        "-n",
+        "-num",
         "--include_numbers",
         action="store_true",
         help="Define if random sequences should contain numbers. Only works with -rs",
         default=False
     )
     parser.add_argument(
-        "-s",
+        "-sym",
         "--include_symbols",
         action="store_true",
         help="Define if random sequences should contain symbols. Only works with -rs",
