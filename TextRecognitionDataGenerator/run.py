@@ -276,7 +276,7 @@ def create_strings_from_wikipedia(minimum_length, count, lang):
 
     return sentences[0:count]
 
-def create_strings_randomly(length, allow_variable, count, let, num, sym):
+def create_strings_randomly(length, allow_variable, count, let, num, sym, lang):
     """
         Create all strings by randomly sampling from a pool of characters.
     """
@@ -287,14 +287,21 @@ def create_strings_randomly(length, allow_variable, count, let, num, sym):
 
     pool = ''
     if let:
-        pool += string.ascii_letters
+        if lang == 'cn':
+            pool += ''.join([chr(i) for i in range(19968, 40908)]) # Unicode range of CHK characters
+        else:
+            pool += string.ascii_letters
     if num:
         pool += "0123456789"
     if sym:
         pool += "!\"#$%&'()*+,-./:;?@[\\]^_`{|}~"
 
-    min_seq_len = 2
-    max_seq_len = 10
+    if lang == 'cn':
+        min_seq_len = 1
+        max_seq_len = 2
+    else:
+        min_seq_len = 2
+        max_seq_len = 10
 
     strings = []
     for _ in range(0, count):
@@ -337,7 +344,7 @@ def main():
         strings = create_strings_from_file(args.input_file, args.count)
     elif args.random_sequences:
         strings = create_strings_randomly(args.length, args.random, args.count,
-                                          args.include_letters, args.include_numbers, args.include_symbols)
+                                          args.include_letters, args.include_numbers, args.include_symbols, args.language)
         # Set a name format compatible with special characters automatically if they are used
         if args.include_symbols or True not in (args.include_letters, args.include_numbers, args.include_symbols):
             args.name_format = 2
