@@ -197,7 +197,7 @@ def load_dict(lang):
     """
 
     lang_dict = []
-    with open(os.path.join('dicts', lang + '.txt'), 'r') as d:
+    with open(os.path.join('dicts', lang + '.txt'), 'r', encoding="utf8") as d:
         lang_dict = d.readlines()
     return lang_dict
 
@@ -218,7 +218,7 @@ def create_strings_from_file(filename, count):
 
     strings = []
 
-    with open(filename, 'r') as f:
+    with open(filename, 'r', encoding="utf8") as f:
         lines = [l.strip()[0:200] for l in f.readlines()]
         if len(lines) == 0:
             raise Exception("No lines could be read in file")
@@ -379,7 +379,7 @@ def main():
 
     if args.name_format == 2:
         # Create file with filename-to-label connections
-        with open(os.path.join(args.output_dir, "labels.txt"), 'w') as f:
+        with open(os.path.join(args.output_dir, "labels.txt"), 'w', encoding="utf8") as f:
             for i in range(string_count):
                 file_name = str(i) + "." + args.extension
                 f.write("{} {}\n".format(file_name, strings[i]))
