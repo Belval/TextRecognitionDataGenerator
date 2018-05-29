@@ -1,7 +1,10 @@
 import os
 import sys
 import unittest
+import subprocess
 import hashlib
+import shutil
+import string
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), './TextRecognitionDataGenerator')))
 
@@ -24,6 +27,10 @@ def md5(filename):
         hash_md5.update(f.read())
     h = hash_md5.hexdigest()
     return h
+
+def empty_directory(path):
+    for f in os.listdir(path):
+        os.remove(os.path.join(path, f))
 
 class DataGenerator(unittest.TestCase):
     def test_create_string_from_wikipedia(self):
@@ -231,6 +238,104 @@ class DataGenerator(unittest.TestCase):
         )
 
         os.remove('tests/out/gaussian_background.jpg')
+
+class CommandLineInterface(unittest.TestCase):
+    def test_output_dir(self):
+        args = ['python', 'run.py', '-c', '1', '--output_dir', '../tests/out_2/']
+        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+        self.assertTrue(len(os.listdir('tests/out_2/')) == 1)
+        empty_directory('tests/out_2/')
+
+    def test_language_english(self):
+        args = ['python', 'run.py', '-l', 'en', '-c', '1', '--output_dir', '../tests/out/']
+        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+        self.assertTrue(len(os.listdir('tests/out/')) == 1)
+        empty_directory('tests/out/')
+
+    def test_language_french(self):
+        args = ['python', 'run.py', '-l', 'fr', '-c', '1', '--output_dir', '../tests/out/']
+        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+        self.assertTrue(len(os.listdir('tests/out/')) == 1)
+        empty_directory('tests/out/')
+
+    def test_language_spanish(self):
+        args = ['python', 'run.py', '-l', 'es', '-c', '1', '--output_dir', '../tests/out/']
+        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+        self.assertTrue(len(os.listdir('tests/out/')) == 1)
+        empty_directory('tests/out/')
+
+    def test_language_german(self):
+        args = ['python', 'run.py', '-l', 'de', '-c', '1', '--output_dir', '../tests/out/']
+        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+        self.assertTrue(len(os.listdir('tests/out/')) == 1)
+        empty_directory('tests/out/')
+
+    def test_language_chinese(self):
+        args = ['python', 'run.py', '-l', 'cn', '-c', '1', '--output_dir', '../tests/out/']
+        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+        self.assertTrue(len(os.listdir('tests/out/')) == 1)
+        empty_directory('tests/out/')
+
+    def test_count_parameter(self):
+        args = ['python', 'run.py', '-c', '10', '--output_dir', '../tests/out/']
+        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+        self.assertTrue(len(os.listdir('tests/out/')) == 10)
+        empty_directory('tests/out/')
+
+    def test_random_sequences_letter_only(self):
+        args = ['python', 'run.py', '-rs', '-let', '-c', '1', '--output_dir', '../tests/out/']
+        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+        self.assertTrue(all([c in string.ascii_letters for f in os.listdir('tests/out/') for c in f.split('_')[0]]))
+        empty_directory('tests/out/')
+
+    def test_random_sequences_number_only(self):
+        args = ['python', 'run.py', '-rs', '-num', '-c', '1', '--output_dir', '../tests/out/']
+        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+        self.assertTrue(all([c in '0123456789' for f in os.listdir('tests/out/') for c in f.split('_')[0]]))
+        empty_directory('tests/out/')
+
+    def test_random_sequences_symbols_only(self):
+        args = ['python', 'run.py', '-rs', '-sym', '-c', '1', '--output_dir', '../tests/out/']
+        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+        with open('tests/out/labels.txt', 'r') as f:
+            self.assertTrue(all([c in "!\"#$%&'()*+,-./:;?@[\\]^_`{|}~" for c in f.readline().split(' ')[1][:-1]]))
+        empty_directory('tests/out/')
+
+#    def test_word_count(self):
+#        args = ['python', 'run.py', '-c', '1', '-w', '5']
+#        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+#        self.assertTrue(False)
+#        empty_directory('tests/out/')
+#
+#    def test_extension_jpg(self):
+#        args = ['python', 'run.py', '-c', '1', '-e', 'jpg']
+#        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+#        self.assertTrue(False)
+#        empty_directory('tests/out/')
+#
+#    def test_extension_png(self):
+#        args = ['python', 'run.py', '-c', '1', '-e', 'png']
+#        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+#        self.assertTrue(False)
+#        empty_directory('tests/out/')
+#
+#    def test_name_format_0(self):
+#        args = ['python', 'run.py', '-c', '1', '-na', '0']
+#        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+#        self.assertTrue(False)
+#        empty_directory('tests/out/')
+#
+#    def test_name_format_1(self):
+#        args = ['python', 'run.py', '-c', '1', '-na', '1']
+#        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+#        self.assertTrue(False)
+#        empty_directory('tests/out/')
+#
+#    def test_name_format_2(self):
+#        args = ['python', 'run.py', '-c', '1', '-na', '2']
+#        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+#        self.assertTrue(False)
+#        empty_directory('tests/out/')
 
 if __name__=='__main__':
     unittest.main()

@@ -197,7 +197,7 @@ def load_dict(lang):
     """
 
     lang_dict = []
-    with open(os.path.join('dicts', lang + '.txt'), 'r', encoding="utf8") as d:
+    with open(os.path.join('dicts', lang + '.txt'), 'r', encoding="utf8", errors='ignore') as d:
         lang_dict = d.readlines()
     return lang_dict
 
