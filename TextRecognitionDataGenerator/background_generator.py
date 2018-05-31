@@ -70,9 +70,16 @@ class BackgroundGenerator(object):
                 picture = picture.resize([width, int(picture.size[1] * (width / picture.size[0]))], Image.ANTIALIAS)
             elif picture.size[1] < height:
                 picture.thumbnail([int(picture.size[0] * (height / picture.size[1])), height], Image.ANTIALIAS)
-
-            x = random.randint(0, picture.size[0] - width)
-            y = random.randint(0, picture.size[1] - height)
+            
+            if (picture.size[0] == width):
+                x = 0
+            else:
+                x = random.randint(0, picture.size[0] - width)
+            if (picture.size[1] == height):
+                y = 0
+            else:
+                y = random.randint(0, picture.size[1] - height)
+                
             return picture.crop(
                 (
                     x,
