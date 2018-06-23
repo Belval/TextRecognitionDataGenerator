@@ -75,7 +75,7 @@ class FakeTextDataGenerator(object):
         # Resize image to desired format #
         ##################################
         new_width = float(new_text_width + 10) * (float(height) / float(new_text_height + 10))
-        image_on_background = background.resize((int(new_text_width), height), Image.ANTIALIAS)
+        image_on_background = background.resize((int(new_width), height), Image.ANTIALIAS)
 
         final_image = image_on_background.filter(
             ImageFilter.GaussianBlur(
