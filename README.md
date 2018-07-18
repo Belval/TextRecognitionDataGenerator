@@ -137,5 +137,3 @@ If anything is missing, unclear, or simply not working, open an issue on the rep
 - Better background generation
 - Better handwritten text generation
 - More customization parameters (mostly regarding background)
-- Implement `--include_symbols`
-- Implement `--include_numbers`
