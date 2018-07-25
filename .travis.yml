@@ -2,11 +2,7 @@ language: python
 python:
   - "3.5"
 install:
-  - pip install pillow
-  - pip install numpy
-  - pip install requests
-  - pip install beautifulsoup4
-  - pip install opencv-python
+  - pip install -r requirements.txt
   - pip install codecov
 script:
   - python3 tests.py
