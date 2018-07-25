@@ -16,17 +16,18 @@ Pillow
 Numpy
 Requests
 BeautifulSoup
+tqdm
 ```
 
  You can simply use `pip install -r requirements.txt` too.
 
 ## New
+- Progress bar using tqdm
 - Generate random strings with letters, numbers and symbols (Thank you @FHainzl)
 - Save the labels in a file instead of in the file name (Thank you @FHainzl)
 - Add support for Simplified and Traditional Chinese
 - You can add distorsion to the generated text
 - You can "fake" handwriting using `-hw`
-
 
 ## How does it work?
 `python run.py -w 5 -f 64`
@@ -122,6 +123,16 @@ If you want to add a new non-latin language, the amount of work is minimal.
 5. Run the tool as you normally would but add `-l` with your two-letters code
 
 It only supports .ttf for now.
+
+## Benchmarks
+
+- Intel Core i7-4710HQ @ 2.50Ghz + SSD (-c 1000 -w 1)
+    - `-t 1` : 363 img/s
+    - `-t 2` : 694 img/s
+    - `-t 4` : 1300 img/s
+    - `-t 8` : 1500 img/s
+- AMD Ryzen 7 1700 @ 4.0Ghz + SSD (-c 1000 -w 1)
+    - TODO
 
 ## Contributing
 

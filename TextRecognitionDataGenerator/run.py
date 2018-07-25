@@ -5,6 +5,7 @@ import re
 import requests
 import string
 
+from tqdm import tqdm
 from bs4 import BeautifulSoup
 from PIL import Image, ImageFont
 from data_generator import FakeTextDataGenerator
@@ -355,8 +356,8 @@ def main():
     string_count = len(strings)
 
     p = Pool(args.thread_count)
-    p.starmap(
-        FakeTextDataGenerator.generate,
+    for _ in tqdm(p.imap_unordered(
+        FakeTextDataGenerator.generate_from_tuple,
         zip(
             [i for i in range(0, string_count)],
             strings,
@@ -374,7 +375,8 @@ def main():
             [args.handwritten] * string_count,
             [args.name_format] * string_count,
         )
-    )
+    ), total=args.count):
+        pass
     p.terminate()
 
     if args.name_format == 2:

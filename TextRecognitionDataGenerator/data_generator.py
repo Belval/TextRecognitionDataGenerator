@@ -14,6 +14,14 @@ from distorsion_generator import DistorsionGenerator
 
 class FakeTextDataGenerator(object):
     @classmethod
+    def generate_from_tuple(cls, t):
+        """
+            Same as generate, but takes all parameters as one tuple
+        """
+
+        cls.generate(*t)
+
+    @classmethod
     def generate(cls, index, text, font, out_dir, height, extension, skewing_angle, random_skew, blur, random_blur, background_type, distorsion_type, distorsion_orientation, is_handwritten, name_format, text_color=-1):
         image = None
 
