@@ -1,0 +1,3 @@
+ignore:
+  - "TextRecognitionDataGenerator/run.py"
+  - "tests.py"
