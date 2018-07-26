@@ -243,6 +243,15 @@ class DataGenerator(unittest.TestCase):
             all([l in '!"#$%&\'()*+,-./:;?@[\\]^_`{|}~' for l in s])
         )
 
+    def test_generate_chinese_string(self):
+        s = create_strings_randomly(1, False, 1, True, False, False, 'cn')[0]
+        
+        cn_chars = [chr(i) for i in range(19968, 40908)]
+
+        self.assertTrue(
+            all([l in cn_chars for l in s])
+        )
+
     def test_generate_data_with_white_background(self):
         BackgroundGenerator.plain_white(64, 128).save('tests/out/white_background.jpg')
 
