@@ -15,10 +15,11 @@ except:
 
 from TextRecognitionDataGenerator.data_generator import FakeTextDataGenerator
 from TextRecognitionDataGenerator.background_generator import BackgroundGenerator
-from TextRecognitionDataGenerator.run import (
+from TextRecognitionDataGenerator.string_generator import (
     create_strings_from_file,
     create_strings_from_dict,
-    create_strings_from_wikipedia
+    create_strings_from_wikipedia,
+    create_strings_randomly
 )
 
 def md5(filename):
@@ -221,6 +222,27 @@ class DataGenerator(unittest.TestCase):
 
         os.remove('tests/out/TEST TEST TEST_5.jpg')
 
+    def test_generate_string_with_letters(self):
+        s = create_strings_randomly(1, False, 1, True, False, False, 'en')[0]
+
+        self.assertTrue(
+            all([l in string.ascii_letters for l in s])
+        )
+
+    def test_generate_string_with_numbers(self):
+        s = create_strings_randomly(1, False, 1, False, True, False, 'en')[0]
+
+        self.assertTrue(
+            all([l in '0123456789' for l in s])
+        )
+    
+    def test_generate_string_with_symbols(self):
+        s = create_strings_randomly(1, False, 1, False, False, True, 'en')[0]
+        
+        self.assertTrue(
+            all([l in '!"#$%&\'()*+,-./:;?@[\\]^_`{|}~' for l in s])
+        )
+
     def test_generate_data_with_white_background(self):
         BackgroundGenerator.plain_white(64, 128).save('tests/out/white_background.jpg')
 
@@ -238,6 +260,13 @@ class DataGenerator(unittest.TestCase):
         )
 
         os.remove('tests/out/gaussian_background.jpg')
+
+    def test_generate_data_with_quasicrystal_background(self):
+        bkgd = BackgroundGenerator.quasicrystal(64, 128)
+        
+        self.assertTrue(
+            len(bkgd.histogram()) > 20 and bkgd.size == (128, 64)
+        )
 
 class CommandLineInterface(unittest.TestCase):
     def test_output_dir(self):

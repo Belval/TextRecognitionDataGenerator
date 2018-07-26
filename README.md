@@ -132,7 +132,10 @@ It only supports .ttf for now.
     - `-t 4` : 1300 img/s
     - `-t 8` : 1500 img/s
 - AMD Ryzen 7 1700 @ 4.0Ghz + SSD (-c 1000 -w 1)
-    - TODO
+    - `-t 1` : 558 img/s
+    - `-t 2` : 1045 img/s
+    - `-t 4` : 2107 img/s
+    - `-t 8` : 3297 img/s
 
 ## Contributing
 
