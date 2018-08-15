@@ -16,7 +16,7 @@ class DistorsionGenerator(object):
         if not vertical and not horizontal:
             return image
 
-        rgb_image = image.convert('RGB')
+        rgb_image = image.convert('RGBA')
         
         img_arr = np.array(rgb_image)
 
@@ -33,7 +33,7 @@ class DistorsionGenerator(object):
         new_img_arr = np.zeros((
                           img_arr.shape[0] + (2 * max_offset if vertical else 0),
                           img_arr.shape[1] + (2 * max_offset if horizontal else 0),
-                          3
+                          4
                       ))
 
         new_img_arr_copy = np.copy(new_img_arr)
@@ -52,29 +52,34 @@ class DistorsionGenerator(object):
                 else:
                     new_img_arr[i, max_offset+o:row_width+max_offset+o,:] = img_arr[i, :, :]
 
-        return Image.fromarray(np.uint8(new_img_arr_copy if horizontal and vertical else new_img_arr)).convert('L')
+        return Image.fromarray(np.uint8(new_img_arr_copy if horizontal and vertical else new_img_arr)).convert('RGBA')
 
     @classmethod
-    def sin(cls, image, vertical=False, horizontal=False, max_offset=10):
+    def sin(cls, image, vertical=False, horizontal=False):
         """
             Apply a sine distorsion on one or both of the specified axis
         """
 
+        max_offset = int(image.height ** 0.5)
+
         return cls.apply_func_distorsion(image, vertical, horizontal, max_offset, (lambda x: int(math.sin(math.radians(x)) * max_offset)))
 
     @classmethod
-    def cos(cls, image, vertical=False, horizontal=False, max_offset=10):
+    def cos(cls, image, vertical=False, horizontal=False):
         """
             Apply a cosine distorsion on one or both of the specified axis
         """
 
+        max_offset = int(image.height ** 0.5)
+
         return cls.apply_func_distorsion(image, vertical, horizontal, max_offset, (lambda x: int(math.cos(math.radians(x)) * max_offset)))
 
     @classmethod
-    def random(cls, image, vertical=False, horizontal=False, max_offset=3):
+    def random(cls, image, vertical=False, horizontal=False):
         """
             Apply a random distorsion on one or both of the specified axis
         """
 
-        return cls.apply_func_distorsion(image, vertical, horizontal, max_offset, (lambda x: random.randint(0, max_offset)))
+        max_offset = int(image.height ** 0.4)
 
+        return cls.apply_func_distorsion(image, vertical, horizontal, max_offset, (lambda x: random.randint(0, max_offset)))

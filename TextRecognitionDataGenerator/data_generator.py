@@ -31,7 +31,7 @@ class FakeTextDataGenerator(object):
         if is_handwritten:
             image = HandwrittenTextGenerator.generate(text)
         else:
-            image = ComputerTextGenerator.generate(text, font, text_color)
+            image = ComputerTextGenerator.generate(text, font, text_color, height)
 
         random_angle = random.randint(0-skewing_angle, skewing_angle)
 
@@ -75,9 +75,7 @@ class FakeTextDataGenerator(object):
         else:
             background = BackgroundGenerator.picture(new_text_height + 10, new_text_width + 10)
 
-        mask = distorted_img.point(lambda x: 0 if x == 255 or x == 0 else 255, '1')
-
-        background.paste(distorted_img, (5, 5), mask=mask)
+        background.paste(distorted_img, (5, 5), distorted_img)
 
         ##################################
         # Resize image to desired format #
