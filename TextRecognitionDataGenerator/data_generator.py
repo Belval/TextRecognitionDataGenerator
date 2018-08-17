@@ -22,7 +22,7 @@ class FakeTextDataGenerator(object):
         cls.generate(*t)
 
     @classmethod
-    def generate(cls, index, text, font, out_dir, height, extension, skewing_angle, random_skew, blur, random_blur, background_type, distorsion_type, distorsion_orientation, is_handwritten, name_format, text_color=-1):
+    def generate(cls, index, text, font, out_dir, height, extension, skewing_angle, random_skew, blur, random_blur, background_type, distorsion_type, distorsion_orientation, is_handwritten, name_format, width, alignment, text_color=-1):
         image = None
 
         ##########################
@@ -61,29 +61,46 @@ class FakeTextDataGenerator(object):
                 horizontal=(distorsion_orientation == 1 or distorsion_orientation == 2)
             )
 
-        new_text_width, new_text_height = distorted_img.size
+        ##################################
+        # Resize image to desired format #
+        ##################################
+
+        new_width = int(float(distorted_img.size[0] + 10) * (float(height) / float(distorted_img.size[1] + 10)))
+        
+        resized_img = distorted_img.resize((new_width, height - 10), Image.ANTIALIAS)
+
+        background_width = width if width > 0 else new_width + 10
 
         #############################
         # Generate background image #
         #############################
         if background_type == 0:
-            background = BackgroundGenerator.gaussian_noise(new_text_height + 10, new_text_width + 10)
+            background = BackgroundGenerator.gaussian_noise(height, background_width)
         elif background_type == 1:
-            background = BackgroundGenerator.plain_white(new_text_height + 10, new_text_width + 10)
+            background = BackgroundGenerator.plain_white(height, background_width)
         elif background_type == 2:
-            background = BackgroundGenerator.quasicrystal(new_text_height + 10, new_text_width + 10)
+            background = BackgroundGenerator.quasicrystal(height, background_width)
         else:
-            background = BackgroundGenerator.picture(new_text_height + 10, new_text_width + 10)
+            background = BackgroundGenerator.picture(height, background_width)
 
-        background.paste(distorted_img, (5, 5), distorted_img)
+        #############################
+        # Place text with alignment #
+        #############################
+
+        new_text_width, _ = resized_img.size
+
+        if alignment == 0:
+            background.paste(resized_img, (5, 5), resized_img)
+        elif alignment == 1:
+            background.paste(resized_img, (int(background_width / 2 - new_text_width / 2), 5), resized_img)
+        else:
+            background.paste(resized_img, (background_width - new_text_width - 5, 5), resized_img)
 
         ##################################
-        # Resize image to desired format #
+        # Apply gaussian blur #
         ##################################
-        new_width = float(new_text_width + 10) * (float(height) / float(new_text_height + 10))
-        image_on_background = background.resize((int(new_width), height), Image.ANTIALIAS)
 
-        final_image = image_on_background.filter(
+        final_image = background.filter(
             ImageFilter.GaussianBlur(
                 radius=(blur if not random_blur else random.randint(0, blur))
             )

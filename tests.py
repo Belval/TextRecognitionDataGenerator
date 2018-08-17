@@ -83,6 +83,8 @@ class DataGenerator(unittest.TestCase):
             0,
             False,
             0,
+            -1,
+            0,
             1
         )
 
@@ -108,6 +110,8 @@ class DataGenerator(unittest.TestCase):
             0,
             0,
             False,
+            0,
+            -1,
             0,
             1
         )
@@ -135,6 +139,8 @@ class DataGenerator(unittest.TestCase):
             0,
             False,
             0,
+            -1,
+            0,
             1
         )
 
@@ -160,6 +166,8 @@ class DataGenerator(unittest.TestCase):
             0,
             0,
             False,
+            0,
+            -1,
             0,
             1
         )
@@ -187,6 +195,8 @@ class DataGenerator(unittest.TestCase):
             2,
             False,
             0,
+            -1,
+            0,
             1
         )
 
@@ -213,6 +223,8 @@ class DataGenerator(unittest.TestCase):
             2,
             False,
             0,
+            -1,
+            0,
             1
         )
 
@@ -221,6 +233,90 @@ class DataGenerator(unittest.TestCase):
         )
 
         os.remove('tests/out/TEST TEST TEST_5.jpg')
+
+    def test_generate_data_with_left_alignment(self):
+        FakeTextDataGenerator.generate(
+            6,
+            'TEST TEST TEST',
+            'tests/font.ttf',
+            'tests/out/',
+            64,
+            'jpg',
+            0,
+            False,
+            0,
+            False,
+            1,
+            0,
+            0,
+            False,
+            0,
+            600,
+            0,
+            1
+        )
+
+        self.assertTrue(
+            md5('tests/out/TEST TEST TEST_6.jpg') == md5('tests/expected_results/TEST TEST TEST_6.jpg')
+        )
+
+        os.remove('tests/out/TEST TEST TEST_6.jpg')
+
+    def test_generate_data_with_center_alignment(self):
+        FakeTextDataGenerator.generate(
+            7,
+            'TEST TEST TEST',
+            'tests/font.ttf',
+            'tests/out/',
+            64,
+            'jpg',
+            0,
+            False,
+            0,
+            False,
+            1,
+            0,
+            0,
+            False,
+            0,
+            800,
+            1,
+            1
+        )
+
+        self.assertTrue(
+            md5('tests/out/TEST TEST TEST_7.jpg') == md5('tests/expected_results/TEST TEST TEST_7.jpg')
+        )
+
+        os.remove('tests/out/TEST TEST TEST_7.jpg')
+
+    def test_generate_data_with_right_alignment(self):
+        FakeTextDataGenerator.generate(
+            8,
+            'TEST TEST TEST',
+            'tests/font.ttf',
+            'tests/out/',
+            64,
+            'jpg',
+            0,
+            False,
+            0,
+            False,
+            1,
+            0,
+            0,
+            False,
+            0,
+            1000,
+            2,
+            1
+        )
+
+        self.assertTrue(
+            md5('tests/out/TEST TEST TEST_8.jpg') == md5('tests/expected_results/TEST TEST TEST_8.jpg')
+        )
+
+        os.remove('tests/out/TEST TEST TEST_8.jpg')
 
     def test_generate_string_with_letters(self):
         s = create_strings_randomly(1, False, 1, True, False, False, 'en')[0]

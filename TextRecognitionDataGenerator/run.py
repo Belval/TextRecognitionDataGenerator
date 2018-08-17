@@ -192,6 +192,23 @@ def parse_arguments():
         help="Define the distorsion's orientation. Only used if -d is specified. 0: Vertical (Up and down), 1: Horizontal (Left and Right), 2: Both",
         default=0
     )
+    parser.add_argument(
+        "-wd",
+        "--width",
+        type=int,
+        nargs="?",
+        help="Define the width of the resulting image. If not set it will be the width of the text + 10. If the width of the generated text is bigger that number will be used",
+        default=-1
+    )
+    parser.add_argument(
+        "-al",
+        "--alignment",
+        type=int,
+        nargs="?",
+        help="Define the alignment of the text in the image. Only used if the width parameter is set. 0: left, 1: center, 2: right",
+        default=1
+    )
+
 
     return parser.parse_args()
 
@@ -274,6 +291,8 @@ def main():
             [args.distorsion_orientation] * string_count,
             [args.handwritten] * string_count,
             [args.name_format] * string_count,
+            [args.width] * string_count,
+            [args.alignment] * string_count,
         )
     ), total=args.count):
         pass
