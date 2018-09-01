@@ -14,6 +14,11 @@ from string_generator import (
 from data_generator import FakeTextDataGenerator
 from multiprocessing import Pool
 
+def valid_range(s):
+    if len(s.split(',')) > 2:
+        raise argparse.ArgumentError("The given range is invalid, please use ?,? format.")
+    return tuple([int(i) for i in s.split(',')])
+
 def parse_arguments():
     """
         Parse the command line arguments of the program.
@@ -208,7 +213,14 @@ def parse_arguments():
         help="Define the alignment of the text in the image. Only used if the width parameter is set. 0: left, 1: center, 2: right",
         default=1
     )
-
+    parser.add_argument(
+        "-tc",
+        "--text_color",
+        type=valid_range,
+        nargs="?",
+        help="Define the text's color, should be either a single integer or a range in the ?,? format.",
+        default=(40,)
+    )
 
     return parser.parse_args()
 
@@ -293,6 +305,7 @@ def main():
             [args.name_format] * string_count,
             [args.width] * string_count,
             [args.alignment] * string_count,
+            [args.text_color] * string_count
         )
     ), total=args.count):
         pass

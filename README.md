@@ -22,12 +22,12 @@ tqdm
  You can simply use `pip install -r requirements.txt` too.
 
 ## New
-- Progress bar using tqdm
+- Specify text color range using `-tc min,max`  
+- Explicit alignement when using `-al` with fixed width (0: Left, 1: Center, 2: Right)
+- Fixed width using `-wd`
 - Generate random strings with letters, numbers and symbols (Thank you @FHainzl)
 - Save the labels in a file instead of in the file name (Thank you @FHainzl)
 - Add support for Simplified and Traditional Chinese
-- You can add distorsion to the generated text
-- You can "fake" handwriting using `-hw`
 
 ## How does it work?
 `python run.py -w 5 -f 64`

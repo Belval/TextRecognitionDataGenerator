@@ -16,7 +16,7 @@ class ComputerTextGenerator(object):
 
         txt_draw = ImageDraw.Draw(txt_img)
 
-        fill = random.randint(1, 80) if text_color < 0 else text_color
+        fill = random.randint(text_color[0], text_color[-1])
 
         txt_draw.text((0, 0), text, fill=(fill, fill, fill), font=image_font)
 
