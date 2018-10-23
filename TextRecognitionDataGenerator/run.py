@@ -216,10 +216,10 @@ def parse_arguments():
     parser.add_argument(
         "-tc",
         "--text_color",
-        type=valid_range,
+        type=str,
         nargs="?",
-        help="Define the text's color, should be either a single integer or a range in the ?,? format.",
-        default=(40,)
+        help="Define the text's color, should be either a single hex color or a range in the ?,? format.",
+        default='#282828'
     )
 
     return parser.parse_args()

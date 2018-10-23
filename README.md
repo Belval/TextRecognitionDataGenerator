@@ -22,7 +22,7 @@ tqdm
  You can simply use `pip install -r requirements.txt` too.
 
 ## New
-- Specify text color range using `-tc min,max`  
+- Specify text color range using `-tc '#000000,#FFFFFF'`, please note that the quotes are **necessary**  
 - Explicit alignement when using `-al` with fixed width (0: Left, 1: Center, 2: Right)
 - Fixed width using `-wd`
 - Generate random strings with letters, numbers and symbols (Thank you @FHainzl)

@@ -85,7 +85,7 @@ class DataGenerator(unittest.TestCase):
             0,
             -1,
             0,
-            (1, 1)
+            '#010101'
         )
 
         self.assertTrue(
@@ -113,7 +113,7 @@ class DataGenerator(unittest.TestCase):
             0,
             -1,
             0,
-            (1, 1)
+            '#010101'
         )
 
         self.assertTrue(
@@ -141,7 +141,7 @@ class DataGenerator(unittest.TestCase):
             0,
             -1,
             0,
-            (1, 1)
+            '#010101'
         )
 
         self.assertTrue(
@@ -169,7 +169,7 @@ class DataGenerator(unittest.TestCase):
             0,
             -1,
             0,
-            (1, 1)
+            '#010101'
         )
 
         self.assertTrue(
@@ -197,7 +197,7 @@ class DataGenerator(unittest.TestCase):
             0,
             -1,
             0,
-            (1, 1)
+            '#010101'
         )
 
         self.assertTrue(
@@ -225,7 +225,7 @@ class DataGenerator(unittest.TestCase):
             0,
             -1,
             0,
-            (1, 1)
+            '#010101'
         )
 
         self.assertTrue(
@@ -253,7 +253,7 @@ class DataGenerator(unittest.TestCase):
             0,
             600,
             0,
-            (1, 1)
+            '#010101'
         )
 
         self.assertTrue(
@@ -281,7 +281,7 @@ class DataGenerator(unittest.TestCase):
             0,
             800,
             1,
-            (1, 1)
+            '#010101'
         )
 
         self.assertTrue(
@@ -309,7 +309,7 @@ class DataGenerator(unittest.TestCase):
             0,
             1000,
             2,
-            (1, 1)
+            '#010101'
         )
 
         self.assertTrue(

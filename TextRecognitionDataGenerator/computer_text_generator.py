@@ -4,7 +4,7 @@ import random
 import os
 import numpy as np
 
-from PIL import Image, ImageFont, ImageDraw, ImageFilter
+from PIL import Image, ImageColor, ImageFont, ImageDraw, ImageFilter
 
 class ComputerTextGenerator(object):
     @classmethod
@@ -16,8 +16,15 @@ class ComputerTextGenerator(object):
 
         txt_draw = ImageDraw.Draw(txt_img)
 
-        fill = random.randint(text_color[0], text_color[-1])
+        colors = [ImageColor.getrgb(c) for c in text_color.split(',')]
+        c1, c2 = colors[0], colors[-1]
 
-        txt_draw.text((0, 0), text, fill=(fill, fill, fill), font=image_font)
+        fill = (
+            random.randint(c1[0], c2[0]),
+            random.randint(c1[1], c2[1]),
+            random.randint(c1[2], c2[2])
+        )
+
+        txt_draw.text((0, 0), text, fill=fill, font=image_font)
 
         return txt_img
