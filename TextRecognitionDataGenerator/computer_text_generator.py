@@ -1,8 +1,4 @@
-import cv2
-import math
 import random
-import os
-import numpy as np
 
 from PIL import Image, ImageColor, ImageFont, ImageDraw, ImageFilter
 

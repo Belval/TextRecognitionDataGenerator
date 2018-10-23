@@ -1,7 +1,6 @@
 import argparse
 import os, errno
 import random
-import re
 import string
 
 from tqdm import tqdm

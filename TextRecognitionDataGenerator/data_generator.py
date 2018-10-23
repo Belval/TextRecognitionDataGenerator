@@ -1,5 +1,4 @@
 import os
-import cv2
 import random
 
 from PIL import Image, ImageFilter
@@ -66,7 +65,7 @@ class FakeTextDataGenerator(object):
         ##################################
 
         new_width = int(float(distorted_img.size[0] + 10) * (float(height) / float(distorted_img.size[1] + 10)))
-        
+
         resized_img = distorted_img.resize((new_width, height - 10), Image.ANTIALIAS)
 
         background_width = width if width > 0 else new_width + 10

@@ -4,7 +4,7 @@ import os
 import random
 import numpy as np
 
-from PIL import Image, ImageFont, ImageDraw, ImageFilter
+from PIL import Image, ImageDraw, ImageFilter
 
 class DistorsionGenerator(object):
     @classmethod

@@ -4,7 +4,7 @@ import os
 import random
 import numpy as np
 
-from PIL import Image, ImageFont, ImageDraw, ImageFilter
+from PIL import Image, ImageDraw, ImageFilter
 
 class BackgroundGenerator(object):
     @classmethod
@@ -70,7 +70,7 @@ class BackgroundGenerator(object):
                 picture = picture.resize([width, int(picture.size[1] * (width / picture.size[0]))], Image.ANTIALIAS)
             elif picture.size[1] < height:
                 picture.thumbnail([int(picture.size[0] * (height / picture.size[1])), height], Image.ANTIALIAS)
-            
+
             if (picture.size[0] == width):
                 x = 0
             else:

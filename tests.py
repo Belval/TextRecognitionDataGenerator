@@ -3,7 +3,6 @@ import sys
 import unittest
 import subprocess
 import hashlib
-import shutil
 import string
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), './TextRecognitionDataGenerator')))
@@ -331,7 +330,7 @@ class DataGenerator(unittest.TestCase):
         self.assertTrue(
             all([l in '0123456789' for l in s])
         )
-    
+
     def test_generate_string_with_symbols(self):
         s = create_strings_randomly(1, False, 1, False, False, True, 'en')[0]
         

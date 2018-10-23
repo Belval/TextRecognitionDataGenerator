@@ -1,6 +1,5 @@
 import os
 import pickle
-import argparse
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
@@ -129,18 +128,18 @@ class HandwrittenTextGenerator(object):
             saver.restore(sess, 'handwritten_model/model-29')
             images = []
             for word in text.split(' '):
-                phi_data, window_data, kappa_data, stroke_data, coords = cls.__sample_text(sess, word, translation)
+                _, window_data, kappa_data, stroke_data, coords = cls.__sample_text(sess, word, translation)
 
                 strokes = np.array(stroke_data)
                 strokes[:, :2] = np.cumsum(strokes[:, :2], axis=0)
-                minx, maxx = np.min(strokes[:, 0]), np.max(strokes[:, 0])
+                _, maxx = np.min(strokes[:, 0]), np.max(strokes[:, 0])
                 miny, maxy = np.min(strokes[:, 1]), np.max(strokes[:, 1])
 
                 fig, ax = plt.subplots(1, 1)
                 fig.patch.set_visible(False)
                 ax.axis('off')
 
-                for i, stroke in enumerate(cls.__split_strokes(cls.__cumsum(np.array(coords)))):
+                for stroke in cls.__split_strokes(cls.__cumsum(np.array(coords))):
                     plt.plot(stroke[:, 0], -stroke[:, 1], color='#080808')
 
                 canvas = plt.get_current_fig_manager().canvas
