@@ -3,4 +3,4 @@ numpy==1.15.1
 opencv-python==3.4.3.18
 tqdm==4.23.4
 Pillow==5.1.0
-requests==2.18.1
+requests==2.20.0
