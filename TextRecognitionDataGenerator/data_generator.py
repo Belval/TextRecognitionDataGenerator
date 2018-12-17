@@ -21,7 +21,7 @@ class FakeTextDataGenerator(object):
         cls.generate(*t)
 
     @classmethod
-    def generate(cls, index, text, font, out_dir, height, extension, skewing_angle, random_skew, blur, random_blur, background_type, distorsion_type, distorsion_orientation, is_handwritten, name_format, width, alignment, text_color):
+    def generate(cls, index, text, font, out_dir, height, extension, skewing_angle, random_skew, blur, random_blur, background_type, distorsion_type, distorsion_orientation, is_handwritten, name_format, width, alignment, text_color, orientation, space_width):
         image = None
 
         ##########################
@@ -30,7 +30,7 @@ class FakeTextDataGenerator(object):
         if is_handwritten:
             image = HandwrittenTextGenerator.generate(text)
         else:
-            image = ComputerTextGenerator.generate(text, font, text_color, height)
+            image = ComputerTextGenerator.generate(text, font, text_color, height, orientation, space_width)
 
         random_angle = random.randint(0-skewing_angle, skewing_angle)
 
