@@ -103,7 +103,7 @@ def parse_arguments():
         "--format",
         type=int,
         nargs="?",
-        help="Define the height of the produced images",
+        help="Define the height of the produced images if horizontal, else the width",
         default=32,
     )
     parser.add_argument(
@@ -213,12 +213,28 @@ def parse_arguments():
         default=1
     )
     parser.add_argument(
+        "-or",
+        "--orientation",
+        type=int,
+        nargs="?",
+        help="Define the orientation of the text. 0: Horizontal, 1: Vertical",
+        default=0
+    )
+    parser.add_argument(
         "-tc",
         "--text_color",
         type=str,
         nargs="?",
         help="Define the text's color, should be either a single hex color or a range in the ?,? format.",
         default='#282828'
+    )
+    parser.add_argument(
+        "-sw",
+        "--space_width",
+        type=float,
+        nargs="?",
+        help="Define the width of the spaces between words. 2.0 means twice the normal space width",
+        default=1.0
     )
 
     return parser.parse_args()
@@ -304,7 +320,9 @@ def main():
             [args.name_format] * string_count,
             [args.width] * string_count,
             [args.alignment] * string_count,
-            [args.text_color] * string_count
+            [args.text_color] * string_count,
+            [args.orientation] * string_count,
+            [args.space_width] * string_count
         )
     ), total=args.count):
         pass
