@@ -22,11 +22,11 @@ tqdm
  You can simply use `pip install -r requirements.txt` too.
 
 ## New
+- Change the text orientation using the `-or` parameter
+- Change the space width using the `-sw` parameter
 - Specify text color range using `-tc '#000000,#FFFFFF'`, please note that the quotes are **necessary**  
 - Explicit alignement when using `-al` with fixed width (0: Left, 1: Center, 2: Right)
 - Fixed width using `-wd`
-- Generate random strings with letters, numbers and symbols (Thank you @FHainzl)
-- Save the labels in a file instead of in the file name (Thank you @FHainzl)
 - Add support for Simplified and Traditional Chinese
 
 ## How does it work?
