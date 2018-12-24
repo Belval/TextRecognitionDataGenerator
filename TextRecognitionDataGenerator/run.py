@@ -103,7 +103,7 @@ def parse_arguments():
         "--format",
         type=int,
         nargs="?",
-        help="Define the height of the produced images",
+        help="Define the height of the produced images if horizontal, else the width",
         default=32,
     )
     parser.add_argument(
@@ -218,7 +218,7 @@ def parse_arguments():
         type=int,
         nargs="?",
         help="Define the orientation of the text. 0: Horizontal, 1: Vertical",
-        default=1
+        default=0
     )
     parser.add_argument(
         "-tc",

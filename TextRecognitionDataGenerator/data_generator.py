@@ -21,7 +21,7 @@ class FakeTextDataGenerator(object):
         cls.generate(*t)
 
     @classmethod
-    def generate(cls, index, text, font, out_dir, height, extension, skewing_angle, random_skew, blur, random_blur, background_type, distorsion_type, distorsion_orientation, is_handwritten, name_format, width, alignment, text_color, orientation, space_width):
+    def generate(cls, index, text, font, out_dir, size, extension, skewing_angle, random_skew, blur, random_blur, background_type, distorsion_type, distorsion_orientation, is_handwritten, name_format, width, alignment, text_color, orientation, space_width):
         image = None
 
         ##########################
@@ -29,10 +29,10 @@ class FakeTextDataGenerator(object):
         ##########################
         if is_handwritten:
             if orientation == 1:
-                raise Exception("Vertical handwritten text is unavailable")
+                raise ValueError("Vertical handwritten text is unavailable")
             image = HandwrittenTextGenerator.generate(text)
         else:
-            image = ComputerTextGenerator.generate(text, font, text_color, height, orientation, space_width)
+            image = ComputerTextGenerator.generate(text, font, text_color, size, orientation, space_width)
 
         random_angle = random.randint(0-skewing_angle, skewing_angle)
 
@@ -66,23 +66,32 @@ class FakeTextDataGenerator(object):
         # Resize image to desired format #
         ##################################
 
-        new_width = int(float(distorted_img.size[0] + 10) * (float(height) / float(distorted_img.size[1] + 10)))
-
-        resized_img = distorted_img.resize((new_width, height - 10), Image.ANTIALIAS)
-
-        background_width = width if width > 0 else new_width + 10
+        # Horizontal text
+        if orientation == 0:
+            new_width = int(float(distorted_img.size[0] + 10) * (float(size) / float(distorted_img.size[1] + 10)))
+            resized_img = distorted_img.resize((new_width, size - 10), Image.ANTIALIAS)
+            background_width = width if width > 0 else new_width + 10
+            background_height = size
+        # Vertical text
+        elif orientation == 1:
+            new_height = int(float(distorted_img.size[1] + 10) * (float(size) / float(distorted_img.size[0] + 10)))
+            resized_img = distorted_img.resize((size - 10, new_height), Image.ANTIALIAS)
+            background_width = size
+            background_height = new_height + 10
+        else:
+            raise ValueError("Invalid orientation")
 
         #############################
         # Generate background image #
         #############################
         if background_type == 0:
-            background = BackgroundGenerator.gaussian_noise(height, background_width)
+            background = BackgroundGenerator.gaussian_noise(background_height, background_width)
         elif background_type == 1:
-            background = BackgroundGenerator.plain_white(height, background_width)
+            background = BackgroundGenerator.plain_white(background_height, background_width)
         elif background_type == 2:
-            background = BackgroundGenerator.quasicrystal(height, background_width)
+            background = BackgroundGenerator.quasicrystal(background_height, background_width)
         else:
-            background = BackgroundGenerator.picture(height, background_width)
+            background = BackgroundGenerator.picture(background_height, background_width)
 
         #############################
         # Place text with alignment #
