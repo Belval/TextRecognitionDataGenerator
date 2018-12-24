@@ -10,7 +10,7 @@ class ComputerTextGenerator(object):
         elif orientation == 1:
             return cls.__generate_vertical_text(text, font, text_color, font_size, space_width)
         else:
-            raise Exception("Unknown orientation " + str(orientation))
+            raise ValueError("Unknown orientation " + str(orientation))
     
     @classmethod
     def __generate_horizontal_text(cls, text, font, text_color, font_size, space_width):

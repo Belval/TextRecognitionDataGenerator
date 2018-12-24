@@ -453,6 +453,34 @@ class DataGenerator(unittest.TestCase):
 
         os.remove('tests/out/TEST TEST TEST_12.jpg')
 
+    def test_generate_text_with_unknown_orientation(self):
+        try:
+            FakeTextDataGenerator.generate(
+                12,
+                'TEST TEST TEST',
+                'tests/font.ttf',
+                'tests/out/',
+                32,
+                'jpg',
+                0,
+                False,
+                0,
+                False,
+                1,
+                0,
+                0,
+                False,
+                0,
+                -1,
+                0,
+                '#010101',
+                100,
+                2
+            )
+            raise Exception("Unknown orientation did not throw")
+        except ValueError:
+            pass
+
     def test_generate_string_with_letters(self):
         s = create_strings_randomly(1, False, 1, True, False, False, 'en')[0]
 
