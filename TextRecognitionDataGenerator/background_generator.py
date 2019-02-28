@@ -19,7 +19,7 @@ class BackgroundGenerator(object):
         # We add gaussian noise
         cv2.randn(image, 235, 10)
 
-        return Image.fromarray(image).convert('RGB')
+        return Image.fromarray(image).convert('RGBA')
 
     @classmethod
     def plain_white(cls, height, width):
@@ -27,7 +27,7 @@ class BackgroundGenerator(object):
             Create a plain white background
         """
 
-        return Image.new("L", (width, height), 255).convert('RGB')
+        return Image.new("L", (width, height), 255).convert('RGBA')
 
     @classmethod
     def quasicrystal(cls, height, width):
@@ -53,7 +53,7 @@ class BackgroundGenerator(object):
                     z += math.cos(r * math.sin(a) * frequency + phase)
                 c = int(255 - round(255 * z / rotation_count))
                 pixels[kw, kh] = c # grayscale
-        return image.convert('RGB')
+        return image.convert('RGBA')
 
     @classmethod
     def picture(cls, height, width):
