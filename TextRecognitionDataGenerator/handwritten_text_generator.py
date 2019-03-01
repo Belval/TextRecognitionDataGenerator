@@ -90,10 +90,10 @@ class HandwrittenTextGenerator(object):
     @classmethod
     def __crop_white_borders(cls, image):
         image_data = np.asarray(image)
-        non_empty_columns = np.where(image_data.min(axis=0)<255)[0]
-        non_empty_rows = np.where(image_data.min(axis=1)<255)[0]
+        grey_image_data = np.asarray(image.convert('L'))
+        non_empty_columns = np.where(grey_image_data.min(axis=0) < 255)[0]
+        non_empty_rows = np.where(grey_image_data.min(axis=1) < 255)[0]
         cropBox = (min(non_empty_rows), max(non_empty_rows), min(non_empty_columns), max(non_empty_columns))
-
         image_data_new = image_data[cropBox[0]:cropBox[1]+1, cropBox[2]:cropBox[3]+1, :]
 
         return Image.fromarray(image_data_new)
