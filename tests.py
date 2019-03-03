@@ -598,6 +598,12 @@ class CommandLineInterface(unittest.TestCase):
             self.assertTrue(all([c in "!\"#$%&'()*+,-./:;?@[\\]^_`{|}~" for c in f.readline().split(' ')[1][:-1]]))
         empty_directory('tests/out/')
 
+    def test_handwritten(self):
+        args = ['python3', 'run.py', '-c', '1', '--output_dir', '../tests/out/']
+        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+        self.assertTrue(len(os.listdir('tests/out/')) == 10)
+        empty_directory('tests/out/')
+
 #    def test_word_count(self):
 #        args = ['python3', 'run.py', '-c', '1', '-w', '5']
 #        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()

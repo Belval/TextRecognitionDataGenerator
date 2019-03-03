@@ -2,7 +2,7 @@ language: python
 python:
   - "3.5"
 install:
-  - pip install -r requirements.txt
+  - pip install -r requirements-hw.txt
   - pip install codecov
 script:
   - python3 tests.py
