@@ -44,7 +44,7 @@ def parse_arguments():
         "--language",
         type=str,
         nargs="?",
-        help="The language to use, should be fr (French), en (English), es (Spanish), de (German), or cn (Chinese).",
+        help="The language to use, should be fr (French), en (English), es (Spanish), de (German), ar (Arabic), cn (Chinese), or hi (Hindi)",
         default="en"
     )
     parser.add_argument(
@@ -254,8 +254,12 @@ def load_fonts(lang):
         Load all fonts in the fonts directories
     """
 
-    if lang == 'cn':
+    if lang == 'ar':
+        return [os.path.join('fonts/ar', font) for font in os.listdir('fonts/ar')]
+    elif lang == 'cn':
         return [os.path.join('fonts/cn', font) for font in os.listdir('fonts/cn')]
+    elif lang == 'hi':
+        return [os.path.join('fonts/hi', font) for font in os.listdir('fonts/hi')]
     else:
         return [os.path.join('fonts/latin', font) for font in os.listdir('fonts/latin')]
 
