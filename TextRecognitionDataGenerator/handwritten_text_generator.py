@@ -90,11 +90,11 @@ class HandwrittenTextGenerator(object):
     @classmethod
     def __crop_white_borders(cls, image):
         image_data = np.asarray(image)
-        non_empty_columns = np.where(image_data.min(axis=0)<255)[0]
-        non_empty_rows = np.where(image_data.min(axis=1)<255)[0]
+        grey_image_data = np.asarray(image.convert('L'))
+        non_empty_columns = np.where(grey_image_data.min(axis=0) < 255)[0]
+        non_empty_rows = np.where(grey_image_data.min(axis=1) < 255)[0]
         cropBox = (min(non_empty_rows), max(non_empty_rows), min(non_empty_columns), max(non_empty_columns))
-
-        image_data_new = image_data[cropBox[0]:cropBox[1]+1, cropBox[2]:cropBox[3]+1]
+        image_data_new = image_data[cropBox[0]:cropBox[1]+1, cropBox[2]:cropBox[3]+1, :]
 
         return Image.fromarray(image_data_new)
 
@@ -105,7 +105,7 @@ class HandwrittenTextGenerator(object):
         total_width = sum(widths) - 35 * len(images)
         max_height = max(heights)
 
-        compound_image = Image.new('L', (total_width, max_height))
+        compound_image = Image.new('RGBA', (total_width, max_height))
 
         x_offset = 0
         for im in images:
@@ -142,10 +142,13 @@ class HandwrittenTextGenerator(object):
                 for stroke in cls.__split_strokes(cls.__cumsum(np.array(coords))):
                     plt.plot(stroke[:, 0], -stroke[:, 1], color='#080808')
 
+                fig.patch.set_alpha(0)
+                fig.patch.set_facecolor('none')
+
                 canvas = plt.get_current_fig_manager().canvas
                 canvas.draw()
 
-                image = Image.frombytes('RGB', canvas.get_width_height(), canvas.tostring_rgb()).convert('L')
+                image = Image.frombytes('RGBA', canvas.get_width_height(), canvas.buffer_rgba())
                 images.append(cls.__crop_white_borders(image))
 
                 plt.close()

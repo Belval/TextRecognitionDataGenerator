@@ -512,7 +512,7 @@ class DataGenerator(unittest.TestCase):
         )
 
     def test_generate_data_with_white_background(self):
-        BackgroundGenerator.plain_white(64, 128).save('tests/out/white_background.jpg')
+        BackgroundGenerator.plain_white(64, 128).convert('RGB').save('tests/out/white_background.jpg')
 
         self.assertTrue(
             md5('tests/out/white_background.jpg') == md5('tests/expected_results/white_background.jpg')
@@ -521,7 +521,7 @@ class DataGenerator(unittest.TestCase):
         os.remove('tests/out/white_background.jpg')
 
     def test_generate_data_with_gaussian_background(self):
-        BackgroundGenerator.gaussian_noise(64, 128).save('tests/out/gaussian_background.jpg')
+        BackgroundGenerator.gaussian_noise(64, 128).convert('RGB').save('tests/out/gaussian_background.jpg')
 
         self.assertTrue(
             md5('tests/out/gaussian_background.jpg') == md5('tests/expected_results/gaussian_background.jpg')
@@ -596,6 +596,12 @@ class CommandLineInterface(unittest.TestCase):
         subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
         with open('tests/out/labels.txt', 'r') as f:
             self.assertTrue(all([c in "!\"#$%&'()*+,-./:;?@[\\]^_`{|}~" for c in f.readline().split(' ')[1][:-1]]))
+        empty_directory('tests/out/')
+
+    def test_handwritten(self):
+        args = ['python3', 'run.py', '-c', '1', '--output_dir', '../tests/out/']
+        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+        self.assertTrue(len(os.listdir('tests/out/')) == 1)
         empty_directory('tests/out/')
 
 #    def test_word_count(self):
