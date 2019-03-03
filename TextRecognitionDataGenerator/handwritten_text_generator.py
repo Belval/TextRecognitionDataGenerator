@@ -1,12 +1,13 @@
 import os
 import pickle
 import numpy as np
+import random
 import tensorflow as tf
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import matplotlib.mlab as mlab
 import seaborn
-from PIL import Image
+from PIL import Image, ImageColor
 from collections import namedtuple
 
 class HandwrittenTextGenerator(object):
@@ -115,7 +116,7 @@ class HandwrittenTextGenerator(object):
         return compound_image
 
     @classmethod
-    def generate(cls, text):
+    def generate(cls, text, text_color):
         with open(os.path.join('handwritten_model', 'translation.pkl'), 'rb') as file:
             translation = pickle.load(file)
 
@@ -127,6 +128,15 @@ class HandwrittenTextGenerator(object):
             saver = tf.train.import_meta_graph('handwritten_model/model-29.meta')
             saver.restore(sess, 'handwritten_model/model-29')
             images = []
+            colors = [ImageColor.getrgb(c) for c in text_color.split(',')]
+            c1, c2 = colors[0], colors[-1]
+
+            color = '#{:02x}{:02x}{:02x}'.format(
+                random.randint(min(c1[0], c2[0]), max(c1[0], c2[0])),
+                random.randint(min(c1[1], c2[1]), max(c1[1], c2[1])),
+                random.randint(min(c1[2], c2[2]), max(c1[2], c2[2]))
+            )
+
             for word in text.split(' '):
                 _, window_data, kappa_data, stroke_data, coords = cls.__sample_text(sess, word, translation)
 
@@ -140,7 +150,7 @@ class HandwrittenTextGenerator(object):
                 ax.axis('off')
 
                 for stroke in cls.__split_strokes(cls.__cumsum(np.array(coords))):
-                    plt.plot(stroke[:, 0], -stroke[:, 1], color='#080808')
+                    plt.plot(stroke[:, 0], -stroke[:, 1], color=color)
 
                 fig.patch.set_alpha(0)
                 fig.patch.set_facecolor('none')
