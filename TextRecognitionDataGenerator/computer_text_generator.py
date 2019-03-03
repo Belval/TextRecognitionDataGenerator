@@ -30,9 +30,9 @@ class ComputerTextGenerator(object):
         c1, c2 = colors[0], colors[-1]
 
         fill = (
-            random.randint(c1[0], c2[0]),
-            random.randint(c1[1], c2[1]),
-            random.randint(c1[2], c2[2])
+            random.randint(min(c1[0], c2[0]), max(c1[0], c2[0])),
+            random.randint(min(c1[1], c2[1]), max(c1[1], c2[1])),
+            random.randint(min(c1[2], c2[2]), max(c1[2], c2[2]))
         )
 
         for i, w in enumerate(words):
