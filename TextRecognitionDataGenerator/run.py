@@ -256,6 +256,8 @@ def load_fonts(lang):
 
     if lang == 'ar':
         return [os.path.join('fonts/ar', font) for font in os.listdir('fonts/ar')]
+    elif lang == 'am':
+        return [os.path.join('fonts/am', font) for font in os.listdir('fonts/am')]
     elif lang == 'cn':
         return [os.path.join('fonts/cn', font) for font in os.listdir('fonts/cn')]
     elif lang == 'hi':
