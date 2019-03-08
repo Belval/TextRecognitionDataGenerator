@@ -1,9 +1,9 @@
-# TextRecognitionDataGenerator [![TravisCI](https://travis-ci.org/Belval/TextRecognitionDataGenerator.svg?branch=master)](https://travis-ci.org/Belval/TextRecognitionDataGenerator) [![codecov](https://codecov.io/gh/Belval/TextRecognitionDataGenerator/branch/master/graph/badge.svg)](https://codecov.io/gh/Belval/TextRecognitionDataGenerator)
+# TextRecognitionDataGenerator [![TravisCI](https://travis-ci.org/Belval/TextRecognitionDataGenerator.svg?branch=master)](https://travis-ci.org/Belval/TextRecognitionDataGenerator) [![codecov](https://codecov.io/gh/Belval/TextRecognitionDataGenerator/branch/master/graph/badge.svg)](https://codecov.io/gh/Belval/TextRecognitionDataGenerator) [![Documentation Status](https://readthedocs.org/projects/textrecognitiondatagenerator/badge/?version=latest)](https://textrecognitiondatagenerator.readthedocs.io/en/latest/?badge=latest)
 
 A synthetic data generator for text recognition
 
 ## What is it for?
-Generating text image samples to train an OCR software. Now supporting non-latin text!
+Generating text image samples to train an OCR software. Now supporting non-latin text! For a more thorough tutorial see [the official documentation](https://textrecognitiondatagenerator.readthedocs.io/en/latest/index.html).
 
 ## What do I need to make it work?
 
@@ -11,7 +11,7 @@ I use Archlinux so I cannot tell if it works on Windows yet.
 
 ```
 Python 3.X
-OpenCV 3.2 (It probably works with 2.4)
+OpenCV 4 (Works with 3.2, probably works with 2.4)
 Pillow
 Numpy
 Requests
@@ -107,7 +107,7 @@ Simplified:
 Yes, the script picks a font at random from the *fonts* directory. 
 
 |||
-|----:|:-----|
+|:----|:-----|
 | fonts/latin | English, French, Spanish, German |
 | fonts/cn | Chinese |
 |||
