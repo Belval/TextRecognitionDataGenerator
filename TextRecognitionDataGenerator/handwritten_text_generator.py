@@ -116,7 +116,7 @@ class HandwrittenTextGenerator(object):
         return compound_image
 
     @classmethod
-    def generate(cls, text, text_color):
+    def generate(cls, text, text_color, fit):
         with open(os.path.join('handwritten_model', 'translation.pkl'), 'rb') as file:
             translation = pickle.load(file)
 

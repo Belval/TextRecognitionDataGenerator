@@ -21,7 +21,7 @@ class FakeTextDataGenerator(object):
         cls.generate(*t)
 
     @classmethod
-    def generate(cls, index, text, font, out_dir, size, extension, skewing_angle, random_skew, blur, random_blur, background_type, distorsion_type, distorsion_orientation, is_handwritten, name_format, width, alignment, text_color, orientation, space_width):
+    def generate(cls, index, text, font, out_dir, size, extension, skewing_angle, random_skew, blur, random_blur, background_type, distorsion_type, distorsion_orientation, is_handwritten, name_format, width, alignment, text_color, orientation, space_width, margin, fit):
         image = None
 
         ##########################
@@ -30,9 +30,9 @@ class FakeTextDataGenerator(object):
         if is_handwritten:
             if orientation == 1:
                 raise ValueError("Vertical handwritten text is unavailable")
-            image = HandwrittenTextGenerator.generate(text, text_color)
+            image = HandwrittenTextGenerator.generate(text, text_color, fit)
         else:
-            image = ComputerTextGenerator.generate(text, font, text_color, size, orientation, space_width)
+            image = ComputerTextGenerator.generate(text, font, text_color, size, orientation, space_width, fit)
 
         random_angle = random.randint(0-skewing_angle, skewing_angle)
 
@@ -68,16 +68,16 @@ class FakeTextDataGenerator(object):
 
         # Horizontal text
         if orientation == 0:
-            new_width = int(float(distorted_img.size[0] + 10) * (float(size) / float(distorted_img.size[1] + 10)))
-            resized_img = distorted_img.resize((new_width, size - 10), Image.ANTIALIAS)
-            background_width = width if width > 0 else new_width + 10
+            new_width = int(float(distorted_img.size[0]) * (float(size) / float(distorted_img.size[1])))
+            resized_img = distorted_img.resize((new_width, size), Image.ANTIALIAS)
+            background_width = width if width > 0 else new_width
             background_height = size
         # Vertical text
         elif orientation == 1:
-            new_height = int(float(distorted_img.size[1] + 10) * (float(size) / float(distorted_img.size[0] + 10)))
-            resized_img = distorted_img.resize((size - 10, new_height), Image.ANTIALIAS)
+            new_height = int(float(distorted_img.size[1]) * (float(size) / float(distorted_img.size[0])))
+            resized_img = distorted_img.resize((size, new_height), Image.ANTIALIAS)
             background_width = size
-            background_height = new_height + 10
+            background_height = new_height
         else:
             raise ValueError("Invalid orientation")
 
@@ -100,11 +100,11 @@ class FakeTextDataGenerator(object):
         new_text_width, _ = resized_img.size
 
         if alignment == 0:
-            background.paste(resized_img, (5, 5), resized_img)
+            background.paste(resized_img, (0, 0), resized_img)
         elif alignment == 1:
-            background.paste(resized_img, (int(background_width / 2 - new_text_width / 2), 5), resized_img)
+            background.paste(resized_img, (int(background_width / 2 - new_text_width / 2), 0), resized_img)
         else:
-            background.paste(resized_img, (background_width - new_text_width - 5, 5), resized_img)
+            background.paste(resized_img, (background_width - new_text_width, 0), resized_img)
 
         ##################################
         # Apply gaussian blur #

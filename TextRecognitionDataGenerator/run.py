@@ -236,6 +236,22 @@ def parse_arguments():
         help="Define the width of the spaces between words. 2.0 means twice the normal space width",
         default=1.0
     )
+    parser.add_argument(
+        "-m",
+        "--margin",
+        type=int,
+        nargs="?",
+        help="Define the margin around the text when rendered. In pixels",
+        default=0
+    )
+    parser.add_argument(
+        "-fi",
+        "--fit",
+        action="store_true",
+        help="Apply a tight crop around the rendered text",
+        default=False
+    )
+
 
     return parser.parse_args()
 
@@ -322,7 +338,9 @@ def main():
             [args.alignment] * string_count,
             [args.text_color] * string_count,
             [args.orientation] * string_count,
-            [args.space_width] * string_count
+            [args.space_width] * string_count,
+            [args.margin] * string_count,
+            [args.fit] * string_count
         )
     ), total=args.count):
         pass
