@@ -243,7 +243,7 @@ def parse_arguments():
         type=margins,
         nargs="?",
         help="Define the margin around the text when rendered. In pixels",
-        default=(0, 0, 0, 0)
+        default=(5, 5, 5, 5)
     )
     parser.add_argument(
         "-fi",

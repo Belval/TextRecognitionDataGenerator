@@ -86,7 +86,9 @@ class DataGenerator(unittest.TestCase):
             0,
             '#010101',
             0,
-            1
+            1,
+            (5,5,5,5),
+            0
         )
 
         self.assertTrue(
@@ -116,7 +118,9 @@ class DataGenerator(unittest.TestCase):
             0,
             '#010101',
             0,
-            1
+            1,
+            (5,5,5,5),
+            0
         )
 
         self.assertTrue(
@@ -146,7 +150,9 @@ class DataGenerator(unittest.TestCase):
             0,
             '#010101',
             0,
-            1
+            1,
+            (5,5,5,5),
+            0
         )
 
         self.assertTrue(
@@ -176,7 +182,9 @@ class DataGenerator(unittest.TestCase):
             0,
             '#010101',
             0,
-            1
+            1,
+            (5,5,5,5),
+            0
         )
 
         self.assertTrue(
@@ -206,7 +214,9 @@ class DataGenerator(unittest.TestCase):
             0,
             '#010101',
             0,
-            1
+            1,
+            (5,5,5,5),
+            0
         )
 
         self.assertTrue(
@@ -236,7 +246,9 @@ class DataGenerator(unittest.TestCase):
             0,
             '#010101',
             0,
-            1
+            1,
+            (5,5,5,5),
+            0
         )
 
         self.assertTrue(
@@ -266,7 +278,9 @@ class DataGenerator(unittest.TestCase):
             0,
             '#010101',
             0,
-            1
+            1,
+            (5,5,5,5),
+            0
         )
 
         self.assertTrue(
@@ -296,7 +310,9 @@ class DataGenerator(unittest.TestCase):
             1,
             '#010101',
             0,
-            1
+            1,
+            (5,5,5,5),
+            0
         )
 
         self.assertTrue(
@@ -326,7 +342,9 @@ class DataGenerator(unittest.TestCase):
             2,
             '#010101',
             0,
-            1
+            1,
+            (5,5,5,5),
+            0
         )
 
         self.assertTrue(
@@ -357,7 +375,9 @@ class DataGenerator(unittest.TestCase):
                 2,
                 '#010101',
                 1,
-                1
+                1,
+                (5,5,5,5),
+                0
             )
             raise Exception("Vertical handwritten did not throw")
         except ValueError:
@@ -384,7 +404,9 @@ class DataGenerator(unittest.TestCase):
             0,
             '#010101',
             1,
-            1
+            1,
+            (5,5,5,5),
+            0
         )
 
         self.assertTrue(
@@ -414,7 +436,9 @@ class DataGenerator(unittest.TestCase):
             0,
             '#010101',
             0,
-            4
+            4,
+            (5,5,5,5),
+            0
         )
 
         self.assertTrue(
@@ -444,7 +468,9 @@ class DataGenerator(unittest.TestCase):
             0,
             '#010101',
             1,
-            2
+            2,
+            (5,5,5,5),
+            0
         )
 
         self.assertTrue(
@@ -475,7 +501,9 @@ class DataGenerator(unittest.TestCase):
                 0,
                 '#010101',
                 100,
-                2
+                2,
+                (5,5,5,5),
+                0
             )
             raise Exception("Unknown orientation did not throw")
         except ValueError:
