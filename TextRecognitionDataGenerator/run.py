@@ -239,10 +239,10 @@ def parse_arguments():
     )
     parser.add_argument(
         "-m",
-        "--margin",
+        "--margins",
         type=margins,
         nargs="?",
-        help="Define the margin around the text when rendered. In pixels",
+        help="Define the margins around the text when rendered. In pixels",
         default=(5, 5, 5, 5)
     )
     parser.add_argument(
@@ -340,7 +340,7 @@ def main():
             [args.text_color] * string_count,
             [args.orientation] * string_count,
             [args.space_width] * string_count,
-            [args.margin] * string_count,
+            [args.margins] * string_count,
             [args.fit] * string_count
         )
     ), total=args.count):
