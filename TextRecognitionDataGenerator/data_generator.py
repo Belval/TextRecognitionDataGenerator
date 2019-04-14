@@ -3,13 +3,14 @@ import random
 
 from PIL import Image, ImageFilter
 
-from computer_text_generator import ComputerTextGenerator
+import computer_text_generator
+import background_generator
+import distorsion_generator
 try:
-    from handwritten_text_generator import HandwrittenTextGenerator
+    import handwritten_text_generator
 except ImportError as e:
     print('Missing modules for handwritten text generation.')
-from background_generator import BackgroundGenerator
-from distorsion_generator import DistorsionGenerator
+
 
 class FakeTextDataGenerator(object):
     @classmethod
@@ -34,9 +35,9 @@ class FakeTextDataGenerator(object):
         if is_handwritten:
             if orientation == 1:
                 raise ValueError("Vertical handwritten text is unavailable")
-            image = HandwrittenTextGenerator.generate(text, text_color, fit)
+            image = handwritten_text_generator.generate(text, text_color, fit)
         else:
-            image = ComputerTextGenerator.generate(text, font, text_color, size, orientation, space_width, fit)
+            image = computer_text_generator.generate(text, font, text_color, size, orientation, space_width, fit)
 
         random_angle = random.randint(0-skewing_angle, skewing_angle)
 
@@ -48,19 +49,19 @@ class FakeTextDataGenerator(object):
         if distorsion_type == 0:
             distorted_img = rotated_img # Mind = blown
         elif distorsion_type == 1:
-            distorted_img = DistorsionGenerator.sin(
+            distorted_img = distorsion_generator.sin(
                 rotated_img,
                 vertical=(distorsion_orientation == 0 or distorsion_orientation == 2),
                 horizontal=(distorsion_orientation == 1 or distorsion_orientation == 2)
             )
         elif distorsion_type == 2:
-            distorted_img = DistorsionGenerator.cos(
+            distorted_img = distorsion_generator.cos(
                 rotated_img,
                 vertical=(distorsion_orientation == 0 or distorsion_orientation == 2),
                 horizontal=(distorsion_orientation == 1 or distorsion_orientation == 2)
             )
         else:
-            distorted_img = DistorsionGenerator.random(
+            distorted_img = distorsion_generator.random(
                 rotated_img,
                 vertical=(distorsion_orientation == 0 or distorsion_orientation == 2),
                 horizontal=(distorsion_orientation == 1 or distorsion_orientation == 2)
@@ -89,13 +90,13 @@ class FakeTextDataGenerator(object):
         # Generate background image #
         #############################
         if background_type == 0:
-            background = BackgroundGenerator.gaussian_noise(background_height, background_width)
+            background = background_generator.gaussian_noise(background_height, background_width)
         elif background_type == 1:
-            background = BackgroundGenerator.plain_white(background_height, background_width)
+            background = background_generator.plain_white(background_height, background_width)
         elif background_type == 2:
-            background = BackgroundGenerator.quasicrystal(background_height, background_width)
+            background = background_generator.quasicrystal(background_height, background_width)
         else:
-            background = BackgroundGenerator.picture(background_height, background_width)
+            background = background_generator.picture(background_height, background_width)
 
         #############################
         # Place text with alignment #
