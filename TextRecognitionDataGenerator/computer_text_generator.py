@@ -11,6 +11,9 @@ def generate(text, font, text_color, font_size, orientation, space_width, fit):
         raise ValueError("Unknown orientation " + str(orientation))
 
 def _generate_horizontal_text(text, font, text_color, font_size, space_width, fit):
+    font = "fonts/th/sarun.ttf"
+    print(f"DEBUG : {font}")
+    
     image_font = ImageFont.truetype(font=font, size=font_size)
     words = text.split(' ')
     space_width = image_font.getsize(' ')[0] * space_width
@@ -41,6 +44,8 @@ def _generate_horizontal_text(text, font, text_color, font_size, space_width, fi
         return txt_img
 
 def _generate_vertical_text(text, font, text_color, font_size, space_width, fit):
+    font = "fonts/th/sarun.ttf"
+    
     image_font = ImageFont.truetype(font=font, size=font_size)
     
     space_height = int(image_font.getsize(' ')[1] * space_width)
