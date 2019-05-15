@@ -2,6 +2,7 @@ import argparse
 import os, errno
 import random
 import string
+import sys
 
 from tqdm import tqdm
 from string_generator import (
@@ -257,8 +258,7 @@ def parse_arguments():
         "--font",
         type=str,
         nargs="?",
-        help="Define font to be used",
-        default=""
+        help="Define font to be used"
     )
 
 
@@ -306,7 +306,10 @@ def main():
     if not args.font:
         fonts = load_fonts(args.language)
     else:
-        fonts = [args.font]
+        if os.path.isfile(args.font):
+            fonts = [args.font]
+        else:
+            sys.exit("Cannot open font")
 
     # Creating synthetic sentences (or word)
     strings = []
