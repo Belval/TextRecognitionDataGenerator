@@ -664,6 +664,18 @@ class CommandLineInterface(unittest.TestCase):
         self.assertTrue(len(os.listdir('tests/out/')) == 1)
         empty_directory('tests/out/')
 
+    def test_personalfont(self):
+        args = ['python3', 'run.py', '--font', 'fonts/latin/Aller_Bd.ttf' , '-c', '1', '--output_dir', '../tests/out/']
+        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+        self.assertTrue(len(os.listdir('tests/out/')) == 1)
+        empty_directory('tests/out/')
+
+    def test_personalfont_unlocated(self):
+        args = ['python3', 'run.py', '--font', 'fonts/latin/unlocatedFont.ttf' , '-c', '1', '--output_dir', '../tests/out/']
+        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+        self.assertTrue(len(os.listdir('tests/out/')) == 0)
+        empty_directory('tests/out/')
+
 #    def test_word_count(self):
 #        args = ['python3', 'run.py', '-c', '1', '-w', '5']
 #        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
