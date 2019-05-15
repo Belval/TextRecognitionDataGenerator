@@ -252,6 +252,14 @@ def parse_arguments():
         help="Apply a tight crop around the rendered text",
         default=False
     )
+    parser.add_argument(
+        "-ft",
+        "--font",
+        type=str,
+        nargs="?",
+        help="Define font to be used",
+        default=""
+    )
 
 
     return parser.parse_args()
@@ -295,7 +303,10 @@ def main():
     lang_dict = load_dict(args.language)
 
     # Create font (path) list
-    fonts = load_fonts(args.language)
+    if not args.font:
+        fonts = load_fonts(args.language)
+    else:
+        fonts = [args.font]
 
     # Creating synthetic sentences (or word)
     strings = []
