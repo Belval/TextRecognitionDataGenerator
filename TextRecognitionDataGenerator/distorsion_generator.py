@@ -71,7 +71,7 @@ def cos(image, vertical=False, horizontal=False):
 
     return _apply_func_distorsion(image, vertical, horizontal, max_offset, (lambda x: int(math.cos(math.radians(x)) * max_offset)))
 
-def random(image, vertical=False, horizontal=False):
+def random_generator(image, vertical=False, horizontal=False):
     """
         Apply a random distorsion on one or both of the specified axis
     """

@@ -61,7 +61,7 @@ class FakeTextDataGenerator(object):
                 horizontal=(distorsion_orientation == 1 or distorsion_orientation == 2)
             )
         else:
-            distorted_img = distorsion_generator.random(
+            distorted_img = distorsion_generator.random_generator(
                 rotated_img,
                 vertical=(distorsion_orientation == 0 or distorsion_orientation == 2),
                 horizontal=(distorsion_orientation == 1 or distorsion_orientation == 2)
