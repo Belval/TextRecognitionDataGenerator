@@ -13,7 +13,7 @@ def create_strings_from_file(filename, count):
     strings = []
 
     with open(filename, 'r', encoding="utf8") as f:
-        lines = [l.strip()[0:200] for l in f.readlines()]
+        lines = [l[0:200] for l in f.read().splitlines() if len(l) > 0]
         if len(lines) == 0:
             raise Exception("No lines could be read in file")
         while len(strings) < count:
