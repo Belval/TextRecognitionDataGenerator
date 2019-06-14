@@ -271,7 +271,7 @@ def load_dict(lang):
 
     lang_dict = []
     with open(os.path.join('dicts', lang + '.txt'), 'r', encoding="utf8", errors='ignore') as d:
-        lang_dict = d.readlines()
+        lang_dict = [l for l in d.read().splitlines() if len(l) > 0]
     return lang_dict
 
 def load_fonts(lang):
