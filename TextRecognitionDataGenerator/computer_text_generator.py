@@ -1,4 +1,4 @@
-import random
+import random as rnd
 
 from PIL import Image, ImageColor, ImageFont, ImageDraw, ImageFilter
 
@@ -27,9 +27,9 @@ def _generate_horizontal_text(text, font, text_color, font_size, space_width, fi
     c1, c2 = colors[0], colors[-1]
 
     fill = (
-        random.randint(min(c1[0], c2[0]), max(c1[0], c2[0])),
-        random.randint(min(c1[1], c2[1]), max(c1[1], c2[1])),
-        random.randint(min(c1[2], c2[2]), max(c1[2], c2[2]))
+        rnd.randint(min(c1[0], c2[0]), max(c1[0], c2[0])),
+        rnd.randint(min(c1[1], c2[1]), max(c1[1], c2[1])),
+        rnd.randint(min(c1[2], c2[2]), max(c1[2], c2[2]))
     )
 
     for i, w in enumerate(words):
@@ -57,9 +57,9 @@ def _generate_vertical_text(text, font, text_color, font_size, space_width, fit)
     c1, c2 = colors[0], colors[-1]
 
     fill = (
-        random.randint(c1[0], c2[0]),
-        random.randint(c1[1], c2[1]),
-        random.randint(c1[2], c2[2])
+        rnd.randint(c1[0], c2[0]),
+        rnd.randint(c1[1], c2[1]),
+        rnd.randint(c1[2], c2[2])
     )
 
     for i, c in enumerate(text):
