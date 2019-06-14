@@ -1,7 +1,7 @@
 import cv2
 import math
 import os
-import random
+import random as rnd
 import numpy as np
 
 from PIL import Image, ImageDraw, ImageFilter
@@ -78,4 +78,4 @@ def random(image, vertical=False, horizontal=False):
 
     max_offset = int(image.height ** 0.4)
 
-    return _apply_func_distorsion(image, vertical, horizontal, max_offset, (lambda x: random.randint(0, max_offset)))
+    return _apply_func_distorsion(image, vertical, horizontal, max_offset, (lambda x: rnd.randint(0, max_offset)))

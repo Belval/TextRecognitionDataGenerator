@@ -1,7 +1,7 @@
 import cv2
 import math
 import os
-import random
+import random as rnd
 import numpy as np
 
 from PIL import Image, ImageDraw, ImageFilter
@@ -34,9 +34,9 @@ def quasicrystal(height, width):
     image = Image.new("L", (width, height))
     pixels = image.load()
 
-    frequency = random.random() * 30 + 20 # frequency
-    phase = random.random() * 2 * math.pi # phase
-    rotation_count = random.randint(10, 20) # of rotations
+    frequency = rnd.random() * 30 + 20 # frequency
+    phase = rnd.random() * 2 * math.pi # phase
+    rotation_count = rnd.randint(10, 20) # of rotations
 
     for kw in range(width):
         y = float(kw) / (width - 1) * 4 * math.pi - 2 * math.pi
@@ -59,23 +59,23 @@ def picture(height, width):
     pictures = os.listdir('./pictures')
 
     if len(pictures) > 0:
-        picture = Image.open('./pictures/' + pictures[random.randint(0, len(pictures) - 1)])
+        pic = Image.open('./pictures/' + pictures[rnd.randint(0, len(pictures) - 1)])
 
-        if picture.size[0] < width:
-            picture = picture.resize([width, int(picture.size[1] * (width / picture.size[0]))], Image.ANTIALIAS)
-        elif picture.size[1] < height:
-            picture.thumbnail([int(picture.size[0] * (height / picture.size[1])), height], Image.ANTIALIAS)
+        if pic.size[0] < width:
+            pic = pic.resize([width, int(pic.size[1] * (width / pic.size[0]))], Image.ANTIALIAS)
+        elif pic.size[1] < height:
+            pic.thumbnail([int(pic.size[0] * (height / pic.size[1])), height], Image.ANTIALIAS)
 
-        if (picture.size[0] == width):
+        if (pic.size[0] == width):
             x = 0
         else:
-            x = random.randint(0, picture.size[0] - width)
-        if (picture.size[1] == height):
+            x = rnd.randint(0, pic.size[0] - width)
+        if (pic.size[1] == height):
             y = 0
         else:
-            y = random.randint(0, picture.size[1] - height)
+            y = rnd.randint(0, pic.size[1] - height)
             
-        return picture.crop(
+        return pic.crop(
             (
                 x,
                 y,

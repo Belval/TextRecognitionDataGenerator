@@ -1,7 +1,7 @@
 import os
 import pickle
 import numpy as np
-import random
+import random as rnd
 import tensorflow as tf
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
@@ -124,9 +124,9 @@ def generate(text, text_color):
         c1, c2 = colors[0], colors[-1]
 
         color = '#{:02x}{:02x}{:02x}'.format(
-            random.randint(min(c1[0], c2[0]), max(c1[0], c2[0])),
-            random.randint(min(c1[1], c2[1]), max(c1[1], c2[1])),
-            random.randint(min(c1[2], c2[2]), max(c1[2], c2[2]))
+            rnd.randint(min(c1[0], c2[0]), max(c1[0], c2[0])),
+            rnd.randint(min(c1[1], c2[1]), max(c1[1], c2[1])),
+            rnd.randint(min(c1[2], c2[2]), max(c1[2], c2[2]))
         )
 
         for word in text.split(' '):

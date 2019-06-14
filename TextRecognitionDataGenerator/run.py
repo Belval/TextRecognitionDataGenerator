@@ -1,6 +1,6 @@
 import argparse
 import os, errno
-import random
+import random as rnd
 import string
 import sys
 
@@ -336,7 +336,7 @@ def main():
         zip(
             [i for i in range(0, string_count)],
             strings,
-            [fonts[random.randrange(0, len(fonts))] for _ in range(0, string_count)],
+            [fonts[rnd.randrange(0, len(fonts))] for _ in range(0, string_count)],
             [args.output_dir] * string_count,
             [args.format] * string_count,
             [args.extension] * string_count,
