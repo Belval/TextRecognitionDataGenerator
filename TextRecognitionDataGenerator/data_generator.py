@@ -1,5 +1,5 @@
 import os
-import random
+import random as rnd
 
 from PIL import Image, ImageFilter
 
@@ -39,7 +39,7 @@ class FakeTextDataGenerator(object):
         else:
             image = computer_text_generator.generate(text, font, text_color, size, orientation, space_width, fit)
 
-        random_angle = random.randint(0-skewing_angle, skewing_angle)
+        random_angle = rnd.randint(0-skewing_angle, skewing_angle)
 
         rotated_img = image.rotate(skewing_angle if not random_skew else random_angle, expand=1)
 
@@ -117,7 +117,7 @@ class FakeTextDataGenerator(object):
 
         final_image = background.filter(
             ImageFilter.GaussianBlur(
-                radius=(blur if not random_blur else random.randint(0, blur))
+                radius=(blur if not random_blur else rnd.randint(0, blur))
             )
         )
 
