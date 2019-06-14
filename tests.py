@@ -58,7 +58,7 @@ class DataGenerator(unittest.TestCase):
         )
 
     def test_create_strings_from_dict(self):
-        strings = create_strings_from_dict(3, False, 2, ['TEST\n', 'TEST\n', 'TEST\n', 'TEST\n'])
+        strings = create_strings_from_dict(3, False, 2, ['TEST', 'TEST', 'TEST', 'TEST'])
 
         self.assertTrue(
             len(strings) == 2 and
