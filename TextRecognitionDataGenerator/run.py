@@ -2,6 +2,7 @@ import argparse
 import os, errno
 import random
 import string
+from multiprocessing import Pool
 
 from tqdm import tqdm
 from string_generator import (
@@ -11,7 +12,6 @@ from string_generator import (
     create_strings_randomly
 )
 from data_generator import FakeTextDataGenerator
-from multiprocessing import Pool
 
 def valid_range(s):
     if len(s.split(',')) > 2:
@@ -300,6 +300,10 @@ def main():
     else:
         strings = create_strings_from_dict(args.length, args.random, args.count, lang_dict)
 
+    if args.language == 'ar':
+        from arabic_reshaper import ArabicReshaper
+        arabic_reshaper = ArabicReshaper()
+        strings = [' '.join([arabic_reshaper.reshape(w) for w in s.split(' ')[::-1]]) for s in strings]
 
     string_count = len(strings)
 
