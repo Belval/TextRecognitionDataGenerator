@@ -3,6 +3,7 @@
 A synthetic data generator for text recognition
 
 ## What is it for?
+
 Generating text image samples to train an OCR software. Now supporting non-latin text! For a more thorough tutorial see [the official documentation](https://textrecognitiondatagenerator.readthedocs.io/en/latest/index.html).
 
 ## What do I need to make it work?
@@ -20,6 +21,18 @@ tqdm
 ```
 
  You can simply use `pip install -r requirements.txt` too.
+
+## Docker image
+
+If you would rather not have to install anything to use TextRecognitionDataGenerator, you can pull the docker image.
+
+```
+docker pull belval/trdg:latest
+
+docker run /output/path/:/app/out/ -t belval/trdg:latest python3 run.py [args]
+```
+
+The path (`/output/path/`) must be absolute.
 
 ## New
 - Add `--font` to use only one font for all the generated images (Thank you @JulienCoutault!)
