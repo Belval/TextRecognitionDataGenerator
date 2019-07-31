@@ -260,6 +260,13 @@ def parse_arguments():
         nargs="?",
         help="Define font to be used"
     )
+        parser.add_argument(
+        "-ca",
+        "--case",
+        type=str,
+        nargs="?",
+        help="Generate upper or lowercase only. arguments: upper or lower. Example: --case upper"
+    )
 
 
     return parser.parse_args()
@@ -326,8 +333,12 @@ def main():
             args.name_format = 2
     else:
         strings = create_strings_from_dict(args.length, args.random, args.count, lang_dict)
-
-
+    
+    if args.case =='upper':
+        strings = [x.upper() for x in strings]
+    if args.case =='lower':
+        strings = [x.lower() for x in strings]
+    
     string_count = len(strings)
 
     p = Pool(args.thread_count)
