@@ -14,11 +14,13 @@ from string_generator import (
 from data_generator import FakeTextDataGenerator
 from multiprocessing import Pool
 
+
 def margins(margin):
     margins = margin.split(',')
     if len(margins) == 1:
         return [margins[0]] * 4
     return [int(m) for m in margins]
+
 
 def parse_arguments():
     """
@@ -260,9 +262,15 @@ def parse_arguments():
         nargs="?",
         help="Define font to be used"
     )
-
-
+    parser.add_argument(
+        "-ca",
+        "--case",
+        type=str,
+        nargs="?",
+        help="Generate upper or lowercase only. arguments: upper or lower. Example: --case upper"
+    )
     return parser.parse_args()
+
 
 def load_dict(lang):
     """
@@ -274,6 +282,7 @@ def load_dict(lang):
         lang_dict = [l for l in d.read().splitlines() if len(l) > 0]
     return lang_dict
 
+
 def load_fonts(lang):
     """
         Load all fonts in the fonts directories
@@ -283,6 +292,7 @@ def load_fonts(lang):
         return [os.path.join('fonts/cn', font) for font in os.listdir('fonts/cn')]
     else:
         return [os.path.join('fonts/latin', font) for font in os.listdir('fonts/latin')]
+
 
 def main():
     """
@@ -327,36 +337,40 @@ def main():
     else:
         strings = create_strings_from_dict(args.length, args.random, args.count, lang_dict)
 
+    if args.case == 'upper':
+        strings = [x.upper() for x in strings]
+    if args.case == 'lower':
+        strings = [x.lower() for x in strings]
 
     string_count = len(strings)
 
     p = Pool(args.thread_count)
     for _ in tqdm(p.imap_unordered(
-        FakeTextDataGenerator.generate_from_tuple,
-        zip(
-            [i for i in range(0, string_count)],
-            strings,
-            [fonts[rnd.randrange(0, len(fonts))] for _ in range(0, string_count)],
-            [args.output_dir] * string_count,
-            [args.format] * string_count,
-            [args.extension] * string_count,
-            [args.skew_angle] * string_count,
-            [args.random_skew] * string_count,
-            [args.blur] * string_count,
-            [args.random_blur] * string_count,
-            [args.background] * string_count,
-            [args.distorsion] * string_count,
-            [args.distorsion_orientation] * string_count,
-            [args.handwritten] * string_count,
-            [args.name_format] * string_count,
-            [args.width] * string_count,
-            [args.alignment] * string_count,
-            [args.text_color] * string_count,
-            [args.orientation] * string_count,
-            [args.space_width] * string_count,
-            [args.margins] * string_count,
-            [args.fit] * string_count
-        )
+            FakeTextDataGenerator.generate_from_tuple,
+            zip(
+                [i for i in range(0, string_count)],
+                strings,
+                [fonts[rnd.randrange(0, len(fonts))] for _ in range(0, string_count)],
+                [args.output_dir] * string_count,
+                [args.format] * string_count,
+                [args.extension] * string_count,
+                [args.skew_angle] * string_count,
+                [args.random_skew] * string_count,
+                [args.blur] * string_count,
+                [args.random_blur] * string_count,
+                [args.background] * string_count,
+                [args.distorsion] * string_count,
+                [args.distorsion_orientation] * string_count,
+                [args.handwritten] * string_count,
+                [args.name_format] * string_count,
+                [args.width] * string_count,
+                [args.alignment] * string_count,
+                [args.text_color] * string_count,
+                [args.orientation] * string_count,
+                [args.space_width] * string_count,
+                [args.margins] * string_count,
+                [args.fit] * string_count
+            )
     ), total=args.count):
         pass
     p.terminate()
@@ -367,6 +381,7 @@ def main():
             for i in range(string_count):
                 file_name = str(i) + "." + args.extension
                 f.write("{} {}\n".format(file_name, strings[i]))
+
 
 if __name__ == '__main__':
     main()
