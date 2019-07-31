@@ -269,9 +269,8 @@ def parse_arguments():
         nargs="?",
         help="Generate upper or lowercase only. arguments: upper or lower. Example: --case upper"
     )
-    
-    
     return parser.parse_args()
+
 
 def load_dict(lang):
     """
