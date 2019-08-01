@@ -361,7 +361,9 @@ def main():
     elif args.remove:
         strings = [re.sub(f'[{args.remove}]', "", x) for x in strings]
     strings = list(filter(None, strings))  # Removes leftover empty strings
-
+        if not strings:
+        print("Removed all letters, no text left to generate)
+        return
     string_count = len(strings)
 
     p = Pool(args.thread_count)
