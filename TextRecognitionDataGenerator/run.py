@@ -3,6 +3,7 @@ import os, errno
 import random as rnd
 import string
 import sys
+import re
 
 from tqdm import tqdm
 from string_generator import (
@@ -269,6 +270,20 @@ def parse_arguments():
         nargs="?",
         help="Generate upper or lowercase only. arguments: upper or lower. Example: --case upper"
     )
+    parser.add_argument(
+        "-on",
+        "--only",
+        type=str,
+        nargs="?",
+        help="Only allow certain characters, separate with comma or dash (From-To). Example: --only A,B,C,D,Y or --only A-D,Y"
+    )
+    parser.add_argument(
+        "-rm",
+        "--remove",
+        type=str,
+        nargs="?",
+        help="Remove certain characters, separate with comma or dash (From-To). Example: --only A,B,C,D,Y or --only A-D,Y"
+    )
     return parser.parse_args()
 
 
@@ -339,8 +354,14 @@ def main():
 
     if args.case == 'upper':
         strings = [x.upper() for x in strings]
-    if args.case == 'lower':
+    elif args.case == 'lower':
         strings = [x.lower() for x in strings]
+    
+    if args.only:
+        strings = [re.sub(f'[^{args.only}]', "", x) for x in strings]
+    elif args.remove:
+        strings = [re.sub(f'[{args.remove}]', "", x) for x in strings]
+    strings = list(filter(None, strings))  # Removes leftover empty strings
 
     string_count = len(strings)
 
