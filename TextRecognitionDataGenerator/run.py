@@ -356,7 +356,6 @@ def main():
         strings = [x.upper() for x in strings]
     elif args.case == 'lower':
         strings = [x.lower() for x in strings]
-    
     if args.only:
         strings = [re.sub(f'[^{args.only}]', "", x) for x in strings]
     elif args.remove:
@@ -392,7 +391,7 @@ def main():
                 [args.margins] * string_count,
                 [args.fit] * string_count
             )
-    ), total=args.count):
+    ), total=string_count):
         pass
     p.terminate()
 
