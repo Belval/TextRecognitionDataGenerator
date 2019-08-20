@@ -63,8 +63,8 @@ def picture(height, width):
 
         if pic.size[0] < width:
             pic = pic.resize([width, int(pic.size[1] * (width / pic.size[0]))], Image.ANTIALIAS)
-        elif pic.size[1] < height:
-            pic.thumbnail([int(pic.size[0] * (height / pic.size[1])), height], Image.ANTIALIAS)
+        if pic.size[1] < height:
+            pic = pic.resize([int(pic.size[0] * (height / pic.size[1])), height], Image.ANTIALIAS)
 
         if (pic.size[0] == width):
             x = 0
