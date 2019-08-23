@@ -168,7 +168,7 @@ def parse_arguments():
         "--background",
         type=int,
         nargs="?",
-        help="Define what kind of background to use. 0: Gaussian Noise, 1: Plain white, 2: Quasicrystal, 3: Pictures",
+        help="Define what kind of background to use. 0: Gaussian Noise, 1: Plain white, 2: Quasicrystal, 3: random noise vs white, 4: Pictures",
         default=0,
     )
     parser.add_argument(
@@ -257,10 +257,11 @@ def parse_arguments():
     )
     parser.add_argument(
         "-ft",
-        "--font",
+        "--fonts",
         type=str,
         nargs="?",
-        help="Define font to be used"
+        help="Define font folder to be used",
+        default=None
     )
     parser.add_argument(
         "-ca",
@@ -268,6 +269,37 @@ def parse_arguments():
         type=str,
         nargs="?",
         help="Generate upper or lowercase only. arguments: upper or lower. Example: --case upper"
+    )
+    parser.add_argument(
+        "-imga",
+        "--imgaug",
+        action="store_true",
+        help="Imgaug augmentation with imgaug",
+        default=False,
+    )
+    parser.add_argument(
+        "-thr",
+        "--threshold",
+        nargs="?",
+        type=int,
+        default=0,
+        help="Thresholding method on text with 0.5 probability. 0: no threshold, 1: (sauvola, adaptive randomly)",
+    )
+    parser.add_argument(
+        "-minl",
+        "--min_seq_len",
+        type=int,
+        default=2,
+        nargs="?",
+        help="Generate words with minimum sequance length of ... (default=2)"
+    )
+    parser.add_argument(
+        "-maxl",
+        "--max_seq_len",
+        type=int,
+        nargs="?",
+        default=10,
+        help="Generate words with maximum sequance length of ... (default=10)"
     )
     return parser.parse_args()
 
@@ -283,16 +315,17 @@ def load_dict(lang):
     return lang_dict
 
 
-def load_fonts(lang):
+def load_fonts(folder='fonts/latin'):
     """
         Load all fonts in the fonts directories
     """
-
-    if lang == 'cn':
-        return [os.path.join('fonts/cn', font) for font in os.listdir('fonts/cn')]
-    else:
-        return [os.path.join('fonts/latin', font) for font in os.listdir('fonts/latin')]
-
+    fonts = []
+    if folder is not None:
+        for font in os.listdir(folder):
+            if font.split('.')[-1].lower() in ['ttf', 'otf', 'svg', 'eot', 'woff']:
+                fonts.append(os.path.join(folder, font))
+        return fonts
+    raise Exception("no font specified")
 
 def main():
     """
@@ -313,13 +346,7 @@ def main():
     lang_dict = load_dict(args.language)
 
     # Create font (path) list
-    if not args.font:
-        fonts = load_fonts(args.language)
-    else:
-        if os.path.isfile(args.font):
-            fonts = [args.font]
-        else:
-            sys.exit("Cannot open font")
+    fonts = load_fonts(args.fonts)
 
     # Creating synthetic sentences (or word)
     strings = []
@@ -330,7 +357,8 @@ def main():
         strings = create_strings_from_file(args.input_file, args.count)
     elif args.random_sequences:
         strings = create_strings_randomly(args.length, args.random, args.count,
-                                          args.include_letters, args.include_numbers, args.include_symbols, args.language)
+                                          args.include_letters, args.include_numbers, args.include_symbols, args.language,
+                                          args.min_seq_len, args.max_seq_len)
         # Set a name format compatible with special characters automatically if they are used
         if args.include_symbols or True not in (args.include_letters, args.include_numbers, args.include_symbols):
             args.name_format = 2
@@ -369,7 +397,9 @@ def main():
                 [args.orientation] * string_count,
                 [args.space_width] * string_count,
                 [args.margins] * string_count,
-                [args.fit] * string_count
+                [args.fit] * string_count,
+                [args.imgaug] * string_count,
+                [args.threshold] * string_count
             )
     ), total=args.count):
         pass

@@ -1,11 +1,19 @@
 import os
 import random as rnd
 
+import cv2
 from PIL import Image, ImageFilter
-
+import numpy as np
 import computer_text_generator
 import background_generator
 import distorsion_generator
+from skimage import img_as_ubyte
+
+from skimage.filters import threshold_sauvola#, threshold_adaptive
+
+import imgaug as ia
+import imgaug.augmenters as iaa
+
 try:
     import handwritten_text_generator
 except ImportError as e:
@@ -13,6 +21,22 @@ except ImportError as e:
 
 
 class FakeTextDataGenerator(object):
+    sometimes = lambda aug: iaa.Sometimes(0.5, aug)
+    seq = iaa.Sequential([
+            sometimes(iaa.PerspectiveTransform(scale=(0.01, 0.07))),
+            sometimes(iaa.CoarseDropout((0.03, 0.05), size_percent=(0.1, 0.3))),
+            sometimes(iaa.Multiply((0.5, 1.4), per_channel=0.5)),
+            sometimes(
+                iaa.OneOf([
+                    iaa.MotionBlur(k=(3,7),angle=(0,360)),
+                    iaa.GaussianBlur((0, 2.0)),
+                    iaa.AverageBlur(k=(2, 5)),
+                    iaa.MedianBlur(k=(3, 11))
+                ])
+            )
+        ]
+    )
+
     @classmethod
     def generate_from_tuple(cls, t):
         """
@@ -22,7 +46,7 @@ class FakeTextDataGenerator(object):
         cls.generate(*t)
 
     @classmethod
-    def generate(cls, index, text, font, out_dir, size, extension, skewing_angle, random_skew, blur, random_blur, background_type, distorsion_type, distorsion_orientation, is_handwritten, name_format, width, alignment, text_color, orientation, space_width, margins, fit):
+    def generate(cls, index, text, font, out_dir, size, extension, skewing_angle, random_skew, blur, random_blur, background_type, distorsion_type, distorsion_orientation, is_handwritten, name_format, width, alignment, text_color, orientation, space_width, margins, fit, imgaug1, treshold):
         image = None
 
         margin_top, margin_left, margin_bottom, margin_right = margins
@@ -95,6 +119,9 @@ class FakeTextDataGenerator(object):
             background = background_generator.plain_white(background_height, background_width)
         elif background_type == 2:
             background = background_generator.quasicrystal(background_height, background_width)
+        elif background_type == 3:
+            background_func= rnd.choice([background_generator.plain_white, background_generator.gaussian_noise])
+            background = background_func(background_height, background_width)
         else:
             background = background_generator.picture(background_height, background_width)
 
@@ -112,9 +139,25 @@ class FakeTextDataGenerator(object):
             background.paste(resized_img, (background_width - new_text_width - margin_right, margin_top), resized_img)
 
         ##################################
+        # Apply Image augmentation #
+        ##################################
+        if imgaug1:
+            background = np.array(background)
+            image = cls.seq.augment_images([background])[0]
+            image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            background = Image.fromarray(img_as_ubyte(image))
+
+        ##################################
+        # Apply sauvola method #
+        ##################################
+        if treshold and rnd.random() < 0.5:
+            background = np.array(background)
+            thresh_sauvola = threshold_sauvola(background, window_size=rnd.choice([17,25]))
+            background = Image.fromarray(img_as_ubyte(background > thresh_sauvola))
+
+        ##################################
         # Apply gaussian blur #
         ##################################
-
         final_image = background.filter(
             ImageFilter.GaussianBlur(
                 radius=(blur if not random_blur else rnd.randint(0, blur))
