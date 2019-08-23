@@ -108,6 +108,12 @@ Or maybe you are working on an OCR for handwritten text? Add `-hw`! (Experimenta
 
 It uses a Tensorflow model trained using [this excellent project](https://github.com/Grzego/handwriting-generation) by Grzego.
 
+### Advanced Example
+
+Generate just numbers with minimum length 1, maximum length 4, and do some advanced image augmentation:
+
+`python run.py -w 1 -f 64 -rs --include_numbers -minl 1 -maxl 4 -rk -k 15  --fit --background 3 --threshold 1  --fonts fonts/fonts --imgaug`
+
 **The project does not require TensorFlow to run if you aren't using this feature**
 
 ### Dictionary
