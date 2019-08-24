@@ -23,16 +23,31 @@ except ImportError as e:
 class FakeTextDataGenerator(object):
     sometimes = lambda aug: iaa.Sometimes(0.5, aug)
     seq = iaa.Sequential([
-            sometimes(iaa.PerspectiveTransform(scale=(0.01, 0.07))),
-            sometimes(iaa.CoarseDropout((0.03, 0.05), size_percent=(0.1, 0.3))),
-            sometimes(iaa.Multiply((0.5, 1.4), per_channel=0.5)),
+            sometimes(iaa.PerspectiveTransform(scale=(0.01, 0.1))),
             sometimes(
                 iaa.OneOf([
-                    iaa.MotionBlur(k=(3,7),angle=(0,360)),
-                    iaa.GaussianBlur((0, 2.0)),
-                    iaa.AverageBlur(k=(2, 5)),
-                    iaa.MedianBlur(k=(3, 11))
+                    iaa.CoarseDropout((0.03, 0.05), size_percent=(0.1, 0.3)),
+                    iaa.CoarseDropout((0.03, 0.1), size_percent=(0.1, 0.3), per_channel=1.0),
+                    iaa.Dropout((0.03,0.1)),
+                    iaa.Salt((0.03,0.1))
                 ])
+            ),
+            iaa.Multiply((0.3, 1.7), per_channel=0.5),
+            sometimes(iaa.AdditiveGaussianNoise((0.02,0.2))),
+            sometimes(
+                iaa.OneOf([
+                    iaa.MotionBlur(k=(3,5),angle=(0,360)),
+                    iaa.GaussianBlur((0, 1.5)),
+                    iaa.AverageBlur(k=(2, 4)),
+                    iaa.MedianBlur(k=(3, 7))
+                ])
+            ),
+            sometimes(
+                iaa.CropAndPad(
+                    percent=(-0.05, 0.1),
+                    pad_mode=ia.ALL,
+                    pad_cval=(0, 255)
+                ),
             )
         ]
     )
@@ -150,7 +165,7 @@ class FakeTextDataGenerator(object):
         ##################################
         # Apply sauvola method #
         ##################################
-        if treshold and rnd.random() < 0.5:
+        if treshold and rnd.random() < 0.3:
             background = np.array(background)
             thresh_sauvola = threshold_sauvola(background, window_size=rnd.choice([17,25]))
             background = Image.fromarray(img_as_ubyte(background > thresh_sauvola))
