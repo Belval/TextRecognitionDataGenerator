@@ -283,7 +283,7 @@ def parse_arguments():
         nargs="?",
         type=int,
         default=0,
-        help="Thresholding method on text with 0.5 probability. 0: no threshold, 1: (sauvola, adaptive randomly)",
+        help="Thresholding method on text with 0.5 probability. 0: no threshold, 1: (sauvola)",
     )
     parser.add_argument(
         "-minl",

@@ -4,3 +4,5 @@ opencv-python==4.0.0.21
 tqdm==4.23.4
 Pillow==5.1.0
 requests==2.20.0
+imgaug==0.2.9
+scikit-image==0.15.0

@@ -110,9 +110,9 @@ It uses a Tensorflow model trained using [this excellent project](https://github
 
 ### Advanced Example
 
-Generate just numbers with minimum length 1, maximum length 4, and do some advanced image augmentation:
+Generate just numbers with minimum length 1, maximum length 3, and do some advanced image augmentation:
 
-`python run.py -w 1 -f 64 -rs --include_numbers -minl 1 -maxl 4 -rk -k 15  --fit --background 3 --threshold 1  --fonts fonts/fonts --imgaug`
+`python run.py -w 1 -f 64  -rs --include_numbers -minl 1 -maxl 3 -rk -k 25 --fit --background 3  --fonts fonts/fonts --imgaug --count 25000`
 
 **The project does not require TensorFlow to run if you aren't using this feature**
 
@@ -124,7 +124,7 @@ There are a lot of parameters that you can tune to get the results you want, the
 
 ## Create images with Chinese text
 
-It is simple! Just do `python run.py -l cn -c 1000 -w 5`!
+It is simple! Just do `python run.py -l cn -c 1000 -w 5 --fonts fonts/cn`!
 
 Generated texts come both in simplified and traditional Chinese scripts.
 You may have to edit `texts/cn.txt` to include some meaningful words instead of random glyphs.
