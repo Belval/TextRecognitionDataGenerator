@@ -3,12 +3,14 @@ import random as rnd
 
 from PIL import Image, ImageFilter
 
-import computer_text_generator
-import background_generator
-import distorsion_generator
+from trdg import (
+    computer_text_generator,
+    background_generator,
+    distorsion_generator,
+)
 
 try:
-    import handwritten_text_generator
+    from trdg import handwritten_text_generator
 except ImportError as e:
     print("Missing modules for handwritten text generation.")
 

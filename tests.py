@@ -8,7 +8,7 @@ import string
 sys.path.insert(
     0,
     os.path.abspath(
-        os.path.join(os.path.dirname(__file__), "./TextRecognitionDataGenerator")
+        os.path.join(os.path.dirname(__file__), "./trdg")
     ),
 )
 
@@ -17,15 +17,15 @@ try:
 except:
     pass
 
-from TextRecognitionDataGenerator.data_generator import FakeTextDataGenerator
-from TextRecognitionDataGenerator import background_generator
-from TextRecognitionDataGenerator.generators import (
+from trdg.data_generator import FakeTextDataGenerator
+from trdg import background_generator
+from trdg.generators import (
     GeneratorFromDict,
     GeneratorFromRandom,
     GeneratorFromStrings,
     GeneratorFromWikipedia,
 )
-from TextRecognitionDataGenerator.string_generator import (
+from trdg.string_generator import (
     create_strings_from_file,
     create_strings_from_dict,
     create_strings_from_wikipedia,
@@ -653,7 +653,7 @@ class DataGenerator(unittest.TestCase):
 class CommandLineInterface(unittest.TestCase):
     def test_output_dir(self):
         args = ["python3", "run.py", "-c", "1", "--output_dir", "../tests/out_2/"]
-        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+        subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out_2/")) == 1)
         empty_directory("tests/out_2/")
 
@@ -668,7 +668,7 @@ class CommandLineInterface(unittest.TestCase):
             "--output_dir",
             "../tests/out/",
         ]
-        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+        subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
         empty_directory("tests/out/")
 
@@ -683,7 +683,7 @@ class CommandLineInterface(unittest.TestCase):
             "--output_dir",
             "../tests/out/",
         ]
-        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+        subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
         empty_directory("tests/out/")
 
@@ -698,7 +698,7 @@ class CommandLineInterface(unittest.TestCase):
             "--output_dir",
             "../tests/out/",
         ]
-        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+        subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
         empty_directory("tests/out/")
 
@@ -713,7 +713,7 @@ class CommandLineInterface(unittest.TestCase):
             "--output_dir",
             "../tests/out/",
         ]
-        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+        subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
         empty_directory("tests/out/")
 
@@ -728,13 +728,13 @@ class CommandLineInterface(unittest.TestCase):
             "--output_dir",
             "../tests/out/",
         ]
-        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+        subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
         empty_directory("tests/out/")
 
     def test_count_parameter(self):
         args = ["python3", "run.py", "-c", "10", "--output_dir", "../tests/out/"]
-        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+        subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 10)
         empty_directory("tests/out/")
 
@@ -749,7 +749,7 @@ class CommandLineInterface(unittest.TestCase):
             "--output_dir",
             "../tests/out/",
         ]
-        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+        subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(
             all(
                 [
@@ -772,7 +772,7 @@ class CommandLineInterface(unittest.TestCase):
             "--output_dir",
             "../tests/out/",
         ]
-        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+        subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(
             all(
                 [
@@ -795,7 +795,7 @@ class CommandLineInterface(unittest.TestCase):
             "--output_dir",
             "../tests/out/",
         ]
-        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+        subprocess.Popen(args, cwd="trdg/").wait()
         with open("tests/out/labels.txt", "r") as f:
             self.assertTrue(
                 all(
@@ -809,7 +809,7 @@ class CommandLineInterface(unittest.TestCase):
 
     def test_handwritten(self):
         args = ["python3", "run.py", "-c", "1", "--output_dir", "../tests/out/"]
-        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+        subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
         empty_directory("tests/out/")
 
@@ -824,7 +824,7 @@ class CommandLineInterface(unittest.TestCase):
             "--output_dir",
             "../tests/out/",
         ]
-        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+        subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
         empty_directory("tests/out/")
 
@@ -839,44 +839,44 @@ class CommandLineInterface(unittest.TestCase):
             "--output_dir",
             "../tests/out/",
         ]
-        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+        subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 0)
         empty_directory("tests/out/")
 
 
 #    def test_word_count(self):
 #        args = ['python3', 'run.py', '-c', '1', '-w', '5']
-#        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+#        subprocess.Popen(args, cwd="trdg/").wait()
 #        self.assertTrue(False)
 #        empty_directory('tests/out/')
 #
 #    def test_extension_jpg(self):
 #        args = ['python3', 'run.py', '-c', '1', '-e', 'jpg']
-#        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+#        subprocess.Popen(args, cwd="trdg/").wait()
 #        self.assertTrue(False)
 #        empty_directory('tests/out/')
 #
 #    def test_extension_png(self):
 #        args = ['python3', 'run.py', '-c', '1', '-e', 'png']
-#        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+#        subprocess.Popen(args, cwd="trdg/").wait()
 #        self.assertTrue(False)
 #        empty_directory('tests/out/')
 #
 #    def test_name_format_0(self):
 #        args = ['python3', 'run.py', '-c', '1', '-na', '0']
-#        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+#        subprocess.Popen(args, cwd="trdg/").wait()
 #        self.assertTrue(False)
 #        empty_directory('tests/out/')
 #
 #    def test_name_format_1(self):
 #        args = ['python3', 'run.py', '-c', '1', '-na', '1']
-#        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+#        subprocess.Popen(args, cwd="trdg/").wait()
 #        self.assertTrue(False)
 #        empty_directory('tests/out/')
 #
 #    def test_name_format_2(self):
 #        args = ['python3', 'run.py', '-c', '1', '-na', '2']
-#        subprocess.Popen(args, cwd="TextRecognitionDataGenerator/").wait()
+#        subprocess.Popen(args, cwd="trdg/").wait()
 #        self.assertTrue(False)
 #        empty_directory('tests/out/')
 

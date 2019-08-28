@@ -39,5 +39,7 @@ setup(
     ],
     keywords="synthetic data text-recognition training-set-generator ocr dataset fake text",
     packages=find_packages(exclude=["contrib", "docs", "tests"]),
-    install_requires=["pillow", "numpy", "requests", ""],
+    include_package_data=True,
+    install_requires=["pillow", "numpy", "requests", "opencv-python", "tqdm", "bs4"],
+    scripts=["trdg/bin/trdg"],
 )

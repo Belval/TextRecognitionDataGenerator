@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import argparse
 import os, errno
 import random as rnd
@@ -5,14 +7,14 @@ import string
 import sys
 
 from tqdm import tqdm
-from string_generator import (
+from trdg.string_generator import (
     create_strings_from_dict,
     create_strings_from_file,
     create_strings_from_wikipedia,
     create_strings_randomly,
 )
-from utils import load_dict, load_fonts
-from data_generator import FakeTextDataGenerator
+from trdg.utils import load_dict, load_fonts
+from trdg.data_generator import FakeTextDataGenerator
 from multiprocessing import Pool
 
 
@@ -56,7 +58,7 @@ def parse_arguments():
         type=int,
         nargs="?",
         help="The number of images to be created.",
-        default=1000,
+        required=True,
     )
     parser.add_argument(
         "-rs",
