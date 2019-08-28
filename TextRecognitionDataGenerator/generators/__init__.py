@@ -1,0 +1,6 @@
+from TextRecognitionDataGenerator.generators.from_dict import GeneratorFromDict
+from TextRecognitionDataGenerator.generators.from_random import GeneratorFromRandom
+from TextRecognitionDataGenerator.generators.from_strings import GeneratorFromStrings
+from TextRecognitionDataGenerator.generators.from_wikipedia import (
+    GeneratorFromWikipedia,
+)
