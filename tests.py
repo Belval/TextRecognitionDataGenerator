@@ -652,15 +652,14 @@ class DataGenerator(unittest.TestCase):
 
 class CommandLineInterface(unittest.TestCase):
     def test_output_dir(self):
-        args = ["python3", "run.py", "-c", "1", "--output_dir", "../tests/out_2/"]
+        args = ["./bin/trdg", "-c", "1", "--output_dir", "../tests/out_2/"]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out_2/")) == 1)
         empty_directory("tests/out_2/")
 
     def test_language_english(self):
         args = [
-            "python3",
-            "run.py",
+            "./bin/trdg",
             "-l",
             "en",
             "-c",
@@ -674,8 +673,7 @@ class CommandLineInterface(unittest.TestCase):
 
     def test_language_french(self):
         args = [
-            "python3",
-            "run.py",
+            "./bin/trdg",
             "-l",
             "fr",
             "-c",
@@ -689,8 +687,7 @@ class CommandLineInterface(unittest.TestCase):
 
     def test_language_spanish(self):
         args = [
-            "python3",
-            "run.py",
+            "./bin/trdg",
             "-l",
             "es",
             "-c",
@@ -704,8 +701,7 @@ class CommandLineInterface(unittest.TestCase):
 
     def test_language_german(self):
         args = [
-            "python3",
-            "run.py",
+            "./bin/trdg",
             "-l",
             "de",
             "-c",
@@ -719,8 +715,7 @@ class CommandLineInterface(unittest.TestCase):
 
     def test_language_chinese(self):
         args = [
-            "python3",
-            "run.py",
+            "./bin/trdg",
             "-l",
             "cn",
             "-c",
@@ -733,15 +728,14 @@ class CommandLineInterface(unittest.TestCase):
         empty_directory("tests/out/")
 
     def test_count_parameter(self):
-        args = ["python3", "run.py", "-c", "10", "--output_dir", "../tests/out/"]
+        args = ["./bin/trdg", "-c", "10", "--output_dir", "../tests/out/"]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 10)
         empty_directory("tests/out/")
 
     def test_random_sequences_letter_only(self):
         args = [
-            "python3",
-            "run.py",
+            "./bin/trdg",
             "-rs",
             "-let",
             "-c",
@@ -763,8 +757,7 @@ class CommandLineInterface(unittest.TestCase):
 
     def test_random_sequences_number_only(self):
         args = [
-            "python3",
-            "run.py",
+            "./bin/trdg",
             "-rs",
             "-num",
             "-c",
@@ -786,8 +779,7 @@ class CommandLineInterface(unittest.TestCase):
 
     def test_random_sequences_symbols_only(self):
         args = [
-            "python3",
-            "run.py",
+            "./bin/trdg",
             "-rs",
             "-sym",
             "-c",
@@ -808,15 +800,14 @@ class CommandLineInterface(unittest.TestCase):
         empty_directory("tests/out/")
 
     def test_handwritten(self):
-        args = ["python3", "run.py", "-c", "1", "--output_dir", "../tests/out/"]
+        args = ["./bin/trdg", "-c", "1", "--output_dir", "../tests/out/"]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
         empty_directory("tests/out/")
 
     def test_personalfont(self):
         args = [
-            "python3",
-            "run.py",
+            "./bin/trdg",
             "--font",
             "fonts/latin/Aller_Bd.ttf",
             "-c",
@@ -830,8 +821,7 @@ class CommandLineInterface(unittest.TestCase):
 
     def test_personalfont_unlocated(self):
         args = [
-            "python3",
-            "run.py",
+            "./bin/trdg",
             "--font",
             "fonts/latin/unlocatedFont.ttf",
             "-c",
