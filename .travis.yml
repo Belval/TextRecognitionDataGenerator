@@ -4,6 +4,7 @@ python:
 install:
   - pip install -r requirements-hw.txt
   - pip install codecov
+  - python3 setup.py install
 script:
   - python3 tests.py
   - coverage run tests.py
