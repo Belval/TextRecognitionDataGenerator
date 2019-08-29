@@ -25,12 +25,12 @@ docker run /output/path/:/app/out/ -t belval/trdg:latest python3 run.py [args]
 The path (`/output/path/`) must be absolute.
 
 ## New
+- Add python module
+- Move `run.py` to an executable python file ([`trdg/bin/trdg`](trdg/bin/trdg))
 - Add `--font` to use only one font for all the generated images (Thank you @JulienCoutault!)
 - Add `--fit` and `--margins` for finer layout control
 - Change the text orientation using the `-or` parameter
-- Change the space width using the `-sw` parameter
 - Specify text color range using `-tc '#000000,#FFFFFF'`, please note that the quotes are **necessary**
-- Explicit alignment when using `-al` with fixed width (0: Left, 1: Center, 2: Right)
 - Add support for Simplified and Traditional Chinese
 
 ## How does it work?
@@ -41,7 +41,7 @@ Words will be randomly chosen from a dictionary of a specific language. Then an 
 
 The usage as a Python module is very similar to the CLI, but it is more flexible if you want to include it directly in your training pipeline, and will consume less space and memory. There are 4 generators that can be used.
 
-```
+```py
 from TextRecognitionDataGenerator.generators import (
     GeneratorFromDict,
     GeneratorFromRandom,
@@ -57,8 +57,15 @@ generator = GeneratorFromStrings(
 )
 
 for img in generator:
-    # Do something with the pillow image here.
+    # Do something with the pillow images here.
 ```
+
+You can see the full class definition here:
+
+- [`GeneratorFromDict`](trdg/generators/from_dict.py)
+- [`GeneratorFromRandom`](trdg/generators/from_random.py)
+- [`GeneratorFromStrings`](trdg/generators/from_strings.py)
+- [`GeneratorFromWikipedia`](trdg/generators/from_wikipedia.py)
 
 ### Basic (CLI)
 
