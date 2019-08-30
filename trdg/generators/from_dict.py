@@ -9,7 +9,8 @@ class GeneratorFromDict:
 
     def __init__(
         self,
-        word_count,
+        count=-1,
+        length=1,
         allow_variable=False,
         fonts=[],
         language="en",
@@ -30,11 +31,13 @@ class GeneratorFromDict:
         margins=(5, 5, 5, 5),
         fit=False,
     ):
+        self.count = count
         self.length = length
         self.allow_variable = allow_variable
         self.dict = load_dict(language)
         self.generator = GeneratorFromStrings(
             create_strings_from_dict(self.length, self.allow_variable, 1000, self.dict),
+            count,
             fonts if len(fonts) else load_fonts(language),
             language,
             size,

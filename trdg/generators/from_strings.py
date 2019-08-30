@@ -8,6 +8,7 @@ class GeneratorFromStrings:
     def __init__(
         self,
         strings,
+        count=-1,
         fonts=[],
         language="en",
         size=32,
@@ -27,6 +28,7 @@ class GeneratorFromStrings:
         margins=(5, 5, 5, 5),
         fit=False,
     ):
+        self.count = count
         self.strings = strings
         self.fonts = fonts
         if len(fonts) == 0:
@@ -57,10 +59,13 @@ class GeneratorFromStrings:
         return self.next()
 
     def next(self):
+        if self.generated_count == self.count:
+            raise StopIteration
+        self.generated_count += 1        
         return FakeTextDataGenerator.generate(
             self.generated_count,
-            self.strings[self.generated_count % len(self.strings)],
-            self.fonts[self.generated_count % len(self.fonts)],
+            self.strings[(self.generated_count - 1) % len(self.strings)],
+            self.fonts[(self.generated_count - 1) % len(self.fonts)],
             None,
             self.size,
             None,
@@ -81,4 +86,3 @@ class GeneratorFromStrings:
             self.margins,
             self.fit,
         )
-        self.generated_count += 1

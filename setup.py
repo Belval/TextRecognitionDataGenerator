@@ -42,7 +42,7 @@ setup(
     include_package_data=True,
     install_requires=[
         "pillow>=5.1.0",
-        "numpy>=1.15.1",
+        "numpy>=1.15.1,<1.17",
         "requests>=2.20.0",
         "opencv-python>=4.0.0.21",
         "tqdm>=4.23.0",

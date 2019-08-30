@@ -5,12 +5,7 @@ import subprocess
 import hashlib
 import string
 
-sys.path.insert(
-    0,
-    os.path.abspath(
-        os.path.join(os.path.dirname(__file__), "./trdg")
-    ),
-)
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "./trdg")))
 
 try:
     os.mkdir("tests/out")
@@ -48,7 +43,7 @@ def empty_directory(path):
 
 class Generators(unittest.TestCase):
     def test_generator_from_dict(self):
-        generator = GeneratorFromDict(3, False)
+        generator = GeneratorFromDict()
         i = 0
         while i < 100:
             img = next(generator)
@@ -56,13 +51,13 @@ class Generators(unittest.TestCase):
             i += 1
 
     def test_generator_from_random(self):
-        generator = GeneratorFromRandom(3, False, True, True, True)
+        generator = GeneratorFromRandom()
         i = 0
         while i < 100:
             img = next(generator)
             self.assertTrue(img.size[1] == 32, "Shape is not right")
             i += 1
-            
+
     def test_generator_from_strings(self):
         generator = GeneratorFromStrings(["TEST TEST TEST"])
         i = 0
@@ -70,14 +65,35 @@ class Generators(unittest.TestCase):
             img = next(generator)
             self.assertTrue(img.size[1] == 32, "Shape is not right")
             i += 1
-            
+
     def test_generator_from_wikipedia(self):
-        generator = GeneratorFromWikipedia(3)
+        generator = GeneratorFromWikipedia()
         i = 0
         while i < 100:
             img = next(generator)
             self.assertTrue(img.size[1] == 32, "Shape is not right")
             i += 1
+
+    def test_generator_from_dict_stops(self):
+        generator = GeneratorFromDict(count=1)
+        next(generator)
+        self.assertRaises(StopIteration, generator.next)
+
+    def test_generator_from_random_stops(self):
+        generator = GeneratorFromRandom(count=1)
+        next(generator)
+        self.assertRaises(StopIteration, generator.next)
+
+    def test_generator_from_strings_stops(self):
+        generator = GeneratorFromStrings(["TEST TEST TEST"], count=1)
+        next(generator)
+        self.assertRaises(StopIteration, generator.next)
+
+    def test_generator_from_wikipedia_stops(self):
+        generator = GeneratorFromWikipedia(count=1)
+        next(generator)
+        self.assertRaises(StopIteration, generator.next)
+
 
 class DataGenerator(unittest.TestCase):
     def test_create_string_from_wikipedia(self):
@@ -658,71 +674,31 @@ class CommandLineInterface(unittest.TestCase):
         empty_directory("tests/out_2/")
 
     def test_language_english(self):
-        args = [
-            "./bin/trdg",
-            "-l",
-            "en",
-            "-c",
-            "1",
-            "--output_dir",
-            "../tests/out/",
-        ]
+        args = ["./bin/trdg", "-l", "en", "-c", "1", "--output_dir", "../tests/out/"]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
         empty_directory("tests/out/")
 
     def test_language_french(self):
-        args = [
-            "./bin/trdg",
-            "-l",
-            "fr",
-            "-c",
-            "1",
-            "--output_dir",
-            "../tests/out/",
-        ]
+        args = ["./bin/trdg", "-l", "fr", "-c", "1", "--output_dir", "../tests/out/"]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
         empty_directory("tests/out/")
 
     def test_language_spanish(self):
-        args = [
-            "./bin/trdg",
-            "-l",
-            "es",
-            "-c",
-            "1",
-            "--output_dir",
-            "../tests/out/",
-        ]
+        args = ["./bin/trdg", "-l", "es", "-c", "1", "--output_dir", "../tests/out/"]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
         empty_directory("tests/out/")
 
     def test_language_german(self):
-        args = [
-            "./bin/trdg",
-            "-l",
-            "de",
-            "-c",
-            "1",
-            "--output_dir",
-            "../tests/out/",
-        ]
+        args = ["./bin/trdg", "-l", "de", "-c", "1", "--output_dir", "../tests/out/"]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
         empty_directory("tests/out/")
 
     def test_language_chinese(self):
-        args = [
-            "./bin/trdg",
-            "-l",
-            "cn",
-            "-c",
-            "1",
-            "--output_dir",
-            "../tests/out/",
-        ]
+        args = ["./bin/trdg", "-l", "cn", "-c", "1", "--output_dir", "../tests/out/"]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
         empty_directory("tests/out/")
@@ -734,15 +710,7 @@ class CommandLineInterface(unittest.TestCase):
         empty_directory("tests/out/")
 
     def test_random_sequences_letter_only(self):
-        args = [
-            "./bin/trdg",
-            "-rs",
-            "-let",
-            "-c",
-            "1",
-            "--output_dir",
-            "../tests/out/",
-        ]
+        args = ["./bin/trdg", "-rs", "-let", "-c", "1", "--output_dir", "../tests/out/"]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(
             all(
@@ -756,15 +724,7 @@ class CommandLineInterface(unittest.TestCase):
         empty_directory("tests/out/")
 
     def test_random_sequences_number_only(self):
-        args = [
-            "./bin/trdg",
-            "-rs",
-            "-num",
-            "-c",
-            "1",
-            "--output_dir",
-            "../tests/out/",
-        ]
+        args = ["./bin/trdg", "-rs", "-num", "-c", "1", "--output_dir", "../tests/out/"]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(
             all(
@@ -778,15 +738,7 @@ class CommandLineInterface(unittest.TestCase):
         empty_directory("tests/out/")
 
     def test_random_sequences_symbols_only(self):
-        args = [
-            "./bin/trdg",
-            "-rs",
-            "-sym",
-            "-c",
-            "1",
-            "--output_dir",
-            "../tests/out/",
-        ]
+        args = ["./bin/trdg", "-rs", "-sym", "-c", "1", "--output_dir", "../tests/out/"]
         subprocess.Popen(args, cwd="trdg/").wait()
         with open("tests/out/labels.txt", "r") as f:
             self.assertTrue(

@@ -9,7 +9,8 @@ class GeneratorFromWikipedia:
 
     def __init__(
         self,
-        minimum_word_count,
+        count=-1,
+        minimum_length=1,
         fonts=[],
         language="en",
         size=32,
@@ -29,10 +30,12 @@ class GeneratorFromWikipedia:
         margins=(5, 5, 5, 5),
         fit=False,
     ):
+        self.count = count
         self.minimum_length = minimum_length
         self.language = language
         self.generator = GeneratorFromStrings(
             create_strings_from_wikipedia(self.minimum_length, 1000, self.language),
+            count,
             fonts if len(fonts) else load_fonts(language),
             language,
             size,

@@ -9,7 +9,8 @@ class GeneratorFromRandom:
 
     def __init__(
         self,
-        word_count,
+        count=-1,
+        length=1,
         allow_variable=False,
         use_letters=True,
         use_numbers=True,
@@ -33,6 +34,7 @@ class GeneratorFromRandom:
         margins=(5, 5, 5, 5),
         fit=False,
     ):
+        self.count = count
         self.length = length
         self.allow_variable = allow_variable
         self.use_letters = use_letters
@@ -49,6 +51,7 @@ class GeneratorFromRandom:
                 self.use_symbols,
                 self.language,
             ),
+            count,
             fonts if len(fonts) else load_fonts(language),
             language,
             size,
