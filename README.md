@@ -8,7 +8,13 @@ Generating text image samples to train an OCR software. Now supporting non-latin
 
 ## What do I need to make it work?
 
-Just install the pip package using `pip install trdg`. Afterwards, you can use `trdg` from the CLI. I recommend using a virtualenv instead of installing with `sudo`.
+Install the pypi package
+
+```
+pip install trdg
+```
+
+Afterwards, you can use `trdg` from the CLI. I recommend using a virtualenv instead of installing with `sudo`.
 
 If you want to add another language, you can clone the repository instead. Simply run `pip install -r requirements.txt`
 
