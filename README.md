@@ -25,7 +25,7 @@ If you would rather not have to install anything to use TextRecognitionDataGener
 ```
 docker pull belval/trdg:latest
 
-docker run /output/path/:/app/out/ -t belval/trdg:latest python3 run.py [args]
+docker run -v /output/path/:/app/out/ -t belval/trdg:latest trdg [args]
 ```
 
 The path (`/output/path/`) must be absolute.
