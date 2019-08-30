@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import argparse
 import os, errno
 import random as rnd
@@ -5,18 +7,19 @@ import string
 import sys
 
 from tqdm import tqdm
-from string_generator import (
+from trdg.string_generator import (
     create_strings_from_dict,
     create_strings_from_file,
     create_strings_from_wikipedia,
-    create_strings_randomly
+    create_strings_randomly,
 )
-from data_generator import FakeTextDataGenerator
+from trdg.utils import load_dict, load_fonts
+from trdg.data_generator import FakeTextDataGenerator
 from multiprocessing import Pool
 
 
 def margins(margin):
-    margins = margin.split(',')
+    margins = margin.split(",")
     if len(margins) == 1:
         return [margins[0]] * 4
     return [int(m) for m in margins]
@@ -27,13 +30,11 @@ def parse_arguments():
         Parse the command line arguments of the program.
     """
 
-    parser = argparse.ArgumentParser(description='Generate synthetic text data for text recognition.')
+    parser = argparse.ArgumentParser(
+        description="Generate synthetic text data for text recognition."
+    )
     parser.add_argument(
-        "--output_dir",
-        type=str,
-        nargs="?",
-        help="The output directory",
-        default="out/",
+        "--output_dir", type=str, nargs="?", help="The output directory", default="out/"
     )
     parser.add_argument(
         "-i",
@@ -41,7 +42,7 @@ def parse_arguments():
         type=str,
         nargs="?",
         help="When set, this argument uses a specified text file as source for the text",
-        default=""
+        default="",
     )
     parser.add_argument(
         "-l",
@@ -49,7 +50,7 @@ def parse_arguments():
         type=str,
         nargs="?",
         help="The language to use, should be fr (French), en (English), es (Spanish), de (German), or cn (Chinese).",
-        default="en"
+        default="en",
     )
     parser.add_argument(
         "-c",
@@ -57,35 +58,35 @@ def parse_arguments():
         type=int,
         nargs="?",
         help="The number of images to be created.",
-        default=1000
+        required=True,
     )
     parser.add_argument(
         "-rs",
         "--random_sequences",
         action="store_true",
         help="Use random sequences as the source text for the generation. Set '-let','-num','-sym' to use letters/numbers/symbols. If none specified, using all three.",
-        default=False
+        default=False,
     )
     parser.add_argument(
         "-let",
         "--include_letters",
         action="store_true",
         help="Define if random sequences should contain letters. Only works with -rs",
-        default=False
+        default=False,
     )
     parser.add_argument(
         "-num",
         "--include_numbers",
         action="store_true",
         help="Define if random sequences should contain numbers. Only works with -rs",
-        default=False
+        default=False,
     )
     parser.add_argument(
         "-sym",
         "--include_symbols",
         action="store_true",
         help="Define if random sequences should contain symbols. Only works with -rs",
-        default=False
+        default=False,
     )
     parser.add_argument(
         "-w",
@@ -93,14 +94,14 @@ def parse_arguments():
         type=int,
         nargs="?",
         help="Define how many words should be included in each generated sample. If the text source is Wikipedia, this is the MINIMUM length",
-        default=1
+        default=1,
     )
     parser.add_argument(
         "-r",
         "--random",
         action="store_true",
         help="Define if the produced string will have variable word count (with --length being the maximum)",
-        default=False
+        default=False,
     )
     parser.add_argument(
         "-f",
@@ -175,7 +176,7 @@ def parse_arguments():
         "-hw",
         "--handwritten",
         action="store_true",
-        help="Define if the data will be \"handwritten\" by an RNN",
+        help='Define if the data will be "handwritten" by an RNN',
     )
     parser.add_argument(
         "-na",
@@ -190,7 +191,7 @@ def parse_arguments():
         type=int,
         nargs="?",
         help="Define a distorsion applied to the resulting image. 0: None (Default), 1: Sine wave, 2: Cosine wave, 3: Random",
-        default=0
+        default=0,
     )
     parser.add_argument(
         "-do",
@@ -198,7 +199,7 @@ def parse_arguments():
         type=int,
         nargs="?",
         help="Define the distorsion's orientation. Only used if -d is specified. 0: Vertical (Up and down), 1: Horizontal (Left and Right), 2: Both",
-        default=0
+        default=0,
     )
     parser.add_argument(
         "-wd",
@@ -206,7 +207,7 @@ def parse_arguments():
         type=int,
         nargs="?",
         help="Define the width of the resulting image. If not set it will be the width of the text + 10. If the width of the generated text is bigger that number will be used",
-        default=-1
+        default=-1,
     )
     parser.add_argument(
         "-al",
@@ -214,7 +215,7 @@ def parse_arguments():
         type=int,
         nargs="?",
         help="Define the alignment of the text in the image. Only used if the width parameter is set. 0: left, 1: center, 2: right",
-        default=1
+        default=1,
     )
     parser.add_argument(
         "-or",
@@ -222,7 +223,7 @@ def parse_arguments():
         type=int,
         nargs="?",
         help="Define the orientation of the text. 0: Horizontal, 1: Vertical",
-        default=0
+        default=0,
     )
     parser.add_argument(
         "-tc",
@@ -230,7 +231,7 @@ def parse_arguments():
         type=str,
         nargs="?",
         help="Define the text's color, should be either a single hex color or a range in the ?,? format.",
-        default='#282828'
+        default="#282828",
     )
     parser.add_argument(
         "-sw",
@@ -238,7 +239,7 @@ def parse_arguments():
         type=float,
         nargs="?",
         help="Define the width of the spaces between words. 2.0 means twice the normal space width",
-        default=1.0
+        default=1.0,
     )
     parser.add_argument(
         "-m",
@@ -246,52 +247,26 @@ def parse_arguments():
         type=margins,
         nargs="?",
         help="Define the margins around the text when rendered. In pixels",
-        default=(5, 5, 5, 5)
+        default=(5, 5, 5, 5),
     )
     parser.add_argument(
         "-fi",
         "--fit",
         action="store_true",
         help="Apply a tight crop around the rendered text",
-        default=False
+        default=False,
     )
     parser.add_argument(
-        "-ft",
-        "--font",
-        type=str,
-        nargs="?",
-        help="Define font to be used"
+        "-ft", "--font", type=str, nargs="?", help="Define font to be used"
     )
     parser.add_argument(
         "-ca",
         "--case",
         type=str,
         nargs="?",
-        help="Generate upper or lowercase only. arguments: upper or lower. Example: --case upper"
+        help="Generate upper or lowercase only. arguments: upper or lower. Example: --case upper",
     )
     return parser.parse_args()
-
-
-def load_dict(lang):
-    """
-        Read the dictionnary file and returns all words in it.
-    """
-
-    lang_dict = []
-    with open(os.path.join('dicts', lang + '.txt'), 'r', encoding="utf8", errors='ignore') as d:
-        lang_dict = [l for l in d.read().splitlines() if len(l) > 0]
-    return lang_dict
-
-
-def load_fonts(lang):
-    """
-        Load all fonts in the fonts directories
-    """
-
-    if lang == 'cn':
-        return [os.path.join('fonts/cn', font) for font in os.listdir('fonts/cn')]
-    else:
-        return [os.path.join('fonts/latin', font) for font in os.listdir('fonts/latin')]
 
 
 def main():
@@ -326,26 +301,40 @@ def main():
 
     if args.use_wikipedia:
         strings = create_strings_from_wikipedia(args.length, args.count, args.language)
-    elif args.input_file != '':
+    elif args.input_file != "":
         strings = create_strings_from_file(args.input_file, args.count)
     elif args.random_sequences:
-        strings = create_strings_randomly(args.length, args.random, args.count,
-                                          args.include_letters, args.include_numbers, args.include_symbols, args.language)
+        strings = create_strings_randomly(
+            args.length,
+            args.random,
+            args.count,
+            args.include_letters,
+            args.include_numbers,
+            args.include_symbols,
+            args.language,
+        )
         # Set a name format compatible with special characters automatically if they are used
-        if args.include_symbols or True not in (args.include_letters, args.include_numbers, args.include_symbols):
+        if args.include_symbols or True not in (
+            args.include_letters,
+            args.include_numbers,
+            args.include_symbols,
+        ):
             args.name_format = 2
     else:
-        strings = create_strings_from_dict(args.length, args.random, args.count, lang_dict)
+        strings = create_strings_from_dict(
+            args.length, args.random, args.count, lang_dict
+        )
 
-    if args.case == 'upper':
+    if args.case == "upper":
         strings = [x.upper() for x in strings]
-    if args.case == 'lower':
+    if args.case == "lower":
         strings = [x.lower() for x in strings]
 
     string_count = len(strings)
 
     p = Pool(args.thread_count)
-    for _ in tqdm(p.imap_unordered(
+    for _ in tqdm(
+        p.imap_unordered(
             FakeTextDataGenerator.generate_from_tuple,
             zip(
                 [i for i in range(0, string_count)],
@@ -369,19 +358,23 @@ def main():
                 [args.orientation] * string_count,
                 [args.space_width] * string_count,
                 [args.margins] * string_count,
-                [args.fit] * string_count
-            )
-    ), total=args.count):
+                [args.fit] * string_count,
+            ),
+        ),
+        total=args.count,
+    ):
         pass
     p.terminate()
 
     if args.name_format == 2:
         # Create file with filename-to-label connections
-        with open(os.path.join(args.output_dir, "labels.txt"), 'w', encoding="utf8") as f:
+        with open(
+            os.path.join(args.output_dir, "labels.txt"), "w", encoding="utf8"
+        ) as f:
             for i in range(string_count):
                 file_name = str(i) + "." + args.extension
                 f.write("{} {}\n".format(file_name, strings[i]))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
