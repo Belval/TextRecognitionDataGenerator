@@ -9,8 +9,8 @@ class GeneratorFromDict:
 
     def __init__(
         self,
-        length,
-        allow_variable,
+        word_count,
+        allow_variable=False,
         fonts=[],
         language="en",
         size=32,

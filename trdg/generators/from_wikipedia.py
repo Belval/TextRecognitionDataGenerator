@@ -9,7 +9,7 @@ class GeneratorFromWikipedia:
 
     def __init__(
         self,
-        minimum_length,
+        minimum_word_count,
         fonts=[],
         language="en",
         size=32,

@@ -9,11 +9,11 @@ class GeneratorFromRandom:
 
     def __init__(
         self,
-        length,
-        allow_variable,
-        use_letters,
-        use_numbers,
-        use_symbols,
+        word_count,
+        allow_variable=False,
+        use_letters=True,
+        use_numbers=True,
+        use_symbols=True,
         fonts=[],
         language="en",
         size=32,
