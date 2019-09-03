@@ -62,7 +62,7 @@ generator = GeneratorFromStrings(
     random_blur=True
 )
 
-for img in generator:
+for img, lbl in generator:
     # Do something with the pillow images here.
 ```
 

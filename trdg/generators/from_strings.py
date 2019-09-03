@@ -85,4 +85,4 @@ class GeneratorFromStrings:
             self.space_width,
             self.margins,
             self.fit,
-        )
+        ), self.strings[(self.generated_count - 1) % len(self.strings)]
