@@ -46,7 +46,7 @@ class Generators(unittest.TestCase):
         generator = GeneratorFromDict()
         i = 0
         while i < 100:
-            img = next(generator)
+            img, lbl = next(generator)
             self.assertTrue(img.size[1] == 32, "Shape is not right")
             i += 1
 
@@ -54,7 +54,7 @@ class Generators(unittest.TestCase):
         generator = GeneratorFromRandom()
         i = 0
         while i < 100:
-            img = next(generator)
+            img, lbl = next(generator)
             self.assertTrue(img.size[1] == 32, "Shape is not right")
             i += 1
 
@@ -62,7 +62,7 @@ class Generators(unittest.TestCase):
         generator = GeneratorFromStrings(["TEST TEST TEST"])
         i = 0
         while i < 100:
-            img = next(generator)
+            img, lbl = next(generator)
             self.assertTrue(img.size[1] == 32, "Shape is not right")
             i += 1
 
@@ -70,7 +70,7 @@ class Generators(unittest.TestCase):
         generator = GeneratorFromWikipedia()
         i = 0
         while i < 100:
-            img = next(generator)
+            img, lbl = next(generator)
             self.assertTrue(img.size[1] == 32, "Shape is not right")
             i += 1
 
