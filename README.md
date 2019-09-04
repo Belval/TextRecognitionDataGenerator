@@ -48,7 +48,7 @@ Words will be randomly chosen from a dictionary of a specific language. Then an 
 The usage as a Python module is very similar to the CLI, but it is more flexible if you want to include it directly in your training pipeline, and will consume less space and memory. There are 4 generators that can be used.
 
 ```py
-from TextRecognitionDataGenerator.generators import (
+from trdg.generators import (
     GeneratorFromDict,
     GeneratorFromRandom,
     GeneratorFromStrings,
