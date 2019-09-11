@@ -38,6 +38,9 @@ The path (`/output/path/`) must be absolute.
 - Change the text orientation using the `-or` parameter
 - Specify text color range using `-tc '#000000,#FFFFFF'`, please note that the quotes are **necessary**
 - Add support for Simplified and Traditional Chinese
+- Generation strings with regular expressions
+- Specify Image folder for background
+- Use imgaug for advanced image augmentation
 
 ## How does it work?
 
@@ -136,13 +139,11 @@ Or maybe you are working on an OCR for handwritten text? Add `-hw`! (Experimenta
 
 It uses a Tensorflow model trained using [this excellent project](https://github.com/Grzego/handwriting-generation) by Grzego.
 
-### Advanced Example
+### Image Augmentation
 
-Generate just numbers with minimum length 1, maximum length 3, and do some advanced image augmentation:
+You can turn on image augmentation with great [imgaug](https://github.com/aleju/imgaug) library with `--imgaug` param. We recommend to modify the code in data_generator.FakeTextDataGenerator so image augmentation will correspond to your needs.
 
-`python run.py -w 1 -f 64  -rs --include_numbers -minl 1 -maxl 3 -rk -k 25 --fit --background 3  --fonts fonts/fonts --imgaug --count 25000`
-
-**The project does not require TensorFlow to run if you aren't using this feature**
+![24](samples/29.jpg "0")
 
 ### Dictionary
 
@@ -150,9 +151,25 @@ The text is chosen at random in a dictionary file (that can be found in the *dic
 
 There are a lot of parameters that you can tune to get the results you want, therefore I recommend checking out `trdg -h` for more information.
 
+### Generete regex strings
+
+You can generate strings with regex specification. For example generate random price, dates, email, bank accounts, ....
+
+### Advanced Example
+
+Generate just numbers with minimum length 1, maximum length 3, and do some advanced image augmentation:
+
+`python trdg -w 1 -f 64 -rs --include_numbers -minl 1 -maxl 3 -rk -k 25 --fit --background 1 --fonts ../fonts/fonts --imgaug --count 25 --grayscale`
+
+Generate special ID numbers with regex and specify background images:
+
+`python trdg -w 1 -f 64 --include_numbers -rk -k 25 --fit --background 4 --regex "[0-9]{4}/[0-9]{3}" --fonts ../fonts/fonts --count 25 --images_dir ../pictures/id/`
+
+**The project does not require TensorFlow to run if you aren't using this feature**
+
 ## Create images with Chinese text
 
-It is simple! Just do `trdg -l cn -c 1000 -w 5`!
+It is simple! Just do `trdg -l cn -c 1000 -w 5 --fonts ../fonts/cn/`!
 
 Generated texts come both in simplified and traditional Chinese scripts.
 

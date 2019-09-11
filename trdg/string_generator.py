@@ -26,6 +26,7 @@ def create_strings_from_file(filename, count):
 
     return strings
 
+
 def create_strings_from_regex(length, regex, count):
     x = Xeger(limit=length)
     strings = []
@@ -34,6 +35,7 @@ def create_strings_from_regex(length, regex, count):
         current_string = x.xeger(regex)
         strings.append(current_string)
     return strings
+
 
 def create_strings_from_dict(length, allow_variable, count, lang_dict):
     """

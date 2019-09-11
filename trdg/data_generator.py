@@ -1,12 +1,8 @@
 import os
 import random as rnd
 
-import cv2
 from PIL import Image, ImageFilter
-
 import numpy as np
-from skimage import img_as_ubyte
-from skimage.filters import threshold_sauvola#, threshold_adaptive
 import imgaug as ia
 import imgaug.augmenters as iaa
 
@@ -61,7 +57,8 @@ class FakeTextDataGenerator(object):
             sometimes(iaa.ElasticTransformation(alpha=(1.0, 2.0), sigma=(2.0, 3.0))), # move pixels locally around (with random strengths)
             sometimes(iaa.PiecewiseAffine(scale=(0.01, 0.02), mode='constant')), # sometimes move parts of the image around
             sometimes(iaa.AdditiveGaussianNoise((0.02, 0.2))),
-            sometimes(iaa.AdditivePoissonNoise((0.02,0.1)))
+            sometimes(iaa.AdditivePoissonNoise((0.02,0.1))),
+            iaa.Sometimes(1.0, iaa.Grayscale(alpha=1.0))
         ]
     )
 
@@ -98,7 +95,9 @@ class FakeTextDataGenerator(object):
         space_width,
         margins,
         fit,
-        imgaug1,
+        augment=False,
+        grayscale=False,
+        images_dir=""
     ):
         image = None
 
@@ -194,7 +193,7 @@ class FakeTextDataGenerator(object):
             )
         else:
             background = background_generator.picture(
-                background_height, background_width
+                background_height, background_width, images_dir
             )
 
         #############################
@@ -219,16 +218,22 @@ class FakeTextDataGenerator(object):
             )
 
         ##################################
-        # Apply Image augmentation #
+        # Apply Image augmentation       #
         ##################################
-        if imgaug1:
+        if augment:
+            background = background.convert("RGB")
             background = np.array(background)
             image = cls.seq.augment_images([background])[0]
-            image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            background = Image.fromarray(img_as_ubyte(image))
+            background = Image.fromarray(image.astype("uint8"))
 
         ##################################
-        # Apply gaussian blur #
+        # Apply Grayscale                #
+        ##################################
+        if grayscale:
+            background = background.convert("L")
+
+        ##################################
+        # Apply gaussian blur            #
         ##################################
         final_image = background.filter(
             ImageFilter.GaussianBlur(
