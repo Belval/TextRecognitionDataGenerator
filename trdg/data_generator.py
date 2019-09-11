@@ -99,9 +99,6 @@ class FakeTextDataGenerator(object):
         margins,
         fit,
         imgaug1,
-        treshold,
-        imgaug1,
-        treshold,
     ):
         image = None
 
@@ -229,14 +226,6 @@ class FakeTextDataGenerator(object):
             image = cls.seq.augment_images([background])[0]
             image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             background = Image.fromarray(img_as_ubyte(image))
-
-        ##################################
-        # Apply sauvola method #
-        ##################################
-        if treshold and rnd.random() < 0.5:
-            background = np.array(background)
-            thresh_sauvola = threshold_sauvola(background, window_size=rnd.choice([17,25]))
-            background = Image.fromarray(img_as_ubyte(background > thresh_sauvola))
 
         ##################################
         # Apply gaussian blur #

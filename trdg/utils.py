@@ -20,19 +20,14 @@ def load_dict(lang):
     return lang_dict
 
 
-def load_fonts(lang):
+def load_fonts(folder='fonts/latin'):
     """Load all fonts in the fonts directories
     """
+    fonts = []
+    if folder is not None:
+        for font in os.listdir(folder):
+            if font.split('.')[-1].lower() in ['ttf', 'otf', 'svg', 'eot', 'woff']:
+                fonts.append(os.path.join(folder, font))
+        return fonts
 
-    if lang == "cn":
-        return [
-            os.path.join(os.path.dirname(__file__), "fonts/cn", font)
-            for font in os.listdir(os.path.join(os.path.dirname(__file__), "fonts/cn"))
-        ]
-    else:
-        return [
-            os.path.join(os.path.dirname(__file__), "fonts/latin", font)
-            for font in os.listdir(
-                os.path.join(os.path.dirname(__file__), "fonts/latin")
-            )
-        ]
+    raise Exception("No font specified")
