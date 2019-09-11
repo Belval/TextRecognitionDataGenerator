@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 beautifulsoup4==4.6.0
 numpy==1.15.1
 opencv-python==4.0.0.21
@@ -7,6 +6,3 @@ Pillow==5.1.0
 requests==2.20.0
 imgaug==0.2.9
 scikit-image==0.15.0
-=======
-.
->>>>>>> upstream/master
