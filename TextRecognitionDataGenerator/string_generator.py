@@ -3,6 +3,7 @@ import re
 import string
 import requests
 
+from xeger import Xeger
 from bs4 import BeautifulSoup
 
 def create_strings_from_file(filename, count):
@@ -22,6 +23,15 @@ def create_strings_from_file(filename, count):
             else:
                 strings.extend(lines)
 
+    return strings
+
+def create_strings_from_regex(length, regex, count):
+    x = Xeger(limit=length)
+    strings = []
+
+    for _ in range(0, count):
+        current_string = x.xeger(regex)
+        strings.append(current_string)
     return strings
 
 def create_strings_from_dict(length, allow_variable, count, lang_dict):

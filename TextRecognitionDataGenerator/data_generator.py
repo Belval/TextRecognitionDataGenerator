@@ -203,5 +203,7 @@ class FakeTextDataGenerator(object):
             print('{} is not a valid name format. Using default.'.format(name_format))
             image_name = '{}_{}.{}'.format(text, str(index), extension)
 
+        image_name = image_name.replace("/", "|")
+
         # Save the image
         final_image.convert('RGB').save(os.path.join(out_dir, image_name))

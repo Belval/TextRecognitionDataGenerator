@@ -9,7 +9,8 @@ from string_generator import (
     create_strings_from_dict,
     create_strings_from_file,
     create_strings_from_wikipedia,
-    create_strings_randomly
+    create_strings_randomly,
+    create_strings_from_regex
 )
 from data_generator import FakeTextDataGenerator
 from multiprocessing import Pool
@@ -301,6 +302,13 @@ def parse_arguments():
         default=10,
         help="Generate words with maximum sequance length of ... (default=10)"
     )
+    parser.add_argument(
+        "--regex",
+        type=str,
+        nargs="?",
+        help="Generate words with some regex. For example emails/account numbers/....",
+        default="",
+    )
     return parser.parse_args()
 
 
@@ -355,6 +363,8 @@ def main():
         strings = create_strings_from_wikipedia(args.length, args.count, args.language)
     elif args.input_file != '':
         strings = create_strings_from_file(args.input_file, args.count)
+    elif args.regex:
+        strings = create_strings_from_regex(args.length, args.regex, args.count)
     elif args.random_sequences:
         strings = create_strings_randomly(args.length, args.random, args.count,
                                           args.include_letters, args.include_numbers, args.include_symbols, args.language,
