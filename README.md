@@ -153,7 +153,9 @@ There are a lot of parameters that you can tune to get the results you want, the
 
 ### Generete regex strings
 
-You can generate strings with regex specification. For example generate random price, dates, email, bank accounts, ....
+You can generate strings with regex specification. For example generate random price, dates, email, bank accounts, .... For example `--regex "[0-9]{4}/someregex@test.com" `
+
+![25](samples/30.jpg "0")
 
 ### Advanced Example
 
@@ -163,7 +165,7 @@ Generate just numbers with minimum length 1, maximum length 3, and do some advan
 
 Generate special ID numbers with regex and specify background images:
 
-`python trdg -w 1 -f 64 --include_numbers -rk -k 25 --fit --background 4 --regex "[0-9]{4}/[0-9]{3}" --fonts ../fonts/fonts --count 25 --images_dir ../pictures/id/`
+`python trdg -w 1 -f 64 -rk -k 25 --fit --background 4 --regex "[0-9]{4}/[0-9]{3}" --fonts ../fonts/fonts --count 25 --images_dir ../pictures/id/`
 
 **The project does not require TensorFlow to run if you aren't using this feature**
 
