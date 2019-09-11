@@ -280,13 +280,6 @@ def parse_arguments():
         help="Generate upper or lowercase only. arguments: upper or lower. Example: --case upper",
     )
     parser.add_argument(
-        "-imga",
-        "--imgaug",
-        action="store_true",
-        help="Imgaug augmentation with imgaug",
-        default=False,
-    )
-    parser.add_argument(
         "--grayscale",
         action="store_true",
         help="Convert final image to just one channel (grayscale)",
@@ -406,7 +399,6 @@ def main():
                 [args.space_width] * string_count,
                 [args.margins] * string_count,
                 [args.fit] * string_count,
-                [args.imgaug] * string_count,
                 [args.grayscale] * string_count,
                 [args.images_dir] * string_count
             )

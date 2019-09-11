@@ -3,14 +3,8 @@ import random as rnd
 
 from PIL import Image, ImageFilter
 import numpy as np
-import imgaug as ia
-import imgaug.augmenters as iaa
 
-from trdg import (
-    computer_text_generator,
-    background_generator,
-    distorsion_generator,
-)
+from trdg import computer_text_generator, background_generator, distorsion_generator
 
 try:
     from trdg import handwritten_text_generator
@@ -19,49 +13,6 @@ except ImportError as e:
 
 
 class FakeTextDataGenerator(object):
-    sometimes = lambda aug: iaa.Sometimes(0.5, aug)
-    seq = iaa.Sequential([
-            iaa.Multiply((0.6, 3.5), per_channel=0.5),
-            sometimes(iaa.PerspectiveTransform(scale=(0.01, 0.08))),
-            sometimes(
-                iaa.OneOf([
-                    iaa.CoarseDropout((0.03, 0.05), size_percent=(0.1, 0.3)),
-                    iaa.CoarseDropout((0.03, 0.1), size_percent=(0.1, 0.3), per_channel=1.0),
-                    iaa.Dropout((0.03,0.1)),
-                    iaa.Salt((0.03,0.1))
-                ])
-            ),
-            iaa.Multiply((0.6, 1.3), per_channel=0.5),
-            sometimes(iaa.FrequencyNoiseAlpha(
-                    exponent=(-4, 0),
-                    first=iaa.Multiply((0.8, 1.2), per_channel=0.5),
-                    second=iaa.ContrastNormalization((0.5, 3.0))
-                )
-            ),
-            sometimes(
-                iaa.OneOf([
-                    iaa.MotionBlur(k=(3,5),angle=(0, 360)),
-                    iaa.GaussianBlur((0, 1.3)),
-                    iaa.AverageBlur(k=(2, 4)),
-                    iaa.MedianBlur(k=(3, 7))
-                ])
-            ),
-            sometimes(
-                iaa.CropAndPad(
-                    percent=(-0.05, 0.15),
-                    pad_mode='constant',
-                    pad_cval=(0, 255)
-                ),
-            ),
-            sometimes(iaa.Add((-50, 50), per_channel=0.5)),
-            sometimes(iaa.ElasticTransformation(alpha=(1.0, 2.0), sigma=(2.0, 3.0))), # move pixels locally around (with random strengths)
-            sometimes(iaa.PiecewiseAffine(scale=(0.01, 0.02), mode='constant')), # sometimes move parts of the image around
-            sometimes(iaa.AdditiveGaussianNoise((0.02, 0.2))),
-            sometimes(iaa.AdditivePoissonNoise((0.02,0.1))),
-            iaa.Sometimes(1.0, iaa.Grayscale(alpha=1.0))
-        ]
-    )
-
     @classmethod
     def generate_from_tuple(cls, t):
         """
@@ -95,9 +46,8 @@ class FakeTextDataGenerator(object):
         space_width,
         margins,
         fit,
-        augment=False,
         grayscale=False,
-        images_dir=""
+        images_dir="",
     ):
         image = None
 
@@ -113,15 +63,11 @@ class FakeTextDataGenerator(object):
                 raise ValueError("Vertical handwritten text is unavailable")
             image = handwritten_text_generator.generate(text, text_color)
         else:
-            image = computer_text_generator.generate(
-                text, font, text_color, size, orientation, space_width, fit
-            )
+            image = computer_text_generator.generate(text, font, text_color, size, orientation, space_width, fit)
 
         random_angle = rnd.randint(0 - skewing_angle, skewing_angle)
 
-        rotated_img = image.rotate(
-            skewing_angle if not random_skew else random_angle, expand=1
-        )
+        rotated_img = image.rotate(skewing_angle if not random_skew else random_angle, expand=1)
 
         #############################
         # Apply distorsion to image #
@@ -153,24 +99,16 @@ class FakeTextDataGenerator(object):
 
         # Horizontal text
         if orientation == 0:
-            new_width = int(
-                distorted_img.size[0]
-                * (float(size - vertical_margin) / float(distorted_img.size[1]))
-            )
-            resized_img = distorted_img.resize(
-                (new_width, size - vertical_margin), Image.ANTIALIAS
-            )
+            new_width = int(distorted_img.size[0] * (float(size - vertical_margin) / float(distorted_img.size[1])))
+            resized_img = distorted_img.resize((new_width, size - vertical_margin), Image.ANTIALIAS)
             background_width = width if width > 0 else new_width + horizontal_margin
             background_height = size
         # Vertical text
         elif orientation == 1:
             new_height = int(
-                float(distorted_img.size[1])
-                * (float(size - horizontal_margin) / float(distorted_img.size[0]))
+                float(distorted_img.size[1]) * (float(size - horizontal_margin) / float(distorted_img.size[0]))
             )
-            resized_img = distorted_img.resize(
-                (size - horizontal_margin, new_height), Image.ANTIALIAS
-            )
+            resized_img = distorted_img.resize((size - horizontal_margin, new_height), Image.ANTIALIAS)
             background_width = size
             background_height = new_height + vertical_margin
         else:
@@ -180,21 +118,13 @@ class FakeTextDataGenerator(object):
         # Generate background image #
         #############################
         if background_type == 0:
-            background = background_generator.gaussian_noise(
-                background_height, background_width
-            )
+            background = background_generator.gaussian_noise(background_height, background_width)
         elif background_type == 1:
-            background = background_generator.plain_white(
-                background_height, background_width
-            )
+            background = background_generator.plain_white(background_height, background_width)
         elif background_type == 2:
-            background = background_generator.quasicrystal(
-                background_height, background_width
-            )
+            background = background_generator.quasicrystal(background_height, background_width)
         else:
-            background = background_generator.picture(
-                background_height, background_width, images_dir
-            )
+            background = background_generator.picture(background_height, background_width, images_dir)
 
         #############################
         # Place text with alignment #
@@ -205,26 +135,9 @@ class FakeTextDataGenerator(object):
         if alignment == 0 or width == -1:
             background.paste(resized_img, (margin_left, margin_top), resized_img)
         elif alignment == 1:
-            background.paste(
-                resized_img,
-                (int(background_width / 2 - new_text_width / 2), margin_top),
-                resized_img,
-            )
+            background.paste(resized_img, (int(background_width / 2 - new_text_width / 2), margin_top), resized_img)
         else:
-            background.paste(
-                resized_img,
-                (background_width - new_text_width - margin_right, margin_top),
-                resized_img,
-            )
-
-        ##################################
-        # Apply Image augmentation       #
-        ##################################
-        if augment:
-            background = background.convert("RGB")
-            background = np.array(background)
-            image = cls.seq.augment_images([background])[0]
-            background = Image.fromarray(image.astype("uint8"))
+            background.paste(resized_img, (background_width - new_text_width - margin_right, margin_top), resized_img)
 
         ##################################
         # Apply Grayscale                #
@@ -236,9 +149,7 @@ class FakeTextDataGenerator(object):
         # Apply gaussian blur            #
         ##################################
         final_image = background.filter(
-            ImageFilter.GaussianBlur(
-                radius=(blur if not random_blur else rnd.randint(0, blur))
-            )
+            ImageFilter.GaussianBlur(radius=(blur if not random_blur else rnd.randint(0, blur)))
         )
 
         #####################################

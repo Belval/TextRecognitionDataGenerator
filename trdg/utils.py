@@ -11,22 +11,19 @@ def load_dict(lang):
 
     lang_dict = []
     with open(
-        os.path.join(os.path.dirname(__file__), "dicts", lang + ".txt"),
-        "r",
-        encoding="utf8",
-        errors="ignore",
+        os.path.join(os.path.dirname(__file__), "dicts", lang + ".txt"), "r", encoding="utf8", errors="ignore"
     ) as d:
         lang_dict = [l for l in d.read().splitlines() if len(l) > 0]
     return lang_dict
 
 
-def load_fonts(folder='fonts/latin'):
+def load_fonts(folder="fonts/latin"):
     """Load all fonts in the fonts directories
     """
     fonts = []
     if folder is not None:
         for font in os.listdir(folder):
-            if font.split('.')[-1].lower() in ['ttf', 'otf', 'svg', 'eot', 'woff']:
+            if font.split(".")[-1].lower() in ["ttf", "otf"]:
                 fonts.append(os.path.join(folder, font))
         return fonts
 
