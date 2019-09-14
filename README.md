@@ -33,6 +33,7 @@ The path (`/output/path/`) must be absolute.
 ## New
 - Add python module
 - Move `run.py` to an executable python file ([`trdg/bin/trdg`](trdg/bin/trdg))
+- Add --font to use only one font for all the generated images (Thank you @JulienCoutault!)
 - Add `--fit` and `--margins` for finer layout control
 - Change the text orientation using the `-or` parameter
 - Specify text color range using `-tc '#000000,#FFFFFF'`, please note that the quotes are **necessary**

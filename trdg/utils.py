@@ -21,6 +21,7 @@ def load_fonts(folder="fonts/latin"):
     """Load all fonts in the fonts directories
     """
     fonts = []
+    # todo: check custom folder if exist otherwise use __file__ dirname
 
     if folder is not None:
         for font in os.listdir(os.path.join(os.path.dirname(__file__), folder)):
