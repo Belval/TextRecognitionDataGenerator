@@ -33,14 +33,14 @@ The path (`/output/path/`) must be absolute.
 ## New
 - Add python module
 - Move `run.py` to an executable python file ([`trdg/bin/trdg`](trdg/bin/trdg))
-- Add `--font` to use only one font for all the generated images (Thank you @JulienCoutault!)
 - Add `--fit` and `--margins` for finer layout control
 - Change the text orientation using the `-or` parameter
 - Specify text color range using `-tc '#000000,#FFFFFF'`, please note that the quotes are **necessary**
 - Add support for Simplified and Traditional Chinese
-- Generation strings with regular expressions
-- Specify Image folder for background
-- Use imgaug for advanced image augmentation
+- Generation Strings with regular expressions `--regex`
+- Specify Image folder for background `--images_dir `
+- Specify Folder for fonts `--fonts` (if you need to generate images from one or multiple different fonts)
+- Convert generating images to grayscale `--grayscale `
 
 ## How does it work?
 
@@ -139,12 +139,6 @@ Or maybe you are working on an OCR for handwritten text? Add `-hw`! (Experimenta
 
 It uses a Tensorflow model trained using [this excellent project](https://github.com/Grzego/handwriting-generation) by Grzego.
 
-### Image Augmentation
-
-You can turn on image augmentation with great [imgaug](https://github.com/aleju/imgaug) library with `--imgaug` param. We recommend to modify the code in data_generator.FakeTextDataGenerator so image augmentation will correspond to your needs.
-
-![24](samples/29.jpg "0")
-
 ### Dictionary
 
 The text is chosen at random in a dictionary file (that can be found in the *dicts* folder) and drawn on a white background made with Gaussian noise. The resulting image is saved as [text]\_[index].jpg
@@ -159,9 +153,9 @@ You can generate strings with regex specification. For example generate random p
 
 ### Advanced Example
 
-Generate just numbers with minimum length 1, maximum length 3, and do some advanced image augmentation:
+Generate just numbers with minimum length 1, maximum length 3:
 
-`python trdg -w 1 -f 64 -rs --include_numbers -minl 1 -maxl 3 -rk -k 25 --fit --background 1 --fonts ../fonts/fonts --imgaug --count 25 --grayscale`
+`python trdg -w 1 -f 64 -rs --include_numbers -minl 1 -maxl 3 -rk -k 25 --fit --background 1 --fonts ../fonts/fonts --count 25 --grayscale`
 
 Generate special ID numbers with regex and specify background images:
 
@@ -171,7 +165,7 @@ Generate special ID numbers with regex and specify background images:
 
 ## Create images with Chinese text
 
-It is simple! Just do `trdg -l cn -c 1000 -w 5 --fonts ../fonts/cn/`!
+It is simple! Just do `trdg -l cn -c 1000 -w 5 --fonts fonts/cn/`!
 
 Generated texts come both in simplified and traditional Chinese scripts.
 

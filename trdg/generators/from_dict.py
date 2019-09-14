@@ -12,7 +12,7 @@ class GeneratorFromDict:
         count=-1,
         length=1,
         allow_variable=False,
-        fonts=[],
+        fonts="fonts/latin",
         language="en",
         size=32,
         skewing_angle=0,
@@ -38,7 +38,7 @@ class GeneratorFromDict:
         self.generator = GeneratorFromStrings(
             create_strings_from_dict(self.length, self.allow_variable, 1000, self.dict),
             count,
-            fonts if len(fonts) else load_fonts(language),
+            fonts,
             language,
             size,
             skewing_angle,
@@ -66,7 +66,5 @@ class GeneratorFromDict:
 
     def next(self):
         if self.generator.generated_count >= 999:
-            self.generator.strings = create_strings_from_dict(
-                self.length, self.allow_variable, 1000, self.dict
-            )
+            self.generator.strings = create_strings_from_dict(self.length, self.allow_variable, 1000, self.dict)
         return self.generator.next()

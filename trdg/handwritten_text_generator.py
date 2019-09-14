@@ -61,9 +61,7 @@ def _sample_text(sess, args_text, translation):
 
     text = np.array([translation.get(c, 0) for c in args_text])
     sequence = np.eye(len(translation), dtype=np.float32)[text]
-    sequence = np.expand_dims(
-        np.concatenate([sequence, np.zeros((1, len(translation)))]), axis=0
-    )
+    sequence = np.expand_dims(np.concatenate([sequence, np.zeros((1, len(translation)))]), axis=0)
 
     coord = np.array([0.0, 0.0, 1.0])
     coords = [coord]
@@ -72,37 +70,17 @@ def _sample_text(sess, args_text, translation):
     sess.run(vs.zero_states)
     for s in range(1, 60 * len(args_text) + 1):
         e, pi, mu1, mu2, std1, std2, rho, finish, phi, window, kappa = sess.run(
-            [
-                vs.e,
-                vs.pi,
-                vs.mu1,
-                vs.mu2,
-                vs.std1,
-                vs.std2,
-                vs.rho,
-                vs.finish,
-                vs.phi,
-                vs.window,
-                vs.kappa,
-            ],
-            feed_dict={
-                vs.coordinates: coord[None, None, ...],
-                vs.sequence: sequence,
-                vs.bias: 1.0,
-            },
+            [vs.e, vs.pi, vs.mu1, vs.mu2, vs.std1, vs.std2, vs.rho, vs.finish, vs.phi, vs.window, vs.kappa],
+            feed_dict={vs.coordinates: coord[None, None, ...], vs.sequence: sequence, vs.bias: 1.0},
         )
         phi_data += [phi[0, :]]
         window_data += [window[0, :]]
         kappa_data += [kappa[0, :]]
         # ---
         g = np.random.choice(np.arange(pi.shape[1]), p=pi[0])
-        coord = _sample(
-            e[0, 0], mu1[0, g], mu2[0, g], std1[0, g], std2[0, g], rho[0, g]
-        )
+        coord = _sample(e[0, 0], mu1[0, g], mu2[0, g], std1[0, g], std2[0, g], rho[0, g])
         coords += [coord]
-        stroke_data += [
-            [mu1[0, g], mu2[0, g], std1[0, g], std2[0, g], rho[0, g], coord[2]]
-        ]
+        stroke_data += [[mu1[0, g], mu2[0, g], std1[0, g], std2[0, g], rho[0, g], coord[2]]]
 
         if finish[0, 0] > 0.8:
             break
@@ -118,15 +96,8 @@ def _crop_white_borders(image):
     grey_image_data = np.asarray(image.convert("L"))
     non_empty_columns = np.where(grey_image_data.min(axis=0) < 255)[0]
     non_empty_rows = np.where(grey_image_data.min(axis=1) < 255)[0]
-    cropBox = (
-        min(non_empty_rows),
-        max(non_empty_rows),
-        min(non_empty_columns),
-        max(non_empty_columns),
-    )
-    image_data_new = image_data[
-        cropBox[0] : cropBox[1] + 1, cropBox[2] : cropBox[3] + 1, :
-    ]
+    cropBox = (min(non_empty_rows), max(non_empty_rows), min(non_empty_columns), max(non_empty_columns))
+    image_data_new = image_data[cropBox[0] : cropBox[1] + 1, cropBox[2] : cropBox[3] + 1, :]
 
     return Image.fromarray(image_data_new)
 
@@ -167,9 +138,7 @@ def generate(text, text_color):
         )
 
         for word in text.split(" "):
-            _, window_data, kappa_data, stroke_data, coords = _sample_text(
-                sess, word, translation
-            )
+            _, window_data, kappa_data, stroke_data, coords = _sample_text(sess, word, translation)
 
             strokes = np.array(stroke_data)
             strokes[:, :2] = np.cumsum(strokes[:, :2], axis=0)
@@ -189,9 +158,7 @@ def generate(text, text_color):
             canvas = plt.get_current_fig_manager().canvas
             canvas.draw()
 
-            image = Image.frombytes(
-                "RGBA", canvas.get_width_height(), canvas.buffer_rgba()
-            )
+            image = Image.frombytes("RGBA", canvas.get_width_height(), canvas.buffer_rgba())
             images.append(_crop_white_borders(image))
 
             plt.close()

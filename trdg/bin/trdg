@@ -265,12 +265,15 @@ def parse_arguments():
         default=False,
     )
     parser.add_argument(
-        "-ft",
+        "-ft", "--font", type=str, nargs="?", help="Define font to be used"
+    )
+    parser.add_argument(
+        "-fts",
         "--fonts",
         type=str,
         nargs="?",
         help="Define font folder to be used",
-        default=None
+        default="fonts/latin"
     )
     parser.add_argument(
         "-ca",
@@ -330,7 +333,10 @@ def main():
     lang_dict = load_dict(args.language)
 
     # Create font (path) list
-    fonts = load_fonts(args.fonts)
+    if args.font:
+        fonts = [args.font]
+    else:
+        fonts = load_fonts(args.fonts)
 
     # Creating synthetic sentences (or word)
     strings = []

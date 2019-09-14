@@ -11,7 +11,7 @@ class GeneratorFromWikipedia:
         self,
         count=-1,
         minimum_length=1,
-        fonts=[],
+        fonts="fonts/latin",
         language="en",
         size=32,
         skewing_angle=0,
@@ -36,7 +36,7 @@ class GeneratorFromWikipedia:
         self.generator = GeneratorFromStrings(
             create_strings_from_wikipedia(self.minimum_length, 1000, self.language),
             count,
-            fonts if len(fonts) else load_fonts(language),
+            fonts,
             language,
             size,
             skewing_angle,
@@ -64,7 +64,5 @@ class GeneratorFromWikipedia:
 
     def next(self):
         if self.generator.generated_count >= 999:
-            self.generator.strings = create_strings_from_wikipedia(
-                self.minimum_length, 1000, self.language
-            )
+            self.generator.strings = create_strings_from_wikipedia(self.minimum_length, 1000, self.language)
         return self.generator.next()

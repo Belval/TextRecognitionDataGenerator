@@ -9,7 +9,7 @@ class GeneratorFromStrings:
         self,
         strings,
         count=-1,
-        fonts=[],
+        fonts="fonts/latin",
         language="en",
         size=32,
         skewing_angle=0,
@@ -30,9 +30,7 @@ class GeneratorFromStrings:
     ):
         self.count = count
         self.strings = strings
-        self.fonts = fonts
-        if len(fonts) == 0:
-            self.fonts = load_fonts(language)
+        self.fonts = load_fonts(fonts)
         self.language = language
         self.size = size
         self.skewing_angle = skewing_angle
@@ -61,28 +59,31 @@ class GeneratorFromStrings:
     def next(self):
         if self.generated_count == self.count:
             raise StopIteration
-        self.generated_count += 1        
-        return FakeTextDataGenerator.generate(
-            self.generated_count,
+        self.generated_count += 1
+        return (
+            FakeTextDataGenerator.generate(
+                self.generated_count,
+                self.strings[(self.generated_count - 1) % len(self.strings)],
+                self.fonts[(self.generated_count - 1) % len(self.fonts)],
+                None,
+                self.size,
+                None,
+                self.skewing_angle,
+                self.random_skew,
+                self.blur,
+                self.random_blur,
+                self.background_type,
+                self.distorsion_type,
+                self.distorsion_orientation,
+                self.is_handwritten,
+                0,
+                self.width,
+                self.alignment,
+                self.text_color,
+                self.orientation,
+                self.space_width,
+                self.margins,
+                self.fit,
+            ),
             self.strings[(self.generated_count - 1) % len(self.strings)],
-            self.fonts[(self.generated_count - 1) % len(self.fonts)],
-            None,
-            self.size,
-            None,
-            self.skewing_angle,
-            self.random_skew,
-            self.blur,
-            self.random_blur,
-            self.background_type,
-            self.distorsion_type,
-            self.distorsion_orientation,
-            self.is_handwritten,
-            0,
-            self.width,
-            self.alignment,
-            self.text_color,
-            self.orientation,
-            self.space_width,
-            self.margins,
-            self.fit,
-        ), self.strings[(self.generated_count - 1) % len(self.strings)]
+        )

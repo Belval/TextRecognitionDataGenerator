@@ -21,10 +21,11 @@ def load_fonts(folder="fonts/latin"):
     """Load all fonts in the fonts directories
     """
     fonts = []
+
     if folder is not None:
-        for font in os.listdir(folder):
+        for font in os.listdir(os.path.join(os.path.dirname(__file__), folder)):
             if font.split(".")[-1].lower() in ["ttf", "otf"]:
-                fonts.append(os.path.join(folder, font))
+                fonts.append(os.path.join(os.path.dirname(__file__), folder, font))
         return fonts
 
     raise Exception("No font specified")

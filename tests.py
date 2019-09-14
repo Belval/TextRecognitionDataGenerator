@@ -14,12 +14,7 @@ except:
 
 from trdg.data_generator import FakeTextDataGenerator
 from trdg import background_generator
-from trdg.generators import (
-    GeneratorFromDict,
-    GeneratorFromRandom,
-    GeneratorFromStrings,
-    GeneratorFromWikipedia,
-)
+from trdg.generators import GeneratorFromDict, GeneratorFromRandom, GeneratorFromStrings, GeneratorFromWikipedia
 from trdg.string_generator import (
     create_strings_from_file,
     create_strings_from_dict,
@@ -114,14 +109,10 @@ class DataGenerator(unittest.TestCase):
     def test_create_string_from_file(self):
         strings = create_strings_from_file("tests/test.txt", 6)
 
-        self.assertTrue(
-            len(strings) == 6 and strings[0] != strings[1] and strings[0] == strings[3]
-        )
+        self.assertTrue(len(strings) == 6 and strings[0] != strings[1] and strings[0] == strings[3])
 
     def test_create_strings_from_dict(self):
-        strings = create_strings_from_dict(
-            3, False, 2, ["TEST", "TEST", "TEST", "TEST"]
-        )
+        strings = create_strings_from_dict(3, False, 2, ["TEST", "TEST", "TEST", "TEST"])
 
         self.assertTrue(len(strings) == 2 and len(strings[0].split(" ")) == 3)
 
@@ -151,10 +142,7 @@ class DataGenerator(unittest.TestCase):
             0,
         )
 
-        self.assertTrue(
-            md5("tests/out/TEST TEST TEST_0.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_0.jpg")
-        )
+        self.assertTrue(md5("tests/out/TEST TEST TEST_0.jpg") == md5("tests/expected_results/TEST TEST TEST_0.jpg"))
 
         os.remove("tests/out/TEST TEST TEST_0.jpg")
 
@@ -184,10 +172,7 @@ class DataGenerator(unittest.TestCase):
             0,
         )
 
-        self.assertTrue(
-            md5("tests/out/TEST TEST TEST_1.png")
-            == md5("tests/expected_results/TEST TEST TEST_1.png")
-        )
+        self.assertTrue(md5("tests/out/TEST TEST TEST_1.png") == md5("tests/expected_results/TEST TEST TEST_1.png"))
 
         os.remove("tests/out/TEST TEST TEST_1.png")
 
@@ -217,10 +202,7 @@ class DataGenerator(unittest.TestCase):
             0,
         )
 
-        self.assertTrue(
-            md5("tests/out/TEST TEST TEST_2.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_2.jpg")
-        )
+        self.assertTrue(md5("tests/out/TEST TEST TEST_2.jpg") == md5("tests/expected_results/TEST TEST TEST_2.jpg"))
 
         os.remove("tests/out/TEST TEST TEST_2.jpg")
 
@@ -250,10 +232,7 @@ class DataGenerator(unittest.TestCase):
             0,
         )
 
-        self.assertTrue(
-            md5("tests/out/TEST TEST TEST_3.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_3.jpg")
-        )
+        self.assertTrue(md5("tests/out/TEST TEST TEST_3.jpg") == md5("tests/expected_results/TEST TEST TEST_3.jpg"))
 
         os.remove("tests/out/TEST TEST TEST_3.jpg")
 
@@ -283,10 +262,7 @@ class DataGenerator(unittest.TestCase):
             0,
         )
 
-        self.assertTrue(
-            md5("tests/out/TEST TEST TEST_4.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_4.jpg")
-        )
+        self.assertTrue(md5("tests/out/TEST TEST TEST_4.jpg") == md5("tests/expected_results/TEST TEST TEST_4.jpg"))
 
         os.remove("tests/out/TEST TEST TEST_4.jpg")
 
@@ -316,10 +292,7 @@ class DataGenerator(unittest.TestCase):
             0,
         )
 
-        self.assertTrue(
-            md5("tests/out/TEST TEST TEST_5.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_5.jpg")
-        )
+        self.assertTrue(md5("tests/out/TEST TEST TEST_5.jpg") == md5("tests/expected_results/TEST TEST TEST_5.jpg"))
 
         os.remove("tests/out/TEST TEST TEST_5.jpg")
 
@@ -349,10 +322,7 @@ class DataGenerator(unittest.TestCase):
             0,
         )
 
-        self.assertTrue(
-            md5("tests/out/TEST TEST TEST_6.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_6.jpg")
-        )
+        self.assertTrue(md5("tests/out/TEST TEST TEST_6.jpg") == md5("tests/expected_results/TEST TEST TEST_6.jpg"))
 
         os.remove("tests/out/TEST TEST TEST_6.jpg")
 
@@ -382,10 +352,7 @@ class DataGenerator(unittest.TestCase):
             0,
         )
 
-        self.assertTrue(
-            md5("tests/out/TEST TEST TEST_7.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_7.jpg")
-        )
+        self.assertTrue(md5("tests/out/TEST TEST TEST_7.jpg") == md5("tests/expected_results/TEST TEST TEST_7.jpg"))
 
         os.remove("tests/out/TEST TEST TEST_7.jpg")
 
@@ -415,10 +382,7 @@ class DataGenerator(unittest.TestCase):
             0,
         )
 
-        self.assertTrue(
-            md5("tests/out/TEST TEST TEST_8.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_8.jpg")
-        )
+        self.assertTrue(md5("tests/out/TEST TEST TEST_8.jpg") == md5("tests/expected_results/TEST TEST TEST_8.jpg"))
 
         os.remove("tests/out/TEST TEST TEST_8.jpg")
 
@@ -478,10 +442,7 @@ class DataGenerator(unittest.TestCase):
             0,
         )
 
-        self.assertTrue(
-            md5("tests/out/TEST TEST TEST_10.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_10.jpg")
-        )
+        self.assertTrue(md5("tests/out/TEST TEST TEST_10.jpg") == md5("tests/expected_results/TEST TEST TEST_10.jpg"))
 
         os.remove("tests/out/TEST TEST TEST_10.jpg")
 
@@ -511,10 +472,7 @@ class DataGenerator(unittest.TestCase):
             0,
         )
 
-        self.assertTrue(
-            md5("tests/out/TEST TEST TEST_11.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_11.jpg")
-        )
+        self.assertTrue(md5("tests/out/TEST TEST TEST_11.jpg") == md5("tests/expected_results/TEST TEST TEST_11.jpg"))
 
         os.remove("tests/out/TEST TEST TEST_11.jpg")
 
@@ -544,10 +502,7 @@ class DataGenerator(unittest.TestCase):
             0,
         )
 
-        self.assertTrue(
-            md5("tests/out/TEST TEST TEST_12.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_12.jpg")
-        )
+        self.assertTrue(md5("tests/out/TEST TEST TEST_12.jpg") == md5("tests/expected_results/TEST TEST TEST_12.jpg"))
 
         os.remove("tests/out/TEST TEST TEST_12.jpg")
 
@@ -607,55 +562,44 @@ class DataGenerator(unittest.TestCase):
             1,
         )
 
-        self.assertTrue(
-            md5("tests/out/TEST TEST TEST_13.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_13.jpg")
-        )
+        self.assertTrue(md5("tests/out/TEST TEST TEST_13.jpg") == md5("tests/expected_results/TEST TEST TEST_13.jpg"))
 
         os.remove("tests/out/TEST TEST TEST_13.jpg")
 
     def test_generate_string_with_letters(self):
-        s = create_strings_randomly(1, False, 1, True, False, False, "en")[0]
+        s = create_strings_randomly(1, False, 1, True, False, False, "en", 2, 10)[0]
 
         self.assertTrue(all([l in string.ascii_letters for l in s]))
 
     def test_generate_string_with_numbers(self):
-        s = create_strings_randomly(1, False, 1, False, True, False, "en")[0]
+        s = create_strings_randomly(1, False, 1, False, True, False, "en", 2, 10)[0]
 
         self.assertTrue(all([l in "0123456789" for l in s]))
 
     def test_generate_string_with_symbols(self):
-        s = create_strings_randomly(1, False, 1, False, False, True, "en")[0]
+        s = create_strings_randomly(1, False, 1, False, False, True, "en", 2, 10)[0]
 
         self.assertTrue(all([l in "!\"#$%&'()*+,-./:;?@[\\]^_`{|}~" for l in s]))
 
     def test_generate_chinese_string(self):
-        s = create_strings_randomly(1, False, 1, True, False, False, "cn")[0]
+        s = create_strings_randomly(1, False, 1, True, False, False, "cn", 0, 0)[0]
 
         cn_chars = [chr(i) for i in range(19968, 40908)]
 
         self.assertTrue(all([l in cn_chars for l in s]))
 
     def test_generate_data_with_white_background(self):
-        background_generator.plain_white(64, 128).convert("RGB").save(
-            "tests/out/white_background.jpg"
-        )
+        background_generator.plain_white(64, 128).convert("RGB").save("tests/out/white_background.jpg")
 
-        self.assertTrue(
-            md5("tests/out/white_background.jpg")
-            == md5("tests/expected_results/white_background.jpg")
-        )
+        self.assertTrue(md5("tests/out/white_background.jpg") == md5("tests/expected_results/white_background.jpg"))
 
         os.remove("tests/out/white_background.jpg")
 
     def test_generate_data_with_gaussian_background(self):
-        background_generator.gaussian_noise(64, 128).convert("RGB").save(
-            "tests/out/gaussian_background.jpg"
-        )
+        background_generator.gaussian_noise(64, 128).convert("RGB").save("tests/out/gaussian_background.jpg")
 
         self.assertTrue(
-            md5("tests/out/gaussian_background.jpg")
-            == md5("tests/expected_results/gaussian_background.jpg")
+            md5("tests/out/gaussian_background.jpg") == md5("tests/expected_results/gaussian_background.jpg")
         )
 
         os.remove("tests/out/gaussian_background.jpg")
@@ -698,7 +642,7 @@ class CommandLineInterface(unittest.TestCase):
         empty_directory("tests/out/")
 
     def test_language_chinese(self):
-        args = ["./bin/trdg", "-l", "cn", "-c", "1", "--output_dir", "../tests/out/"]
+        args = ["./bin/trdg", "-l", "cn", "-c", "1", "--fonts", "fonts/cn", "--output_dir", "../tests/out/"]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
         empty_directory("tests/out/")
@@ -712,43 +656,20 @@ class CommandLineInterface(unittest.TestCase):
     def test_random_sequences_letter_only(self):
         args = ["./bin/trdg", "-rs", "-let", "-c", "1", "--output_dir", "../tests/out/"]
         subprocess.Popen(args, cwd="trdg/").wait()
-        self.assertTrue(
-            all(
-                [
-                    c in string.ascii_letters
-                    for f in os.listdir("tests/out/")
-                    for c in f.split("_")[0]
-                ]
-            )
-        )
+        self.assertTrue(all([c in string.ascii_letters for f in os.listdir("tests/out/") for c in f.split("_")[0]]))
         empty_directory("tests/out/")
 
     def test_random_sequences_number_only(self):
         args = ["./bin/trdg", "-rs", "-num", "-c", "1", "--output_dir", "../tests/out/"]
         subprocess.Popen(args, cwd="trdg/").wait()
-        self.assertTrue(
-            all(
-                [
-                    c in "0123456789"
-                    for f in os.listdir("tests/out/")
-                    for c in f.split("_")[0]
-                ]
-            )
-        )
+        self.assertTrue(all([c in "0123456789" for f in os.listdir("tests/out/") for c in f.split("_")[0]]))
         empty_directory("tests/out/")
 
     def test_random_sequences_symbols_only(self):
         args = ["./bin/trdg", "-rs", "-sym", "-c", "1", "--output_dir", "../tests/out/"]
         subprocess.Popen(args, cwd="trdg/").wait()
         with open("tests/out/labels.txt", "r") as f:
-            self.assertTrue(
-                all(
-                    [
-                        c in "!\"#$%&'()*+,-./:;?@[\\]^_`{|}~"
-                        for c in f.readline().split(" ")[1][:-1]
-                    ]
-                )
-            )
+            self.assertTrue(all([c in "!\"#$%&'()*+,-./:;?@[\\]^_`{|}~" for c in f.readline().split(" ")[1][:-1]]))
         empty_directory("tests/out/")
 
     def test_handwritten(self):
@@ -758,29 +679,13 @@ class CommandLineInterface(unittest.TestCase):
         empty_directory("tests/out/")
 
     def test_personalfont(self):
-        args = [
-            "./bin/trdg",
-            "--font",
-            "fonts/latin/Aller_Bd.ttf",
-            "-c",
-            "1",
-            "--output_dir",
-            "../tests/out/",
-        ]
+        args = ["./bin/trdg", "--font", "fonts/latin/Aller_Bd.ttf", "-c", "1", "--output_dir", "../tests/out/"]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
         empty_directory("tests/out/")
 
     def test_personalfont_unlocated(self):
-        args = [
-            "./bin/trdg",
-            "--font",
-            "fonts/latin/unlocatedFont.ttf",
-            "-c",
-            "1",
-            "--output_dir",
-            "../tests/out/",
-        ]
+        args = ["./bin/trdg", "--font", "fonts/latin/unlocatedFont.ttf", "-c", "1", "--output_dir", "../tests/out/"]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 0)
         empty_directory("tests/out/")
