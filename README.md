@@ -42,6 +42,7 @@ The path (`/output/path/`) must be absolute.
 - Specify Image folder for background `--images_dir `
 - Specify Folder for fonts `--fonts` (if you need to generate images from one or multiple different fonts)
 - Convert generating images to grayscale `--grayscale `
+- Generate random strings with minimum and maximum length `-rs`, `-minl` and `-maxl` args
 
 ## How does it work?
 
@@ -154,13 +155,13 @@ You can generate strings with regex specification. For example generate random p
 
 ### Advanced Example
 
-Generate just numbers with minimum length 1, maximum length 3:
+Generate just numbers with minimum length 1, maximum length 3 and convert them to grayscale:
 
-`python trdg -w 1 -f 64 -rs --include_numbers -minl 1 -maxl 3 -rk -k 25 --fit --background 1 --fonts ../fonts/fonts --count 25 --grayscale`
+`python trdg -w 1 -f 64 -rs --include_numbers -minl 1 -maxl 3 -rk -k 25 --fit --background 1 --fonts fonts/latin --count 25 --grayscale`
 
 Generate special ID numbers with regex and specify background images:
 
-`python trdg -w 1 -f 64 -rk -k 25 --fit --background 4 --regex "[0-9]{4}/[0-9]{3}" --fonts ../fonts/fonts --count 25 --images_dir ../pictures/id/`
+`python trdg -w 1 -f 64 -rk -k 25 --fit --background 4 --regex "[0-9]{4}/[0-9]{3}" --fonts fonts/latin --count 25 --images_dir pictures/id/`
 
 **The project does not require TensorFlow to run if you aren't using this feature**
 
@@ -189,13 +190,14 @@ The script picks a font at random from the *fonts* directory.
 
 Simply add/remove fonts until you get the desired output.
 
+You can also just specify `--font` or `--fonts` params with the path to the file or folder.
+
 If you want to add a new non-latin language, the amount of work is minimal.
 
-1. Create a new folder with your language [two-letters code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
-2. Add a .ttf font in it
-3. Edit `bin/trdg` to add an if statement in `load_fonts()`
-4. Add a text file in `dicts` with the same two-letters code
-5. Run the tool as you normally would but add `-l` with your two-letters code
+1. Create a new folder with your language and fonts [two-letters code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
+2. Add a .ttf fonts in it
+3. Add a text file in `dicts` with the same two-letters code
+4. Run the tool as you normally would but add `-l` with your two-letters code and `--fonts` folder
 
 It only supports .ttf for now.
 
