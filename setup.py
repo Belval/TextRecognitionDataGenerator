@@ -47,6 +47,7 @@ setup(
         "opencv-python>=4.0.0.21",
         "tqdm>=4.23.0",
         "beautifulsoup4>=4.6.0",
+        "xeger>=0.3.5",
     ],
     scripts=["trdg/bin/trdg"],
 )
