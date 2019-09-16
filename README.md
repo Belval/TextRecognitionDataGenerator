@@ -39,9 +39,9 @@ The path (`/output/path/`) must be absolute.
 - Specify text color range using `-tc '#000000,#FFFFFF'`, please note that the quotes are **necessary**
 - Add support for Simplified and Traditional Chinese
 - Generation Strings with regular expressions `--regex`
-- Specify Image folder for background `--images_dir `
+- Specify Image folder for background `--images `
 - Specify Folder for fonts `--fonts` (if you need to generate images from one or multiple different fonts)
-- Convert generating images to grayscale `--grayscale `
+- Generate grayscale images `--grayscale `
 - Generate random strings with minimum and maximum length `-rs`, `-minl` and `-maxl` args
 
 ## How does it work?
@@ -161,7 +161,7 @@ Generate just numbers with minimum length 1, maximum length 3 and convert them t
 
 Generate special ID numbers with regex and specify background images:
 
-`python trdg -w 1 -f 64 -rk -k 25 --fit --background 4 --regex "[0-9]{4}/[0-9]{3}" --fonts fonts/latin --count 25 --images_dir pictures/id/`
+`python trdg -w 1 -f 64 -rk -k 25 --fit --background 4 --regex "[0-9]{4}/[0-9]{3}" --fonts fonts/latin --count 25 --images pictures/id/`
 
 **The project does not require TensorFlow to run if you aren't using this feature**
 

@@ -170,11 +170,11 @@ def parse_arguments():
         "--background",
         type=int,
         nargs="?",
-        help="Define what kind of background to use. 0: Gaussian Noise, 1: Plain white, 2: Quasicrystal, 3: random noise vs white, 4: Pictures",
+        help="Define what kind of background to use. 0: Gaussian Noise, 1: Plain white, 2: Quasicrystal, 3: Pictures",
         default=0,
     )
     parser.add_argument(
-        "--images_dir",
+        "--images",
         type=str,
         nargs="?",
         help="Define path to the folder whene generating background with images.",
@@ -406,7 +406,7 @@ def main():
                 [args.margins] * string_count,
                 [args.fit] * string_count,
                 [args.grayscale] * string_count,
-                [args.images_dir] * string_count
+                [args.images] * string_count
             )
     ), total=args.count):
         pass

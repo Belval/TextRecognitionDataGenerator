@@ -47,7 +47,7 @@ class FakeTextDataGenerator(object):
         margins,
         fit,
         grayscale=False,
-        images_dir="",
+        images="",
     ):
         image = None
 
@@ -124,7 +124,7 @@ class FakeTextDataGenerator(object):
         elif background_type == 2:
             background = background_generator.quasicrystal(background_height, background_width)
         else:
-            background = background_generator.picture(background_height, background_width, images_dir)
+            background = background_generator.picture(background_height, background_width, images)
 
         #############################
         # Place text with alignment #
