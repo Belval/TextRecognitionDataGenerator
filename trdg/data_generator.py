@@ -1,8 +1,6 @@
 import os
 import random as rnd
-
 from PIL import Image, ImageFilter
-import numpy as np
 
 from trdg import computer_text_generator, background_generator, distorsion_generator
 
