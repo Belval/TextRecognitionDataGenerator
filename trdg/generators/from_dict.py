@@ -66,5 +66,7 @@ class GeneratorFromDict:
 
     def next(self):
         if self.generator.generated_count >= 999:
-            self.generator.strings = create_strings_from_dict(self.length, self.allow_variable, 1000, self.dict)
+            self.generator.strings = create_strings_from_dict(
+                self.length, self.allow_variable, 1000, self.dict
+            )
         return self.generator.next()

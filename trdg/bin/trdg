@@ -336,7 +336,11 @@ def main():
     if args.font:
         fonts = [args.font]
     else:
-        fonts = load_fonts(args.fonts)
+        if args.language == 'cn' and args.fonts == "fonts/latin":
+            # change the cn fonts if cn language is specified and fonts folder not changed
+            fonts = load_fonts("fonts/cn")
+        else:
+            fonts = load_fonts(args.fonts)
 
     # Creating synthetic sentences (or word)
     strings = []

@@ -63,12 +63,18 @@ def picture(height, width, image_dir):
     pictures = os.listdir(image_dir)
 
     if len(pictures) > 0:
-        pic = Image.open(os.path.join(image_dir, pictures[rnd.randint(0, len(pictures) - 1)]))
+        pic = Image.open(
+            os.path.join(image_dir, pictures[rnd.randint(0, len(pictures) - 1)])
+        )
 
         if pic.size[0] < width:
-            pic = pic.resize([width, int(pic.size[1] * (width / pic.size[0]))], Image.ANTIALIAS)
+            pic = pic.resize(
+                [width, int(pic.size[1] * (width / pic.size[0]))], Image.ANTIALIAS
+            )
         if pic.size[1] < height:
-            pic = pic.resize([int(pic.size[0] * (height / pic.size[1])), height], Image.ANTIALIAS)
+            pic = pic.resize(
+                [int(pic.size[0] * (height / pic.size[1])), height], Image.ANTIALIAS
+            )
 
         if pic.size[0] == width:
             x = 0

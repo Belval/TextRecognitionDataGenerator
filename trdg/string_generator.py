@@ -71,8 +71,13 @@ def create_strings_from_wikipedia(minimum_length, count, lang):
         # Only take a certain length
         lines = list(
             filter(
-                lambda s: len(s.split(" ")) > minimum_length and not "Wikipedia" in s and not "wikipedia" in s,
-                [" ".join(re.findall(r"[\w']+", s.strip()))[0:200] for s in soup.get_text().splitlines()],
+                lambda s: len(s.split(" ")) > minimum_length
+                and not "Wikipedia" in s
+                and not "wikipedia" in s,
+                [
+                    " ".join(re.findall(r"[\w']+", s.strip()))[0:200]
+                    for s in soup.get_text().splitlines()
+                ],
             )
         )
 
@@ -82,7 +87,9 @@ def create_strings_from_wikipedia(minimum_length, count, lang):
     return sentences[0:count]
 
 
-def create_strings_randomly(length, allow_variable, count, let, num, sym, lang, min_seq_len, max_seq_len):
+def create_strings_randomly(
+    length, allow_variable, count, let, num, sym, lang, min_seq_len, max_seq_len
+):
     """
         Create all strings by randomly sampling from a pool of characters.
     """
@@ -94,7 +101,9 @@ def create_strings_randomly(length, allow_variable, count, let, num, sym, lang, 
     pool = ""
     if let:
         if lang == "cn":
-            pool += "".join([chr(i) for i in range(19968, 40908)])  # Unicode range of CHK characters
+            pool += "".join(
+                [chr(i) for i in range(19968, 40908)]
+            )  # Unicode range of CHK characters
         else:
             pool += string.ascii_letters
     if num:

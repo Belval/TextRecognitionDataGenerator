@@ -63,11 +63,15 @@ class FakeTextDataGenerator(object):
                 raise ValueError("Vertical handwritten text is unavailable")
             image = handwritten_text_generator.generate(text, text_color)
         else:
-            image = computer_text_generator.generate(text, font, text_color, size, orientation, space_width, fit)
+            image = computer_text_generator.generate(
+                text, font, text_color, size, orientation, space_width, fit
+            )
 
         random_angle = rnd.randint(0 - skewing_angle, skewing_angle)
 
-        rotated_img = image.rotate(skewing_angle if not random_skew else random_angle, expand=1)
+        rotated_img = image.rotate(
+            skewing_angle if not random_skew else random_angle, expand=1
+        )
 
         #############################
         # Apply distorsion to image #
@@ -99,16 +103,24 @@ class FakeTextDataGenerator(object):
 
         # Horizontal text
         if orientation == 0:
-            new_width = int(distorted_img.size[0] * (float(size - vertical_margin) / float(distorted_img.size[1])))
-            resized_img = distorted_img.resize((new_width, size - vertical_margin), Image.ANTIALIAS)
+            new_width = int(
+                distorted_img.size[0]
+                * (float(size - vertical_margin) / float(distorted_img.size[1]))
+            )
+            resized_img = distorted_img.resize(
+                (new_width, size - vertical_margin), Image.ANTIALIAS
+            )
             background_width = width if width > 0 else new_width + horizontal_margin
             background_height = size
         # Vertical text
         elif orientation == 1:
             new_height = int(
-                float(distorted_img.size[1]) * (float(size - horizontal_margin) / float(distorted_img.size[0]))
+                float(distorted_img.size[1])
+                * (float(size - horizontal_margin) / float(distorted_img.size[0]))
             )
-            resized_img = distorted_img.resize((size - horizontal_margin, new_height), Image.ANTIALIAS)
+            resized_img = distorted_img.resize(
+                (size - horizontal_margin, new_height), Image.ANTIALIAS
+            )
             background_width = size
             background_height = new_height + vertical_margin
         else:
@@ -118,13 +130,21 @@ class FakeTextDataGenerator(object):
         # Generate background image #
         #############################
         if background_type == 0:
-            background = background_generator.gaussian_noise(background_height, background_width)
+            background = background_generator.gaussian_noise(
+                background_height, background_width
+            )
         elif background_type == 1:
-            background = background_generator.plain_white(background_height, background_width)
+            background = background_generator.plain_white(
+                background_height, background_width
+            )
         elif background_type == 2:
-            background = background_generator.quasicrystal(background_height, background_width)
+            background = background_generator.quasicrystal(
+                background_height, background_width
+            )
         else:
-            background = background_generator.picture(background_height, background_width, images)
+            background = background_generator.picture(
+                background_height, background_width, images
+            )
 
         #############################
         # Place text with alignment #
@@ -135,9 +155,17 @@ class FakeTextDataGenerator(object):
         if alignment == 0 or width == -1:
             background.paste(resized_img, (margin_left, margin_top), resized_img)
         elif alignment == 1:
-            background.paste(resized_img, (int(background_width / 2 - new_text_width / 2), margin_top), resized_img)
+            background.paste(
+                resized_img,
+                (int(background_width / 2 - new_text_width / 2), margin_top),
+                resized_img,
+            )
         else:
-            background.paste(resized_img, (background_width - new_text_width - margin_right, margin_top), resized_img)
+            background.paste(
+                resized_img,
+                (background_width - new_text_width - margin_right, margin_top),
+                resized_img,
+            )
 
         ##################################
         # Apply Grayscale                #
@@ -149,7 +177,9 @@ class FakeTextDataGenerator(object):
         # Apply gaussian blur            #
         ##################################
         final_image = background.filter(
-            ImageFilter.GaussianBlur(radius=(blur if not random_blur else rnd.randint(0, blur)))
+            ImageFilter.GaussianBlur(
+                radius=(blur if not random_blur else rnd.randint(0, blur))
+            )
         )
 
         #####################################
