@@ -167,7 +167,7 @@ Generate special ID numbers with regex and specify background images:
 
 ## Create images with Chinese text
 
-It is simple! Just do `trdg -l cn -c 1000 -w 5 --fonts fonts/cn/`!
+It is simple! Just do `trdg -l cn -c 1000 -w 5`!
 
 Generated texts come both in simplified and traditional Chinese scripts.
 
