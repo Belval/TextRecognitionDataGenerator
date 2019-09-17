@@ -157,11 +157,11 @@ You can generate strings with regex specification. For example generate random p
 
 Generate just numbers with minimum length 1, maximum length 3 and convert them to grayscale:
 
-`python trdg -w 1 -f 64 -rs --include_numbers -minl 1 -maxl 3 -rk -k 25 --fit --background 1 --fonts fonts/latin --count 25 --grayscale`
+`trdg -w 1 -f 64 -rs --include_numbers -minl 1 -maxl 3 -rk -k 25 --fit --background 1 --fonts fonts/latin --count 25 --grayscale`
 
 Generate special ID numbers with regex and specify background images:
 
-`python trdg -w 1 -f 64 -rk -k 25 --fit --background 4 --regex "[0-9]{4}/[0-9]{3}" --fonts fonts/latin --count 25 --images pictures/id/`
+`trdg -w 1 -f 64 -rk -k 25 --fit --background 4 --regex "[0-9]{4}/[0-9]{3}" --fonts fonts/latin --count 25 --images pictures/id/`
 
 **The project does not require TensorFlow to run if you aren't using this feature**
 

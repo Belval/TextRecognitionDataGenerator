@@ -33,7 +33,11 @@ class GeneratorFromRandom:
         space_width=1.0,
         margins=(5, 5, 5, 5),
         fit=False,
+        min_seq_len=2,
+        max_seq_len=10,
     ):
+        self.min_seq_len = 2
+        self.max_seq_len = 10
         self.count = count
         self.length = length
         self.allow_variable = allow_variable
@@ -90,5 +94,7 @@ class GeneratorFromRandom:
                 self.use_numbers,
                 self.use_symbols,
                 self.language,
+                self.min_seq_len,
+                self.max_seq_len,
             )
         return self.generator.next()

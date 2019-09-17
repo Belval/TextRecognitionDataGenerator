@@ -63,9 +63,9 @@ def picture(height, width, image_dir):
     pictures = os.listdir(image_dir)
 
     if len(pictures) > 0:
-        pic = Image.open(
-            os.path.join(image_dir, pictures[rnd.randrange(0, len(pictures))])
-        )
+        picture_name = pictures[rnd.randrange(0, len(pictures))]
+
+        pic = Image.open(os.path.join(image_dir, picture_name))
 
         if pic.size[0] < width:
             pic = pic.resize(
