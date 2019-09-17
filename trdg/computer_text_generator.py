@@ -20,7 +20,7 @@ def _generate_horizontal_text(text, font, text_color, font_size, space_width, fi
     try:
         image_font = ImageFont.truetype(font=font, size=font_size)
     except:
-        raise Exception(f"Unable to read font {font}!")
+        raise Exception("Unable to read font!")
 
     words = text.split(" ")
     space_width = image_font.getsize(" ")[0] * space_width
