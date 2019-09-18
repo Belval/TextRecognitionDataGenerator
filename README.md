@@ -161,7 +161,7 @@ Generate just numbers with minimum length 1, maximum length 3 and convert them t
 
 Generate special ID numbers with regex and specify background images:
 
-`trdg -w 1 -f 64 -rk -k 25 --fit --background 4 --regex "[0-9]{4}/[0-9]{3}" --fonts fonts/latin --count 25 --images pictures/id/`
+`trdg -w 1 -f 64 -rk -k 25 --fit --background 3 --regex "[0-9]{4}/[0-9]{3}" --fonts fonts/latin --count 25 --images pictures/id/`
 
 **The project does not require TensorFlow to run if you aren't using this feature**
 
