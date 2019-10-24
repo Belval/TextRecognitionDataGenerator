@@ -260,6 +260,9 @@ def parse_arguments():
         "-ft", "--font", type=str, nargs="?", help="Define font to be used"
     )
     parser.add_argument(
+        "-fd", "--font_dir", type=str, nargs="?", help="Define a font directory to be used"
+    )
+    parser.add_argument(
         "-ca",
         "--case",
         type=str,
@@ -288,13 +291,15 @@ def main():
     lang_dict = load_dict(args.language)
 
     # Create font (path) list
-    if not args.font:
-        fonts = load_fonts(args.language)
-    else:
+    if args.font_dir:
+        fonts = [os.path.join(args.font_dir, p) for p in os.listdir(args.font_dir)]
+    elif args.font:
         if os.path.isfile(args.font):
             fonts = [args.font]
         else:
             sys.exit("Cannot open font")
+    else:
+        fonts = load_fonts(args.language)
 
     # Creating synthetic sentences (or word)
     strings = []

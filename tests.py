@@ -785,6 +785,33 @@ class CommandLineInterface(unittest.TestCase):
         self.assertTrue(len(os.listdir("tests/out/")) == 0)
         empty_directory("tests/out/")
 
+    def test_personalfont_directory(self):
+        args = [
+            "./bin/trdg",
+            "--font_dir",
+            "fonts/latin/",
+            "-c",
+            "1",
+            "--output_dir",
+            "../tests/out/",
+        ]
+        subprocess.Popen(args, cwd="trdg/").wait()
+        self.assertTrue(len(os.listdir("tests/out/")) == 1)
+        empty_directory("tests/out/")
+
+    def test_personalfont_directory_unlocated(self):
+        args = [
+            "./bin/trdg",
+            "--font_dir",
+            "fonts/void/",
+            "-c",
+            "1",
+            "--output_dir",
+            "../tests/out/",
+        ]
+        subprocess.Popen(args, cwd="trdg/").wait()
+        self.assertTrue(len(os.listdir("tests/out/")) == 0)
+        empty_directory("tests/out/")
 
 #    def test_word_count(self):
 #        args = ['python3', 'run.py', '-c', '1', '-w', '5']
