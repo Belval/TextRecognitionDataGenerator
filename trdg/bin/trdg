@@ -292,7 +292,11 @@ def main():
 
     # Create font (path) list
     if args.font_dir:
-        fonts = [os.path.join(args.font_dir, p) for p in os.listdir(args.font_dir)]
+        fonts = [
+            os.path.join(args.font_dir, p)
+            for p in os.listdir(args.font_dir)
+            if os.path.splitext(p)[1] == ".ttf"
+        ]
     elif args.font:
         if os.path.isfile(args.font):
             fonts = [args.font]
