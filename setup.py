@@ -41,7 +41,7 @@ setup(
     packages=find_packages(exclude=["contrib", "docs", "tests"]),
     include_package_data=True,
     install_requires=[
-        "pillow>=5.1.0",
+        "pillow>=6.1.0",
         "numpy>=1.15.1,<1.17",
         "requests>=2.20.0",
         "opencv-python>=4.0.0.21",
