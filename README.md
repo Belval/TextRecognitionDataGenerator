@@ -31,6 +31,7 @@ docker run -v /output/path/:/app/out/ -t belval/trdg:latest trdg [args]
 The path (`/output/path/`) must be absolute.
 
 ## New
+- Add `--font_dir` argument to specify the fonts to use
 - Add python module
 - Move `run.py` to an executable python file ([`trdg/bin/trdg`](trdg/bin/trdg))
 - Add `--font` to use only one font for all the generated images (Thank you @JulienCoutault!)
