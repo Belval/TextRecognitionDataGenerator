@@ -25,6 +25,7 @@ class GeneratorFromStrings:
         text_color="#282828",
         orientation=0,
         space_width=1.0,
+        character_spacing=0,
         margins=(5, 5, 5, 5),
         fit=False,
     ):
@@ -48,6 +49,7 @@ class GeneratorFromStrings:
         self.text_color = text_color
         self.orientation = orientation
         self.space_width = space_width
+        self.character_spacing = character_spacing
         self.margins = margins
         self.fit = fit
         self.generated_count = 0
@@ -83,6 +85,7 @@ class GeneratorFromStrings:
             self.text_color,
             self.orientation,
             self.space_width,
+            self.character_spacing,
             self.margins,
             self.fit,
         ), self.strings[(self.generated_count - 1) % len(self.strings)]

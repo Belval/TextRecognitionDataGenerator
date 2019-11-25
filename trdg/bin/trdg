@@ -242,6 +242,14 @@ def parse_arguments():
         default=1.0,
     )
     parser.add_argument(
+        "-cs",
+        "--character_spacing",
+        type=int,
+        nargs="?",
+        help="Define the width of the spaces between characters. 2 means two pixels",
+        default=0,
+    )
+    parser.add_argument(
         "-m",
         "--margins",
         type=margins,
@@ -357,6 +365,7 @@ def main():
                 [args.text_color] * string_count,
                 [args.orientation] * string_count,
                 [args.space_width] * string_count,
+                [args.character_spacing] * string_count,
                 [args.margins] * string_count,
                 [args.fit] * string_count,
             ),
