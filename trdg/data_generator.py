@@ -47,6 +47,7 @@ class FakeTextDataGenerator(object):
         text_color,
         orientation,
         space_width,
+        character_spacing,
         margins,
         fit,
     ):
@@ -65,7 +66,7 @@ class FakeTextDataGenerator(object):
             image = handwritten_text_generator.generate(text, text_color)
         else:
             image = computer_text_generator.generate(
-                text, font, text_color, size, orientation, space_width, fit
+                text, font, text_color, size, orientation, space_width, character_spacing, fit
             )
 
         random_angle = rnd.randint(0 - skewing_angle, skewing_angle)

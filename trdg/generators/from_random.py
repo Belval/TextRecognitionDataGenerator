@@ -31,6 +31,7 @@ class GeneratorFromRandom:
         text_color="#282828",
         orientation=0,
         space_width=1.0,
+        character_spacing=0,
         margins=(5, 5, 5, 5),
         fit=False,
     ):
@@ -68,6 +69,7 @@ class GeneratorFromRandom:
             text_color,
             orientation,
             space_width,
+            character_spacing,
             margins,
             fit,
         )
