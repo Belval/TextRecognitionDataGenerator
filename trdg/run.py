@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import argparse
 import os, errno
 import random as rnd

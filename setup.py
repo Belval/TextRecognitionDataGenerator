@@ -12,7 +12,7 @@ with open(path.join(here, "README.md"), encoding="utf-8") as f:
 
 setup(
     name="trdg",
-    version="1.3.1",
+    version="1.3.2",
     description="TextRecognitionDataGenerator: A synthetic data generator for text recognition",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -48,5 +48,9 @@ setup(
         "tqdm>=4.23.0",
         "beautifulsoup4>=4.6.0"
     ],
-    scripts=["trdg/bin/trdg"],
+    entry_points={
+        "console_scripts": [
+            "trdg=trdg.run:main"
+        ],
+    },
 )
