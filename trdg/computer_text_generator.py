@@ -30,8 +30,11 @@ def _generate_horizontal_text(
     text_height = max([image_font.getsize(c)[1] for c in text])
 
     txt_img = Image.new("RGBA", (text_width, text_height), (0, 0, 0, 0))
+    txt_mask = Image.new("RGB", (text_width, text_height), (0, 0, 0))
 
-    txt_draw = ImageDraw.Draw(txt_img)
+    txt_img_draw = ImageDraw.Draw(txt_img)
+    txt_mask_draw = ImageDraw.Draw(txt_mask, mode="RGB")
+    txt_mask_draw.fontmode = "1"
 
     colors = [ImageColor.getrgb(c) for c in text_color.split(",")]
     c1, c2 = colors[0], colors[-1]
@@ -43,17 +46,23 @@ def _generate_horizontal_text(
     )
 
     for i, c in enumerate(text):
-        txt_draw.text(
+        txt_img_draw.text(
             (sum(char_widths[0:i]) + i * character_spacing, 0),
             c,
             fill=fill,
             font=image_font,
         )
+        txt_mask_draw.text(
+            (sum(char_widths[0:i]) + i * character_spacing, 0),
+            c,
+            fill=((i + 1) // (255 * 255), (i + 1) // 255, (i + 1) % 255),
+            font=image_font,
+        )
 
     if fit:
-        return txt_img.crop(txt_img.getbbox())
+        return txt_img.crop(txt_img.getbbox()), txt_mask.crop(txt_img.getbbox())
     else:
-        return txt_img
+        return txt_img, txt_mask
 
 
 def _generate_vertical_text(
@@ -70,8 +79,10 @@ def _generate_vertical_text(
     text_height = sum(char_heights) + character_spacing * len(text)
 
     txt_img = Image.new("RGBA", (text_width, text_height), (0, 0, 0, 0))
+    txt_mask = Image.new("RGBA", (text_width, text_height), (0, 0, 0, 0))
 
-    txt_draw = ImageDraw.Draw(txt_img)
+    txt_img_draw = ImageDraw.Draw(txt_img)
+    txt_mask_draw = ImageDraw.Draw(txt_img)
 
     colors = [ImageColor.getrgb(c) for c in text_color.split(",")]
     c1, c2 = colors[0], colors[-1]
@@ -83,14 +94,20 @@ def _generate_vertical_text(
     )
 
     for i, c in enumerate(text):
-        txt_draw.text(
+        txt_img_draw.text(
             (0, sum(char_heights[0:i]) + i * character_spacing),
             c,
             fill=fill,
             font=image_font,
         )
+        txt_mask_draw.text(
+            (0, sum(char_heights[0:i]) + i * character_spacing),
+            c,
+            fill=(i // (255 * 255), i // 255, i % 255),
+            font=image_font,
+        )
 
     if fit:
-        return txt_img.crop(txt_img.getbbox())
+        return txt_img.crop(txt_img.getbbox()), txt_mask.crop(txt_img.getbbox())
     else:
-        return txt_img
+        return txt_img, txt_mask

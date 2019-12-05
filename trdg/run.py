@@ -1,5 +1,8 @@
 import argparse
 import os, errno
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
 import random as rnd
 import string
 import sys
@@ -181,6 +184,13 @@ def parse_arguments():
         "--name_format",
         type=int,
         help="Define how the produced files will be named. 0: [TEXT]_[ID].[EXT], 1: [ID]_[TEXT].[EXT] 2: [ID].[EXT] + one file labels.txt containing id-to-label mappings",
+        default=0,
+    )
+    parser.add_argument(
+        "-om",
+        "--output_mask",
+        type=int,
+        help="Define if the generator will return masks for the text",
         default=0,
     )
     parser.add_argument(
@@ -366,6 +376,7 @@ def main():
                 [args.character_spacing] * string_count,
                 [args.margins] * string_count,
                 [args.fit] * string_count,
+                [args.output_mask] * string_count,
             ),
         ),
         total=args.count,
