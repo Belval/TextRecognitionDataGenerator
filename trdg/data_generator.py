@@ -3,11 +3,7 @@ import random as rnd
 
 from PIL import Image, ImageFilter
 
-from trdg import (
-    computer_text_generator,
-    background_generator,
-    distorsion_generator,
-)
+from trdg import computer_text_generator, background_generator, distorsion_generator
 
 try:
     from trdg import handwritten_text_generator
@@ -66,7 +62,14 @@ class FakeTextDataGenerator(object):
             image = handwritten_text_generator.generate(text, text_color)
         else:
             image = computer_text_generator.generate(
-                text, font, text_color, size, orientation, space_width, character_spacing, fit
+                text,
+                font,
+                text_color,
+                size,
+                orientation,
+                space_width,
+                character_spacing,
+                fit,
             )
 
         random_angle = rnd.randint(0 - skewing_angle, skewing_angle)

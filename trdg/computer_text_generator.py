@@ -3,7 +3,9 @@ import random as rnd
 from PIL import Image, ImageColor, ImageFont, ImageDraw, ImageFilter
 
 
-def generate(text, font, text_color, font_size, orientation, space_width, character_spacing, fit):
+def generate(
+    text, font, text_color, font_size, orientation, space_width, character_spacing, fit
+):
     if orientation == 0:
         return _generate_horizontal_text(
             text, font, text_color, font_size, space_width, character_spacing, fit
@@ -16,14 +18,14 @@ def generate(text, font, text_color, font_size, orientation, space_width, charac
         raise ValueError("Unknown orientation " + str(orientation))
 
 
-def _generate_horizontal_text(text, font, text_color, font_size, space_width, character_spacing, fit):
+def _generate_horizontal_text(
+    text, font, text_color, font_size, space_width, character_spacing, fit
+):
     image_font = ImageFont.truetype(font=font, size=font_size)
 
     space_width = int(image_font.getsize(" ")[0] * space_width)
 
-    char_widths = [
-        image_font.getsize(c)[0] if c != " " else space_width for c in text
-    ]
+    char_widths = [image_font.getsize(c)[0] if c != " " else space_width for c in text]
     text_width = sum(char_widths) + character_spacing * (len(text) - 1)
     text_height = max([image_font.getsize(c)[1] for c in text])
 
@@ -54,7 +56,9 @@ def _generate_horizontal_text(text, font, text_color, font_size, space_width, ch
         return txt_img
 
 
-def _generate_vertical_text(text, font, text_color, font_size, space_width, character_spacing, fit):
+def _generate_vertical_text(
+    text, font, text_color, font_size, space_width, character_spacing, fit
+):
     image_font = ImageFont.truetype(font=font, size=font_size)
 
     space_height = int(image_font.getsize(" ")[1] * space_width)
@@ -79,7 +83,12 @@ def _generate_vertical_text(text, font, text_color, font_size, space_width, char
     )
 
     for i, c in enumerate(text):
-        txt_draw.text((0, sum(char_heights[0:i]) + i * character_spacing), c, fill=fill, font=image_font)
+        txt_draw.text(
+            (0, sum(char_heights[0:i]) + i * character_spacing),
+            c,
+            fill=fill,
+            font=image_font,
+        )
 
     if fit:
         return txt_img.crop(txt_img.getbbox())
