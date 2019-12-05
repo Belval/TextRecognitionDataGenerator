@@ -52,7 +52,7 @@ def _apply_func_distorsion(image, mask, vertical, horizontal, max_offset, func):
             # a breakage if img and mask don't match
             img_arr.shape[0] + (2 * max_offset if vertical else 0),
             img_arr.shape[1] + (2 * max_offset if horizontal else 0),
-            4,
+            3,
         )
     )
 
