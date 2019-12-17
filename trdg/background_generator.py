@@ -59,11 +59,11 @@ def picture(height, width):
     """
         Create a background with a picture
     """
-
-    pictures = os.listdir("./pictures")
+    script_path = os.path.split(os.path.realpath(__file__))[0]
+    pictures = os.listdir(os.path.join(script_path, "pictures"))
 
     if len(pictures) > 0:
-        pic = Image.open("./pictures/" + pictures[rnd.randint(0, len(pictures) - 1)])
+        pic = Image.open(os.path.join(script_path, "pictures", pictures[rnd.randint(0, len(pictures) - 1)]))
 
         if pic.size[0] < width:
             pic = pic.resize(
