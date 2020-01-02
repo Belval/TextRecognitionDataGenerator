@@ -150,6 +150,7 @@ class DataGenerator(unittest.TestCase):
             0,
             (5, 5, 5, 5),
             0,
+            0,
         )
 
         self.assertTrue(
@@ -183,6 +184,7 @@ class DataGenerator(unittest.TestCase):
             1,
             0,
             (5, 5, 5, 5),
+            0,
             0,
         )
 
@@ -218,6 +220,7 @@ class DataGenerator(unittest.TestCase):
             0,
             (5, 5, 5, 5),
             0,
+            0,
         )
 
         self.assertTrue(
@@ -251,6 +254,7 @@ class DataGenerator(unittest.TestCase):
             1,
             0,
             (5, 5, 5, 5),
+            0,
             0,
         )
 
@@ -286,6 +290,7 @@ class DataGenerator(unittest.TestCase):
             0,
             (5, 5, 5, 5),
             0,
+            0,
         )
 
         self.assertTrue(
@@ -319,6 +324,7 @@ class DataGenerator(unittest.TestCase):
             1,
             0,
             (5, 5, 5, 5),
+            0,
             0,
         )
 
@@ -354,6 +360,7 @@ class DataGenerator(unittest.TestCase):
             0,
             (5, 5, 5, 5),
             0,
+            0,
         )
 
         self.assertTrue(
@@ -388,6 +395,7 @@ class DataGenerator(unittest.TestCase):
             0,
             (5, 5, 5, 5),
             0,
+            0,
         )
 
         self.assertTrue(
@@ -421,6 +429,7 @@ class DataGenerator(unittest.TestCase):
             1,
             0,
             (5, 5, 5, 5),
+            0,
             0,
         )
 
@@ -457,6 +466,7 @@ class DataGenerator(unittest.TestCase):
                 0,
                 (5, 5, 5, 5),
                 0,
+                0,
             )
             raise Exception("Vertical handwritten did not throw")
         except ValueError:
@@ -486,6 +496,7 @@ class DataGenerator(unittest.TestCase):
             1,
             0,
             (5, 5, 5, 5),
+            0,
             0,
         )
 
@@ -521,6 +532,7 @@ class DataGenerator(unittest.TestCase):
             0,
             (5, 5, 5, 5),
             0,
+            0,
         )
 
         self.assertTrue(
@@ -554,6 +566,7 @@ class DataGenerator(unittest.TestCase):
             2,
             0,
             (5, 5, 5, 5),
+            0,
             0,
         )
 
@@ -590,6 +603,7 @@ class DataGenerator(unittest.TestCase):
                 0,
                 (5, 5, 5, 5),
                 0,
+                0,
             )
             raise Exception("Unknown orientation did not throw")
         except ValueError:
@@ -620,6 +634,7 @@ class DataGenerator(unittest.TestCase):
             0,
             (0, 0, 0, 0),
             1,
+            0,
         )
 
         self.assertTrue(
@@ -662,18 +677,6 @@ class DataGenerator(unittest.TestCase):
         )
 
         os.remove("tests/out/white_background.jpg")
-
-    def test_generate_data_with_gaussian_background(self):
-        background_generator.gaussian_noise(64, 128).convert("RGB").save(
-            "tests/out/gaussian_background.jpg"
-        )
-
-        self.assertTrue(
-            md5("tests/out/gaussian_background.jpg")
-            == md5("tests/expected_results/gaussian_background.jpg")
-        )
-
-        os.remove("tests/out/gaussian_background.jpg")
 
     def test_generate_data_with_quasicrystal_background(self):
         bkgd = background_generator.quasicrystal(64, 128)

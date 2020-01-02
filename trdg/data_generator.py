@@ -46,7 +46,7 @@ class FakeTextDataGenerator(object):
         character_spacing,
         margins,
         fit,
-        output_masks,
+        output_mask,
     ):
         image = None
 
@@ -182,7 +182,6 @@ class FakeTextDataGenerator(object):
             background_mask.paste(
                 resized_mask,
                 (int(background_width / 2 - new_text_width / 2), margin_top),
-                resized_mask,
             )
         else:
             background_img.paste(
@@ -193,7 +192,6 @@ class FakeTextDataGenerator(object):
             background_mask.paste(
                 resized_mask,
                 (background_width - new_text_width - margin_right, margin_top),
-                resized_mask,
             )
 
         ##################################
@@ -226,6 +224,9 @@ class FakeTextDataGenerator(object):
         # Save the image
         if out_dir is not None:
             final_image.convert("RGB").save(os.path.join(out_dir, image_name))
-            final_mask.convert("RGB").save(os.path.join(out_dir, mask_name))
+            if output_mask == 1:
+                final_mask.convert("RGB").save(os.path.join(out_dir, mask_name))
         else:
-            return final_image.convert("RGB"), final_mask.convert("RGB")
+            if output_mask == 1:
+                return final_image.convert("RGB"), final_mask.convert("RGB")
+            return final_image.convert("RGB")
