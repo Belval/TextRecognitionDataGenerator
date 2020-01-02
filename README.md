@@ -32,8 +32,9 @@ The path (`/output/path/`) must be absolute.
 
 ## New
 - Add `--font_dir` argument to specify the fonts to use
+- Add `--output_mask` to output character-level mask for each image
+- Add `--character_spacing` to control space between characters (in pixels)
 - Add python module
-- Move `run.py` to an executable python file ([`trdg/bin/trdg`](trdg/bin/trdg))
 - Add `--font` to use only one font for all the generated images (Thank you @JulienCoutault!)
 - Add `--fit` and `--margins` for finer layout control
 - Change the text orientation using the `-or` parameter
@@ -174,7 +175,7 @@ If you want to add a new non-latin language, the amount of work is minimal.
 
 1. Create a new folder with your language [two-letters code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
 2. Add a .ttf font in it
-3. Edit `bin/trdg` to add an if statement in `load_fonts()`
+3. Edit `run.py` to add an if statement in `load_fonts()`
 4. Add a text file in `dicts` with the same two-letters code
 5. Run the tool as you normally would but add `-l` with your two-letters code
 

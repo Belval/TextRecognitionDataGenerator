@@ -12,7 +12,7 @@ with open(path.join(here, "README.md"), encoding="utf-8") as f:
 
 setup(
     name="trdg",
-    version="1.2.0",
+    version="1.3.2",
     description="TextRecognitionDataGenerator: A synthetic data generator for text recognition",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -41,12 +41,16 @@ setup(
     packages=find_packages(exclude=["contrib", "docs", "tests"]),
     include_package_data=True,
     install_requires=[
-        "pillow>=6.1.0",
+        "pillow==5.1.0",
         "numpy>=1.15.1,<1.17",
         "requests>=2.20.0",
         "opencv-python>=4.0.0.21",
         "tqdm>=4.23.0",
         "beautifulsoup4>=4.6.0"
     ],
-    scripts=["trdg/bin/trdg"],
+    entry_points={
+        "console_scripts": [
+            "trdg=trdg.run:main"
+        ],
+    },
 )

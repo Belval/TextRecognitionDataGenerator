@@ -1,7 +1,8 @@
-#!/usr/bin/env python
-
 import argparse
 import os, errno
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
 import random as rnd
 import string
 import sys
@@ -186,6 +187,13 @@ def parse_arguments():
         default=0,
     )
     parser.add_argument(
+        "-om",
+        "--output_mask",
+        type=int,
+        help="Define if the generator will return masks for the text",
+        default=0,
+    )
+    parser.add_argument(
         "-d",
         "--distorsion",
         type=int,
@@ -240,6 +248,14 @@ def parse_arguments():
         nargs="?",
         help="Define the width of the spaces between words. 2.0 means twice the normal space width",
         default=1.0,
+    )
+    parser.add_argument(
+        "-cs",
+        "--character_spacing",
+        type=int,
+        nargs="?",
+        help="Define the width of the spaces between characters. 2 means two pixels",
+        default=0,
     )
     parser.add_argument(
         "-m",
@@ -366,8 +382,10 @@ def main():
                 [args.text_color] * string_count,
                 [args.orientation] * string_count,
                 [args.space_width] * string_count,
+                [args.character_spacing] * string_count,
                 [args.margins] * string_count,
                 [args.fit] * string_count,
+                [args.output_mask] * string_count,
             ),
         ),
         total=args.count,

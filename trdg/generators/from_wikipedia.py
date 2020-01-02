@@ -27,8 +27,10 @@ class GeneratorFromWikipedia:
         text_color="#282828",
         orientation=0,
         space_width=1.0,
+        character_spacing=0,
         margins=(5, 5, 5, 5),
         fit=False,
+        output_mask=False,
     ):
         self.count = count
         self.minimum_length = minimum_length
@@ -52,8 +54,10 @@ class GeneratorFromWikipedia:
             text_color,
             orientation,
             space_width,
+            character_spacing,
             margins,
             fit,
+            output_mask,
         )
 
     def __iter__(self):
