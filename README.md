@@ -31,6 +31,7 @@ docker run -v /output/path/:/app/out/ -t belval/trdg:latest trdg [args]
 The path (`/output/path/`) must be absolute.
 
 ## New
+- Add `--output_mask` to output character-level mask for each image
 - Add `--character_spacing` to control space between characters (in pixels)
 - Add python module
 - Add `--font` to use only one font for all the generated images (Thank you @JulienCoutault!)
