@@ -187,6 +187,13 @@ def parse_arguments():
         default=0,
     )
     parser.add_argument(
+        "-om",
+        "--output_mask",
+        type=int,
+        help="Define if the generator will return masks for the text",
+        default=0,
+    )
+    parser.add_argument(
         "-d",
         "--distorsion",
         type=int,
@@ -369,6 +376,7 @@ def main():
                 [args.character_spacing] * string_count,
                 [args.margins] * string_count,
                 [args.fit] * string_count,
+                [args.output_mask] * string_count,
             ),
         ),
         total=args.count,

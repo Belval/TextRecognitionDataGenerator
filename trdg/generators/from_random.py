@@ -34,6 +34,7 @@ class GeneratorFromRandom:
         character_spacing=0,
         margins=(5, 5, 5, 5),
         fit=False,
+        output_mask=False,
     ):
         self.count = count
         self.length = length
@@ -72,6 +73,7 @@ class GeneratorFromRandom:
             character_spacing,
             margins,
             fit,
+            output_mask,
         )
 
     def __iter__(self):
