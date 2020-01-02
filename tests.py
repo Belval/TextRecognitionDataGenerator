@@ -805,7 +805,7 @@ class CommandLineInterface(unittest.TestCase):
 
     def test_personalfont_directory(self):
         args = [
-            "./bin/trdg",
+            "python3", "run.py",
             "--font_dir",
             "fonts/latin/",
             "-c",
@@ -819,7 +819,7 @@ class CommandLineInterface(unittest.TestCase):
 
     def test_personalfont_directory_unlocated(self):
         args = [
-            "./bin/trdg",
+            "python3", "run.py",
             "--font_dir",
             "fonts/void/",
             "-c",
