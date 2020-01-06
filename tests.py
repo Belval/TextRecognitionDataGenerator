@@ -132,7 +132,7 @@ class DataGenerator(unittest.TestCase):
             "tests/font.ttf",
             "tests/out/",
             64,
-            "jpg",
+            "png",
             0,
             False,
             0,
@@ -154,11 +154,11 @@ class DataGenerator(unittest.TestCase):
         )
 
         self.assertTrue(
-            md5("tests/out/TEST TEST TEST_0.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_0.jpg")
+            md5("tests/out/TEST TEST TEST_0.png")
+            == md5("tests/expected_results/TEST TEST TEST_0.png")
         )
 
-        os.remove("tests/out/TEST TEST TEST_0.jpg")
+        os.remove("tests/out/TEST TEST TEST_0.png")
 
     def test_generate_data_with_extension(self):
         FakeTextDataGenerator.generate(
@@ -202,7 +202,7 @@ class DataGenerator(unittest.TestCase):
             "tests/font.ttf",
             "tests/out/",
             64,
-            "jpg",
+            "png",
             15,
             False,
             0,
@@ -224,11 +224,11 @@ class DataGenerator(unittest.TestCase):
         )
 
         self.assertTrue(
-            md5("tests/out/TEST TEST TEST_2.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_2.jpg")
+            md5("tests/out/TEST TEST TEST_2.png")
+            == md5("tests/expected_results/TEST TEST TEST_2.png")
         )
 
-        os.remove("tests/out/TEST TEST TEST_2.jpg")
+        os.remove("tests/out/TEST TEST TEST_2.png")
 
     def test_generate_data_with_blur(self):
         FakeTextDataGenerator.generate(
@@ -237,7 +237,7 @@ class DataGenerator(unittest.TestCase):
             "tests/font.ttf",
             "tests/out/",
             64,
-            "jpg",
+            "png",
             0,
             False,
             3,
@@ -259,11 +259,11 @@ class DataGenerator(unittest.TestCase):
         )
 
         self.assertTrue(
-            md5("tests/out/TEST TEST TEST_3.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_3.jpg")
+            md5("tests/out/TEST TEST TEST_3.png")
+            == md5("tests/expected_results/TEST TEST TEST_3.png")
         )
 
-        os.remove("tests/out/TEST TEST TEST_3.jpg")
+        os.remove("tests/out/TEST TEST TEST_3.png")
 
     def test_generate_data_with_sine_distorsion(self):
         FakeTextDataGenerator.generate(
@@ -272,7 +272,7 @@ class DataGenerator(unittest.TestCase):
             "tests/font.ttf",
             "tests/out/",
             64,
-            "jpg",
+            "png",
             0,
             False,
             3,
@@ -294,11 +294,11 @@ class DataGenerator(unittest.TestCase):
         )
 
         self.assertTrue(
-            md5("tests/out/TEST TEST TEST_4.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_4.jpg")
+            md5("tests/out/TEST TEST TEST_4.png")
+            == md5("tests/expected_results/TEST TEST TEST_4.png")
         )
 
-        os.remove("tests/out/TEST TEST TEST_4.jpg")
+        os.remove("tests/out/TEST TEST TEST_4.png")
 
     def test_generate_data_with_cosine_distorsion(self):
         FakeTextDataGenerator.generate(
@@ -307,7 +307,7 @@ class DataGenerator(unittest.TestCase):
             "tests/font.ttf",
             "tests/out/",
             64,
-            "jpg",
+            "png",
             0,
             False,
             3,
@@ -329,11 +329,11 @@ class DataGenerator(unittest.TestCase):
         )
 
         self.assertTrue(
-            md5("tests/out/TEST TEST TEST_5.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_5.jpg")
+            md5("tests/out/TEST TEST TEST_5.png")
+            == md5("tests/expected_results/TEST TEST TEST_5.png")
         )
 
-        os.remove("tests/out/TEST TEST TEST_5.jpg")
+        os.remove("tests/out/TEST TEST TEST_5.png")
 
     def test_generate_data_with_left_alignment(self):
         FakeTextDataGenerator.generate(
@@ -342,7 +342,7 @@ class DataGenerator(unittest.TestCase):
             "tests/font.ttf",
             "tests/out/",
             64,
-            "jpg",
+            "png",
             0,
             False,
             0,
@@ -364,11 +364,11 @@ class DataGenerator(unittest.TestCase):
         )
 
         self.assertTrue(
-            md5("tests/out/TEST TEST TEST_6.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_6.jpg")
+            md5("tests/out/TEST TEST TEST_6.png")
+            == md5("tests/expected_results/TEST TEST TEST_6.png")
         )
 
-        os.remove("tests/out/TEST TEST TEST_6.jpg")
+        os.remove("tests/out/TEST TEST TEST_6.png")
 
     def test_generate_data_with_center_alignment(self):
         FakeTextDataGenerator.generate(
@@ -377,7 +377,7 @@ class DataGenerator(unittest.TestCase):
             "tests/font.ttf",
             "tests/out/",
             64,
-            "jpg",
+            "png",
             0,
             False,
             0,
@@ -399,11 +399,11 @@ class DataGenerator(unittest.TestCase):
         )
 
         self.assertTrue(
-            md5("tests/out/TEST TEST TEST_7.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_7.jpg")
+            md5("tests/out/TEST TEST TEST_7.png")
+            == md5("tests/expected_results/TEST TEST TEST_7.png")
         )
 
-        os.remove("tests/out/TEST TEST TEST_7.jpg")
+        os.remove("tests/out/TEST TEST TEST_7.png")
 
     def test_generate_data_with_right_alignment(self):
         FakeTextDataGenerator.generate(
@@ -412,7 +412,7 @@ class DataGenerator(unittest.TestCase):
             "tests/font.ttf",
             "tests/out/",
             64,
-            "jpg",
+            "png",
             0,
             False,
             0,
@@ -434,11 +434,11 @@ class DataGenerator(unittest.TestCase):
         )
 
         self.assertTrue(
-            md5("tests/out/TEST TEST TEST_8.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_8.jpg")
+            md5("tests/out/TEST TEST TEST_8.png")
+            == md5("tests/expected_results/TEST TEST TEST_8.png")
         )
 
-        os.remove("tests/out/TEST TEST TEST_8.jpg")
+        os.remove("tests/out/TEST TEST TEST_8.png")
 
     def test_raise_if_handwritten_and_vertical(self):
         try:
@@ -448,7 +448,7 @@ class DataGenerator(unittest.TestCase):
                 "tests/font.ttf",
                 "tests/out/",
                 64,
-                "jpg",
+                "png",
                 0,
                 False,
                 0,
@@ -479,7 +479,7 @@ class DataGenerator(unittest.TestCase):
             "tests/font.ttf",
             "tests/out/",
             32,
-            "jpg",
+            "png",
             0,
             False,
             0,
@@ -501,11 +501,11 @@ class DataGenerator(unittest.TestCase):
         )
 
         self.assertTrue(
-            md5("tests/out/TEST TEST TEST_10.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_10.jpg")
+            md5("tests/out/TEST TEST TEST_10.png")
+            == md5("tests/expected_results/TEST TEST TEST_10.png")
         )
 
-        os.remove("tests/out/TEST TEST TEST_10.jpg")
+        os.remove("tests/out/TEST TEST TEST_10.png")
 
     def test_generate_horizontal_text_with_variable_space(self):
         FakeTextDataGenerator.generate(
@@ -514,7 +514,7 @@ class DataGenerator(unittest.TestCase):
             "tests/font.ttf",
             "tests/out/",
             32,
-            "jpg",
+            "png",
             0,
             False,
             0,
@@ -536,11 +536,11 @@ class DataGenerator(unittest.TestCase):
         )
 
         self.assertTrue(
-            md5("tests/out/TEST TEST TEST_11.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_11.jpg")
+            md5("tests/out/TEST TEST TEST_11.png")
+            == md5("tests/expected_results/TEST TEST TEST_11.png")
         )
 
-        os.remove("tests/out/TEST TEST TEST_11.jpg")
+        os.remove("tests/out/TEST TEST TEST_11.png")
 
     def test_generate_vertical_text_with_variable_space(self):
         FakeTextDataGenerator.generate(
@@ -549,7 +549,7 @@ class DataGenerator(unittest.TestCase):
             "tests/font.ttf",
             "tests/out/",
             32,
-            "jpg",
+            "png",
             0,
             False,
             0,
@@ -571,11 +571,11 @@ class DataGenerator(unittest.TestCase):
         )
 
         self.assertTrue(
-            md5("tests/out/TEST TEST TEST_12.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_12.jpg")
+            md5("tests/out/TEST TEST TEST_12.png")
+            == md5("tests/expected_results/TEST TEST TEST_12.png")
         )
 
-        os.remove("tests/out/TEST TEST TEST_12.jpg")
+        os.remove("tests/out/TEST TEST TEST_12.png")
 
     def test_generate_text_with_unknown_orientation(self):
         try:
@@ -585,7 +585,7 @@ class DataGenerator(unittest.TestCase):
                 "tests/font.ttf",
                 "tests/out/",
                 32,
-                "jpg",
+                "png",
                 0,
                 False,
                 0,
@@ -616,7 +616,7 @@ class DataGenerator(unittest.TestCase):
             "tests/font.ttf",
             "tests/out/",
             64,
-            "jpg",
+            "png",
             0,
             False,
             0,
@@ -638,11 +638,11 @@ class DataGenerator(unittest.TestCase):
         )
 
         self.assertTrue(
-            md5("tests/out/TEST TEST TEST_13.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_13.jpg")
+            md5("tests/out/TEST TEST TEST_13.png")
+            == md5("tests/expected_results/TEST TEST TEST_13.png")
         )
 
-        os.remove("tests/out/TEST TEST TEST_13.jpg")
+        os.remove("tests/out/TEST TEST TEST_13.png")
 
     def test_generate_string_with_letters(self):
         s = create_strings_randomly(1, False, 1, True, False, False, "en")[0]
@@ -668,15 +668,15 @@ class DataGenerator(unittest.TestCase):
 
     def test_generate_data_with_white_background(self):
         background_generator.plain_white(64, 128).convert("RGB").save(
-            "tests/out/white_background.jpg"
+            "tests/out/white_background.png"
         )
 
         self.assertTrue(
-            md5("tests/out/white_background.jpg")
-            == md5("tests/expected_results/white_background.jpg")
+            md5("tests/out/white_background.png")
+            == md5("tests/expected_results/white_background.png")
         )
 
-        os.remove("tests/out/white_background.jpg")
+        os.remove("tests/out/white_background.png")
 
     def test_generate_data_with_quasicrystal_background(self):
         bkgd = background_generator.quasicrystal(64, 128)
