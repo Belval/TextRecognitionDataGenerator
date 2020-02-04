@@ -60,7 +60,7 @@ class FakeTextDataGenerator(object):
         if is_handwritten:
             if orientation == 1:
                 raise ValueError("Vertical handwritten text is unavailable")
-            image = handwritten_text_generator.generate(text, text_color)
+            image, mask = handwritten_text_generator.generate(text, text_color)
         else:
             image, mask = computer_text_generator.generate(
                 text,
