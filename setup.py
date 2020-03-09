@@ -41,10 +41,10 @@ setup(
     packages=find_packages(exclude=["contrib", "docs", "tests"]),
     include_package_data=True,
     install_requires=[
-        "pillow==5.1.0",
-        "numpy>=1.15.1,<1.17",
+        "pillow==7.0.0",
+        "numpy==1.17.3",
         "requests>=2.20.0",
-        "opencv-python>=4.0.0.21",
+        "opencv-python==4.2.0.32",
         "tqdm>=4.23.0",
         "beautifulsoup4>=4.6.0"
     ],
