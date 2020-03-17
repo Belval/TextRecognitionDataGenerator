@@ -831,6 +831,34 @@ class CommandLineInterface(unittest.TestCase):
         self.assertTrue(len(os.listdir("tests/out/")) == 0)
         empty_directory("tests/out/")
 
+    def test_personaldict(self):
+        args = [
+            "python3", "run.py",
+            "--dict",
+            "dicts/en.txt",
+            "-c",
+            "1",
+            "--output_dir",
+            "../tests/out/",
+        ]
+        subprocess.Popen(args, cwd="trdg/").wait()
+        self.assertTrue(len(os.listdir("tests/out/")) == 1)
+        empty_directory("tests/out/")
+
+    def test_personaldict_unlocated(self):
+        args = [
+            "python3", "run.py",
+            "--dict",
+            "dicts/unlocatedDict.txt",
+            "-c",
+            "1",
+            "--output_dir",
+            "../tests/out/",
+        ]
+        subprocess.Popen(args, cwd="trdg/").wait()
+        self.assertTrue(len(os.listdir("tests/out/")) == 0)
+        empty_directory("tests/out/")
+
 #    def test_word_count(self):
 #        args = ['python3', 'run.py', '-c', '1', '-w', '5']
 #        subprocess.Popen(args, cwd="trdg/").wait()
