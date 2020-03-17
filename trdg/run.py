@@ -285,6 +285,9 @@ def parse_arguments():
         nargs="?",
         help="Generate upper or lowercase only. arguments: upper or lower. Example: --case upper",
     )
+    parser.add_argument(
+        "-dt", "--dict", type=str, nargs="?", help="Define dictionary to be used"
+    )
     return parser.parse_args()
 
 
@@ -304,7 +307,15 @@ def main():
             raise
 
     # Creating word list
-    lang_dict = load_dict(args.language)
+    if args.dict:
+        lang_dict = []
+        if os.path.isfile(args.dict):
+            with open(args.dict, "r", encoding="utf8", errors="ignore") as d:
+                lang_dict = [l for l in d.read().splitlines() if len(l) > 0]
+        else:
+            sys.exit("Cannot open dict")
+    else:
+        lang_dict = load_dict(args.language)
 
     # Create font (path) list
     if args.font_dir:
