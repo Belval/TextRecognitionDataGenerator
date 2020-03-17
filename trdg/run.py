@@ -1,7 +1,8 @@
 import argparse
 import os, errno
 import sys
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 import random as rnd
 import string
@@ -276,7 +277,11 @@ def parse_arguments():
         "-ft", "--font", type=str, nargs="?", help="Define font to be used"
     )
     parser.add_argument(
-        "-fd", "--font_dir", type=str, nargs="?", help="Define a font directory to be used"
+        "-fd",
+        "--font_dir",
+        type=str,
+        nargs="?",
+        help="Define a font directory to be used",
     )
     parser.add_argument(
         "-ca",
@@ -286,7 +291,7 @@ def parse_arguments():
         help="Generate upper or lowercase only. arguments: upper or lower. Example: --case upper",
     )
     parser.add_argument(
-        "-dt", "--dict", type=str, nargs="?", help="Define dictionary to be used"
+        "-dt", "--dict", type=str, nargs="?", help="Define the dictionary to be used"
     )
     return parser.parse_args()
 

@@ -93,7 +93,7 @@ def _apply_func_distorsion(image, mask, vertical, horizontal, max_offset, func):
         ).convert("RGBA"),
         Image.fromarray(
             np.uint8(new_mask_arr_copy if horizontal and vertical else new_mask_arr)
-        ).convert("RGB")
+        ).convert("RGB"),
     )
 
 
@@ -139,5 +139,10 @@ def random(image, mask, vertical=False, horizontal=False):
     max_offset = int(image.height ** 0.4)
 
     return _apply_func_distorsion(
-        image, mask, vertical, horizontal, max_offset, (lambda x: rnd.randint(0, max_offset))
+        image,
+        mask,
+        vertical,
+        horizontal,
+        max_offset,
+        (lambda x: rnd.randint(0, max_offset)),
     )

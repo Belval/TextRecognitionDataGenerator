@@ -1,4 +1,4 @@
 .
-tensorflow>=1.13.1
+tensorflow>=1.13.1,<1.14
 matplotlib>=3.0.2
 seaborn>=0.9.0
