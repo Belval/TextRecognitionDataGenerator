@@ -162,7 +162,9 @@ class FakeTextDataGenerator(object):
             background_img = background_generator.picture(
                 background_height, background_width
             )
-        background_mask = Image.new("RGB", (background_width, background_height), (0, 0, 0))
+        background_mask = Image.new(
+            "RGB", (background_width, background_height), (0, 0, 0)
+        )
 
         #############################
         # Place text with alignment #

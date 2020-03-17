@@ -9,21 +9,34 @@ import matplotlib.mlab as mlab
 import seaborn
 from PIL import Image, ImageColor
 from collections import namedtuple
+import warnings
+
+warnings.filterwarnings("ignore")
+
 
 def download_model_weights():
     from pathlib import Path
-    import urllib.request 
+    import urllib.request
+
     cwd = os.path.dirname(os.path.abspath(__file__))
-    for k in ['model-29.data-00000-of-00001','model-29.index','model-29.meta','translation.pkl']:
-        download_dir = Path(cwd)/'handwritten_model/'
-        download_dir.mkdir(exist_ok=True,parents=True)
-        if (download_dir/f'{k}').exists(): continue
-        print(f'file {k} not found, downloading from git repo..')
+    for k in [
+        "model-29.data-00000-of-00001",
+        "model-29.index",
+        "model-29.meta",
+        "translation.pkl",
+    ]:
+        download_dir = Path(cwd) / "handwritten_model/"
+        download_dir.mkdir(exist_ok=True, parents=True)
+        if (download_dir / f"{k}").exists():
+            continue
+        print(f"file {k} not found, downloading from git repo..")
         urllib.request.urlretrieve(
-            f'https://raw.github.com/Belval/TextRecognitionDataGenerator/master/trdg/handwritten_model/{k}', 
-            download_dir/f'{k}')
-        print(f'file {k} saved to disk')
+            f"https://raw.github.com/Belval/TextRecognitionDataGenerator/master/trdg/handwritten_model/{k}",
+            download_dir / f"{k}",
+        )
+        print(f"file {k} saved to disk")
     return cwd
+
 
 def _sample(e, mu1, mu2, std1, std2, rho):
     cov = np.array([[std1 * std1, std1 * std2 * rho], [std1 * std2 * rho, std2 * std2]])
@@ -71,7 +84,9 @@ def _sample_text(sess, args_text, translation):
         "finish",
         "zero_states",
     ]
-    vs = namedtuple("Params", fields)(*[tf.compat.v1.get_collection(name)[0] for name in fields])
+    vs = namedtuple("Params", fields)(
+        *[tf.compat.v1.get_collection(name)[0] for name in fields]
+    )
 
     text = np.array([translation.get(c, 0) for c in args_text])
     sequence = np.eye(len(translation), dtype=np.float32)[text]
@@ -163,14 +178,20 @@ def _join_images(images):
 
 def generate(text, text_color):
     cd = download_model_weights()
-    with open(os.path.join(cd, os.path.join("handwritten_model", "translation.pkl")), "rb") as file:
+    with open(
+        os.path.join(cd, os.path.join("handwritten_model", "translation.pkl")), "rb"
+    ) as file:
         translation = pickle.load(file)
 
     config = tf.compat.v1.ConfigProto(device_count={"GPU": 0})
     tf.compat.v1.reset_default_graph()
     with tf.compat.v1.Session(config=config) as sess:
-        saver = tf.compat.v1.train.import_meta_graph(os.path.join(cd,"handwritten_model/model-29.meta"))
-        saver.restore(sess,os.path.join(cd,os.path.join("handwritten_model/model-29")))
+        saver = tf.compat.v1.train.import_meta_graph(
+            os.path.join(cd, "handwritten_model/model-29.meta")
+        )
+        saver.restore(
+            sess, os.path.join(cd, os.path.join("handwritten_model/model-29"))
+        )
         images = []
         colors = [ImageColor.getrgb(c) for c in text_color.split(",")]
         c1, c2 = colors[0], colors[-1]
@@ -203,13 +224,11 @@ def generate(text, text_color):
 
             canvas = plt.get_current_fig_manager().canvas
             canvas.draw()
-            
+
             s, (width, height) = canvas.print_to_buffer()
-            image = Image.frombytes(
-                "RGBA", (width, height), s
-            )
+            image = Image.frombytes("RGBA", (width, height), s)
             mask = Image.new("RGB", (width, height), (0, 0, 0))
-            
+
             images.append(_crop_white_borders(image))
 
             plt.close()
