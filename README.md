@@ -31,11 +31,12 @@ docker run -v /output/path/:/app/out/ -t belval/trdg:latest trdg [args]
 The path (`/output/path/`) must be absolute.
 
 ## New
+- Add `--dict` argument to specify a custom dictionary (Thank you [@luh0907](https://github.com/luh0907))
 - Add `--font_dir` argument to specify the fonts to use
 - Add `--output_mask` to output character-level mask for each image
 - Add `--character_spacing` to control space between characters (in pixels)
 - Add python module
-- Add `--font` to use only one font for all the generated images (Thank you @JulienCoutault!)
+- Add `--font` to use only one font for all the generated images (Thank you [@JulienCoutault](https://github.com/JulienCoutault)!)
 - Add `--fit` and `--margins` for finer layout control
 - Change the text orientation using the `-or` parameter
 - Specify text color range using `-tc '#000000,#FFFFFF'`, please note that the quotes are **necessary**
