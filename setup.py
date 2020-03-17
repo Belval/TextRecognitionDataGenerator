@@ -44,7 +44,7 @@ setup(
         "pillow==7.0.0",
         "numpy>=1.16.4,<1.17",
         "requests>=2.20.0",
-        "opencv-python>=4.0.0.21",
+        "opencv-python>=4.2.0.32",
         "tqdm>=4.23.0",
         "beautifulsoup4>=4.6.0"
     ],
