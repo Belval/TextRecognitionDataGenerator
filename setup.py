@@ -46,7 +46,8 @@ setup(
         "requests>=2.20.0",
         "opencv-python>=4.2.0.32",
         "tqdm>=4.23.0",
-        "beautifulsoup4>=4.6.0"
+        "beautifulsoup4>=4.6.0",
+        "diffimg==0.2.3",
     ],
     entry_points={
         "console_scripts": [
