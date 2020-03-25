@@ -12,6 +12,8 @@ try:
 except:
     pass
 
+from diffimg import diff
+
 from trdg.data_generator import FakeTextDataGenerator
 from trdg import background_generator
 from trdg.generators import (
@@ -26,14 +28,6 @@ from trdg.string_generator import (
     create_strings_from_wikipedia,
     create_strings_randomly,
 )
-
-
-def md5(filename):
-    hash_md5 = hashlib.md5()
-    with open(filename, "rb") as f:
-        hash_md5.update(f.read())
-    h = hash_md5.hexdigest()
-    return h
 
 
 def empty_directory(path):
@@ -154,8 +148,11 @@ class DataGenerator(unittest.TestCase):
         )
 
         self.assertTrue(
-            md5("tests/out/TEST TEST TEST_0.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_0.jpg")
+            diff(
+                "tests/out/TEST TEST TEST_0.jpg",
+                "tests/expected_results/TEST TEST TEST_0.jpg",
+                delete_diff_file=True
+            ) < 0.01
         )
 
         os.remove("tests/out/TEST TEST TEST_0.jpg")
@@ -189,8 +186,11 @@ class DataGenerator(unittest.TestCase):
         )
 
         self.assertTrue(
-            md5("tests/out/TEST TEST TEST_1.png")
-            == md5("tests/expected_results/TEST TEST TEST_1.png")
+            diff(
+                "tests/out/TEST TEST TEST_1.png",
+                "tests/expected_results/TEST TEST TEST_1.png",
+                delete_diff_file=True
+            ) < 0.01
         )
 
         os.remove("tests/out/TEST TEST TEST_1.png")
@@ -224,8 +224,11 @@ class DataGenerator(unittest.TestCase):
         )
 
         self.assertTrue(
-            md5("tests/out/TEST TEST TEST_2.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_2.jpg")
+            diff(
+                "tests/out/TEST TEST TEST_2.jpg",
+                "tests/expected_results/TEST TEST TEST_2.jpg",
+                delete_diff_file=True
+            ) < 0.01
         )
 
         os.remove("tests/out/TEST TEST TEST_2.jpg")
@@ -259,8 +262,11 @@ class DataGenerator(unittest.TestCase):
         )
 
         self.assertTrue(
-            md5("tests/out/TEST TEST TEST_3.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_3.jpg")
+            diff(
+                "tests/out/TEST TEST TEST_3.jpg",
+                "tests/expected_results/TEST TEST TEST_3.jpg",
+                delete_diff_file=True
+            ) < 0.01
         )
 
         os.remove("tests/out/TEST TEST TEST_3.jpg")
@@ -294,8 +300,11 @@ class DataGenerator(unittest.TestCase):
         )
 
         self.assertTrue(
-            md5("tests/out/TEST TEST TEST_4.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_4.jpg")
+            diff(
+                "tests/out/TEST TEST TEST_4.jpg",
+                "tests/expected_results/TEST TEST TEST_4.jpg",
+                delete_diff_file=True
+            ) < 0.01
         )
 
         os.remove("tests/out/TEST TEST TEST_4.jpg")
@@ -329,8 +338,11 @@ class DataGenerator(unittest.TestCase):
         )
 
         self.assertTrue(
-            md5("tests/out/TEST TEST TEST_5.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_5.jpg")
+            diff(
+                "tests/out/TEST TEST TEST_5.jpg",
+                "tests/expected_results/TEST TEST TEST_5.jpg",
+                delete_diff_file=True
+            ) < 0.01
         )
 
         os.remove("tests/out/TEST TEST TEST_5.jpg")
@@ -364,8 +376,11 @@ class DataGenerator(unittest.TestCase):
         )
 
         self.assertTrue(
-            md5("tests/out/TEST TEST TEST_6.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_6.jpg")
+            diff(
+                "tests/out/TEST TEST TEST_6.jpg",
+                "tests/expected_results/TEST TEST TEST_6.jpg",
+                delete_diff_file=True
+            ) < 0.01
         )
 
         os.remove("tests/out/TEST TEST TEST_6.jpg")
@@ -399,8 +414,11 @@ class DataGenerator(unittest.TestCase):
         )
 
         self.assertTrue(
-            md5("tests/out/TEST TEST TEST_7.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_7.jpg")
+            diff(
+                "tests/out/TEST TEST TEST_7.jpg",
+                "tests/expected_results/TEST TEST TEST_7.jpg",
+                delete_diff_file=True
+            ) < 0.01
         )
 
         os.remove("tests/out/TEST TEST TEST_7.jpg")
@@ -434,8 +452,11 @@ class DataGenerator(unittest.TestCase):
         )
 
         self.assertTrue(
-            md5("tests/out/TEST TEST TEST_8.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_8.jpg")
+            diff(
+                "tests/out/TEST TEST TEST_8.jpg",
+                "tests/expected_results/TEST TEST TEST_8.jpg",
+                delete_diff_file=True
+            ) < 0.01
         )
 
         os.remove("tests/out/TEST TEST TEST_8.jpg")
@@ -501,8 +522,11 @@ class DataGenerator(unittest.TestCase):
         )
 
         self.assertTrue(
-            md5("tests/out/TEST TEST TEST_10.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_10.jpg")
+            diff(
+                "tests/out/TEST TEST TEST_10.jpg",
+                "tests/expected_results/TEST TEST TEST_10.jpg",
+                delete_diff_file=True
+            ) < 0.01
         )
 
         os.remove("tests/out/TEST TEST TEST_10.jpg")
@@ -536,8 +560,11 @@ class DataGenerator(unittest.TestCase):
         )
 
         self.assertTrue(
-            md5("tests/out/TEST TEST TEST_11.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_11.jpg")
+            diff(
+                "tests/out/TEST TEST TEST_11.jpg",
+                "tests/expected_results/TEST TEST TEST_11.jpg",
+                delete_diff_file=True
+            ) < 0.01
         )
 
         os.remove("tests/out/TEST TEST TEST_11.jpg")
@@ -571,8 +598,11 @@ class DataGenerator(unittest.TestCase):
         )
 
         self.assertTrue(
-            md5("tests/out/TEST TEST TEST_12.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_12.jpg")
+            diff(
+                "tests/out/TEST TEST TEST_12.jpg",
+                "tests/expected_results/TEST TEST TEST_12.jpg",
+                delete_diff_file=True
+            ) < 0.01
         )
 
         os.remove("tests/out/TEST TEST TEST_12.jpg")
@@ -638,8 +668,11 @@ class DataGenerator(unittest.TestCase):
         )
 
         self.assertTrue(
-            md5("tests/out/TEST TEST TEST_13.jpg")
-            == md5("tests/expected_results/TEST TEST TEST_13.jpg")
+            diff(
+                "tests/out/TEST TEST TEST_13.jpg",
+                "tests/expected_results/TEST TEST TEST_13.jpg",
+                delete_diff_file=True
+            ) < 0.01
         )
 
         os.remove("tests/out/TEST TEST TEST_13.jpg")
@@ -672,8 +705,11 @@ class DataGenerator(unittest.TestCase):
         )
 
         self.assertTrue(
-            md5("tests/out/white_background.jpg")
-            == md5("tests/expected_results/white_background.jpg")
+            diff(
+                "tests/out/white_background.jpg",
+                "tests/expected_results/white_background.jpg",
+                delete_diff_img=True,
+            ) < 0.01
         )
 
         os.remove("tests/out/white_background.jpg")
