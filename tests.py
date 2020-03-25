@@ -705,6 +705,42 @@ class DataGenerator(unittest.TestCase):
 
         os.remove("tests/out/TEST TEST TEST_13.jpg")
 
+    def test_generate_data_with_word_split(self):
+        FakeTextDataGenerator.generate(
+            14,
+            "TEST TEST TEST",
+            "tests/font.ttf",
+            "tests/out/",
+            64,
+            "png",
+            0,
+            False,
+            0,
+            False,
+            1,
+            0,
+            0,
+            False,
+            0,
+            -1,
+            0,
+            "#010101",
+            0,
+            1,
+            0,
+            (5, 5, 5, 5),
+            0,
+            0,
+            True,
+        )
+
+        self.assertTrue(
+            md5("tests/out/TEST TEST TEST_14.jpg")
+            == md5("tests/expected_results/TEST TEST TEST_14.jpg")
+        )
+
+        os.remove("tests/out/TEST TEST TEST_0.jpg")
+
     def test_generate_string_with_letters(self):
         s = create_strings_randomly(1, False, 1, True, False, False, "en")[0]
 
