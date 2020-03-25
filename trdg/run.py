@@ -293,6 +293,12 @@ def parse_arguments():
     parser.add_argument(
         "-dt", "--dict", type=str, nargs="?", help="Define the dictionary to be used"
     )
+    parser.add_argument(
+        "-ws", "--word_split",
+        action="store_true",
+        help="Split on words instead of on characters (preserves ligatures, no character spacing)",
+        default=False,
+    )
     return parser.parse_args()
 
 
@@ -402,6 +408,7 @@ def main():
                 [args.margins] * string_count,
                 [args.fit] * string_count,
                 [args.output_mask] * string_count,
+                [args.word_split] * string_count,
             ),
         ),
         total=args.count,

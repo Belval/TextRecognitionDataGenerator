@@ -29,6 +29,7 @@ class GeneratorFromStrings:
         margins=(5, 5, 5, 5),
         fit=False,
         output_mask=False,
+        word_split=False,
     ):
         self.count = count
         self.strings = strings
@@ -54,6 +55,7 @@ class GeneratorFromStrings:
         self.margins = margins
         self.fit = fit
         self.output_mask = output_mask
+        self.word_split = word_split
         self.generated_count = 0
 
     def __iter__(self):
@@ -92,6 +94,7 @@ class GeneratorFromStrings:
                 self.margins,
                 self.fit,
                 self.output_mask,
+                self.word_split,
             ),
             self.strings[(self.generated_count - 1) % len(self.strings)],
         )

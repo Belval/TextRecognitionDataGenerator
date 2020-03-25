@@ -145,6 +145,7 @@ class DataGenerator(unittest.TestCase):
             (5, 5, 5, 5),
             0,
             0,
+            False,
         )
 
         self.assertTrue(
@@ -184,6 +185,7 @@ class DataGenerator(unittest.TestCase):
             (5, 5, 5, 5),
             0,
             0,
+            False,
         )
 
         self.assertTrue(
@@ -223,6 +225,7 @@ class DataGenerator(unittest.TestCase):
             (5, 5, 5, 5),
             0,
             0,
+            False,
         )
 
         self.assertTrue(
@@ -262,6 +265,7 @@ class DataGenerator(unittest.TestCase):
             (5, 5, 5, 5),
             0,
             0,
+            False,
         )
 
         self.assertTrue(
@@ -301,6 +305,7 @@ class DataGenerator(unittest.TestCase):
             (5, 5, 5, 5),
             0,
             0,
+            False,
         )
 
         self.assertTrue(
@@ -340,6 +345,7 @@ class DataGenerator(unittest.TestCase):
             (5, 5, 5, 5),
             0,
             0,
+            False,
         )
 
         self.assertTrue(
@@ -379,6 +385,7 @@ class DataGenerator(unittest.TestCase):
             (5, 5, 5, 5),
             0,
             0,
+            False,
         )
 
         self.assertTrue(
@@ -418,6 +425,7 @@ class DataGenerator(unittest.TestCase):
             (5, 5, 5, 5),
             0,
             0,
+            False,
         )
 
         self.assertTrue(
@@ -457,6 +465,7 @@ class DataGenerator(unittest.TestCase):
             (5, 5, 5, 5),
             0,
             0,
+            False,
         )
 
         self.assertTrue(
@@ -497,6 +506,7 @@ class DataGenerator(unittest.TestCase):
                 (5, 5, 5, 5),
                 0,
                 0,
+                False,
             )
             raise Exception("Vertical handwritten did not throw")
         except ValueError:
@@ -528,6 +538,7 @@ class DataGenerator(unittest.TestCase):
             (5, 5, 5, 5),
             0,
             0,
+            False,
         )
 
         self.assertTrue(
@@ -567,6 +578,7 @@ class DataGenerator(unittest.TestCase):
             (5, 5, 5, 5),
             0,
             0,
+            False,
         )
 
         self.assertTrue(
@@ -606,6 +618,7 @@ class DataGenerator(unittest.TestCase):
             (5, 5, 5, 5),
             0,
             0,
+            False,
         )
 
         self.assertTrue(
@@ -646,6 +659,7 @@ class DataGenerator(unittest.TestCase):
                 (5, 5, 5, 5),
                 0,
                 0,
+                False,
             )
             raise Exception("Unknown orientation did not throw")
         except ValueError:
@@ -677,6 +691,7 @@ class DataGenerator(unittest.TestCase):
             (0, 0, 0, 0),
             1,
             0,
+            False,
         )
 
         self.assertTrue(
@@ -689,6 +704,46 @@ class DataGenerator(unittest.TestCase):
         )
 
         os.remove("tests/out/TEST TEST TEST_13.jpg")
+
+    def test_generate_data_with_word_split(self):
+        FakeTextDataGenerator.generate(
+            14,
+            "TEST TEST TEST",
+            "tests/font.ttf",
+            "tests/out/",
+            64,
+            "png",
+            0,
+            False,
+            0,
+            False,
+            1,
+            0,
+            0,
+            False,
+            0,
+            -1,
+            0,
+            "#010101",
+            0,
+            1,
+            0,
+            (5, 5, 5, 5),
+            0,
+            0,
+            True,
+        )
+
+        self.assertTrue(
+            diff(
+                "tests/out/TEST TEST TEST_14.png",
+                "tests/expected_results/TEST TEST TEST_14.png",
+                delete_diff_file=True,
+            )
+            < 0.01
+        )
+
+        #os.remove("tests/out/TEST TEST TEST_14.jpg")
 
     def test_generate_string_with_letters(self):
         s = create_strings_randomly(1, False, 1, True, False, False, "en")[0]
