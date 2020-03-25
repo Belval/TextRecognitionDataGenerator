@@ -145,6 +145,7 @@ class DataGenerator(unittest.TestCase):
             (5, 5, 5, 5),
             0,
             0,
+            False,
         )
 
         self.assertTrue(
@@ -184,6 +185,7 @@ class DataGenerator(unittest.TestCase):
             (5, 5, 5, 5),
             0,
             0,
+            False,
         )
 
         self.assertTrue(
@@ -223,6 +225,7 @@ class DataGenerator(unittest.TestCase):
             (5, 5, 5, 5),
             0,
             0,
+            False,
         )
 
         self.assertTrue(
@@ -262,6 +265,7 @@ class DataGenerator(unittest.TestCase):
             (5, 5, 5, 5),
             0,
             0,
+            False,
         )
 
         self.assertTrue(
@@ -301,6 +305,7 @@ class DataGenerator(unittest.TestCase):
             (5, 5, 5, 5),
             0,
             0,
+            False,
         )
 
         self.assertTrue(
@@ -340,6 +345,7 @@ class DataGenerator(unittest.TestCase):
             (5, 5, 5, 5),
             0,
             0,
+            False,
         )
 
         self.assertTrue(
@@ -379,6 +385,7 @@ class DataGenerator(unittest.TestCase):
             (5, 5, 5, 5),
             0,
             0,
+            False,
         )
 
         self.assertTrue(
@@ -418,6 +425,7 @@ class DataGenerator(unittest.TestCase):
             (5, 5, 5, 5),
             0,
             0,
+            False,
         )
 
         self.assertTrue(
@@ -457,6 +465,7 @@ class DataGenerator(unittest.TestCase):
             (5, 5, 5, 5),
             0,
             0,
+            False,
         )
 
         self.assertTrue(
@@ -497,6 +506,7 @@ class DataGenerator(unittest.TestCase):
                 (5, 5, 5, 5),
                 0,
                 0,
+                False,
             )
             raise Exception("Vertical handwritten did not throw")
         except ValueError:
@@ -528,6 +538,7 @@ class DataGenerator(unittest.TestCase):
             (5, 5, 5, 5),
             0,
             0,
+            False,
         )
 
         self.assertTrue(
@@ -567,6 +578,7 @@ class DataGenerator(unittest.TestCase):
             (5, 5, 5, 5),
             0,
             0,
+            False,
         )
 
         self.assertTrue(
@@ -606,6 +618,7 @@ class DataGenerator(unittest.TestCase):
             (5, 5, 5, 5),
             0,
             0,
+            False,
         )
 
         self.assertTrue(
@@ -646,6 +659,7 @@ class DataGenerator(unittest.TestCase):
                 (5, 5, 5, 5),
                 0,
                 0,
+                False,
             )
             raise Exception("Unknown orientation did not throw")
         except ValueError:
@@ -677,6 +691,7 @@ class DataGenerator(unittest.TestCase):
             (0, 0, 0, 0),
             1,
             0,
+            False,
         )
 
         self.assertTrue(

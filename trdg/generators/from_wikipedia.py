@@ -31,6 +31,7 @@ class GeneratorFromWikipedia:
         margins=(5, 5, 5, 5),
         fit=False,
         output_mask=False,
+        word_split=False,
     ):
         self.count = count
         self.minimum_length = minimum_length
@@ -58,6 +59,7 @@ class GeneratorFromWikipedia:
             margins,
             fit,
             output_mask,
+            word_split,
         )
 
     def __iter__(self):
