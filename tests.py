@@ -151,8 +151,9 @@ class DataGenerator(unittest.TestCase):
             diff(
                 "tests/out/TEST TEST TEST_0.jpg",
                 "tests/expected_results/TEST TEST TEST_0.jpg",
-                delete_diff_file=True
-            ) < 0.01
+                delete_diff_file=True,
+            )
+            < 0.01
         )
 
         os.remove("tests/out/TEST TEST TEST_0.jpg")
@@ -189,8 +190,9 @@ class DataGenerator(unittest.TestCase):
             diff(
                 "tests/out/TEST TEST TEST_1.png",
                 "tests/expected_results/TEST TEST TEST_1.png",
-                delete_diff_file=True
-            ) < 0.01
+                delete_diff_file=True,
+            )
+            < 0.01
         )
 
         os.remove("tests/out/TEST TEST TEST_1.png")
@@ -227,8 +229,9 @@ class DataGenerator(unittest.TestCase):
             diff(
                 "tests/out/TEST TEST TEST_2.jpg",
                 "tests/expected_results/TEST TEST TEST_2.jpg",
-                delete_diff_file=True
-            ) < 0.01
+                delete_diff_file=True,
+            )
+            < 0.01
         )
 
         os.remove("tests/out/TEST TEST TEST_2.jpg")
@@ -265,8 +268,9 @@ class DataGenerator(unittest.TestCase):
             diff(
                 "tests/out/TEST TEST TEST_3.jpg",
                 "tests/expected_results/TEST TEST TEST_3.jpg",
-                delete_diff_file=True
-            ) < 0.01
+                delete_diff_file=True,
+            )
+            < 0.01
         )
 
         os.remove("tests/out/TEST TEST TEST_3.jpg")
@@ -303,8 +307,9 @@ class DataGenerator(unittest.TestCase):
             diff(
                 "tests/out/TEST TEST TEST_4.jpg",
                 "tests/expected_results/TEST TEST TEST_4.jpg",
-                delete_diff_file=True
-            ) < 0.01
+                delete_diff_file=True,
+            )
+            < 0.01
         )
 
         os.remove("tests/out/TEST TEST TEST_4.jpg")
@@ -341,8 +346,9 @@ class DataGenerator(unittest.TestCase):
             diff(
                 "tests/out/TEST TEST TEST_5.jpg",
                 "tests/expected_results/TEST TEST TEST_5.jpg",
-                delete_diff_file=True
-            ) < 0.01
+                delete_diff_file=True,
+            )
+            < 0.01
         )
 
         os.remove("tests/out/TEST TEST TEST_5.jpg")
@@ -379,8 +385,9 @@ class DataGenerator(unittest.TestCase):
             diff(
                 "tests/out/TEST TEST TEST_6.jpg",
                 "tests/expected_results/TEST TEST TEST_6.jpg",
-                delete_diff_file=True
-            ) < 0.01
+                delete_diff_file=True,
+            )
+            < 0.01
         )
 
         os.remove("tests/out/TEST TEST TEST_6.jpg")
@@ -417,8 +424,9 @@ class DataGenerator(unittest.TestCase):
             diff(
                 "tests/out/TEST TEST TEST_7.jpg",
                 "tests/expected_results/TEST TEST TEST_7.jpg",
-                delete_diff_file=True
-            ) < 0.01
+                delete_diff_file=True,
+            )
+            < 0.01
         )
 
         os.remove("tests/out/TEST TEST TEST_7.jpg")
@@ -455,8 +463,9 @@ class DataGenerator(unittest.TestCase):
             diff(
                 "tests/out/TEST TEST TEST_8.jpg",
                 "tests/expected_results/TEST TEST TEST_8.jpg",
-                delete_diff_file=True
-            ) < 0.01
+                delete_diff_file=True,
+            )
+            < 0.01
         )
 
         os.remove("tests/out/TEST TEST TEST_8.jpg")
@@ -525,8 +534,9 @@ class DataGenerator(unittest.TestCase):
             diff(
                 "tests/out/TEST TEST TEST_10.jpg",
                 "tests/expected_results/TEST TEST TEST_10.jpg",
-                delete_diff_file=True
-            ) < 0.01
+                delete_diff_file=True,
+            )
+            < 0.01
         )
 
         os.remove("tests/out/TEST TEST TEST_10.jpg")
@@ -563,8 +573,9 @@ class DataGenerator(unittest.TestCase):
             diff(
                 "tests/out/TEST TEST TEST_11.jpg",
                 "tests/expected_results/TEST TEST TEST_11.jpg",
-                delete_diff_file=True
-            ) < 0.01
+                delete_diff_file=True,
+            )
+            < 0.01
         )
 
         os.remove("tests/out/TEST TEST TEST_11.jpg")
@@ -601,8 +612,9 @@ class DataGenerator(unittest.TestCase):
             diff(
                 "tests/out/TEST TEST TEST_12.jpg",
                 "tests/expected_results/TEST TEST TEST_12.jpg",
-                delete_diff_file=True
-            ) < 0.01
+                delete_diff_file=True,
+            )
+            < 0.01
         )
 
         os.remove("tests/out/TEST TEST TEST_12.jpg")
@@ -671,8 +683,9 @@ class DataGenerator(unittest.TestCase):
             diff(
                 "tests/out/TEST TEST TEST_13.jpg",
                 "tests/expected_results/TEST TEST TEST_13.jpg",
-                delete_diff_file=True
-            ) < 0.01
+                delete_diff_file=True,
+            )
+            < 0.01
         )
 
         os.remove("tests/out/TEST TEST TEST_13.jpg")
@@ -708,8 +721,9 @@ class DataGenerator(unittest.TestCase):
             diff(
                 "tests/out/white_background.jpg",
                 "tests/expected_results/white_background.jpg",
-                delete_diff_img=True,
-            ) < 0.01
+                delete_diff_file=True,
+            )
+            < 0.01
         )
 
         os.remove("tests/out/white_background.jpg")
@@ -728,31 +742,76 @@ class CommandLineInterface(unittest.TestCase):
         empty_directory("tests/out_2/")
 
     def test_language_english(self):
-        args = ["python3", "run.py", "-l", "en", "-c", "1", "--output_dir", "../tests/out/"]
+        args = [
+            "python3",
+            "run.py",
+            "-l",
+            "en",
+            "-c",
+            "1",
+            "--output_dir",
+            "../tests/out/",
+        ]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
         empty_directory("tests/out/")
 
     def test_language_french(self):
-        args = ["python3", "run.py", "-l", "fr", "-c", "1", "--output_dir", "../tests/out/"]
+        args = [
+            "python3",
+            "run.py",
+            "-l",
+            "fr",
+            "-c",
+            "1",
+            "--output_dir",
+            "../tests/out/",
+        ]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
         empty_directory("tests/out/")
 
     def test_language_spanish(self):
-        args = ["python3", "run.py", "-l", "es", "-c", "1", "--output_dir", "../tests/out/"]
+        args = [
+            "python3",
+            "run.py",
+            "-l",
+            "es",
+            "-c",
+            "1",
+            "--output_dir",
+            "../tests/out/",
+        ]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
         empty_directory("tests/out/")
 
     def test_language_german(self):
-        args = ["python3", "run.py", "-l", "de", "-c", "1", "--output_dir", "../tests/out/"]
+        args = [
+            "python3",
+            "run.py",
+            "-l",
+            "de",
+            "-c",
+            "1",
+            "--output_dir",
+            "../tests/out/",
+        ]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
         empty_directory("tests/out/")
 
     def test_language_chinese(self):
-        args = ["python3", "run.py", "-l", "cn", "-c", "1", "--output_dir", "../tests/out/"]
+        args = [
+            "python3",
+            "run.py",
+            "-l",
+            "cn",
+            "-c",
+            "1",
+            "--output_dir",
+            "../tests/out/",
+        ]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
         empty_directory("tests/out/")
@@ -764,7 +823,16 @@ class CommandLineInterface(unittest.TestCase):
         empty_directory("tests/out/")
 
     def test_random_sequences_letter_only(self):
-        args = ["python3", "run.py", "-rs", "-let", "-c", "1", "--output_dir", "../tests/out/"]
+        args = [
+            "python3",
+            "run.py",
+            "-rs",
+            "-let",
+            "-c",
+            "1",
+            "--output_dir",
+            "../tests/out/",
+        ]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(
             all(
@@ -778,7 +846,16 @@ class CommandLineInterface(unittest.TestCase):
         empty_directory("tests/out/")
 
     def test_random_sequences_number_only(self):
-        args = ["python3", "run.py", "-rs", "-num", "-c", "1", "--output_dir", "../tests/out/"]
+        args = [
+            "python3",
+            "run.py",
+            "-rs",
+            "-num",
+            "-c",
+            "1",
+            "--output_dir",
+            "../tests/out/",
+        ]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(
             all(
@@ -792,7 +869,16 @@ class CommandLineInterface(unittest.TestCase):
         empty_directory("tests/out/")
 
     def test_random_sequences_symbols_only(self):
-        args = ["python3", "run.py", "-rs", "-sym", "-c", "1", "--output_dir", "../tests/out/"]
+        args = [
+            "python3",
+            "run.py",
+            "-rs",
+            "-sym",
+            "-c",
+            "1",
+            "--output_dir",
+            "../tests/out/",
+        ]
         subprocess.Popen(args, cwd="trdg/").wait()
         with open("tests/out/labels.txt", "r") as f:
             self.assertTrue(
@@ -813,7 +899,8 @@ class CommandLineInterface(unittest.TestCase):
 
     def test_personalfont(self):
         args = [
-            "python3", "run.py",
+            "python3",
+            "run.py",
             "--font",
             "fonts/latin/Aller_Bd.ttf",
             "-c",
@@ -827,7 +914,8 @@ class CommandLineInterface(unittest.TestCase):
 
     def test_personalfont_unlocated(self):
         args = [
-            "python3", "run.py",
+            "python3",
+            "run.py",
             "--font",
             "fonts/latin/unlocatedFont.ttf",
             "-c",
@@ -841,7 +929,8 @@ class CommandLineInterface(unittest.TestCase):
 
     def test_personalfont_directory(self):
         args = [
-            "python3", "run.py",
+            "python3",
+            "run.py",
             "--font_dir",
             "fonts/latin/",
             "-c",
@@ -855,7 +944,8 @@ class CommandLineInterface(unittest.TestCase):
 
     def test_personalfont_directory_unlocated(self):
         args = [
-            "python3", "run.py",
+            "python3",
+            "run.py",
             "--font_dir",
             "fonts/void/",
             "-c",
@@ -869,7 +959,8 @@ class CommandLineInterface(unittest.TestCase):
 
     def test_personaldict(self):
         args = [
-            "python3", "run.py",
+            "python3",
+            "run.py",
             "--dict",
             "dicts/en.txt",
             "-c",
@@ -883,7 +974,8 @@ class CommandLineInterface(unittest.TestCase):
 
     def test_personaldict_unlocated(self):
         args = [
-            "python3", "run.py",
+            "python3",
+            "run.py",
             "--dict",
             "dicts/unlocatedDict.txt",
             "-c",
@@ -894,6 +986,7 @@ class CommandLineInterface(unittest.TestCase):
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 0)
         empty_directory("tests/out/")
+
 
 #    def test_word_count(self):
 #        args = ['python3', 'run.py', '-c', '1', '-w', '5']
