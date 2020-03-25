@@ -31,6 +31,7 @@ docker run -v /output/path/:/app/out/ -t belval/trdg:latest trdg [args]
 The path (`/output/path/`) must be absolute.
 
 ## New
+- Add `--word_split` argument to split on word instead of per-character. This is useful for ligature-based languages
 - Add `--dict` argument to specify a custom dictionary (Thank you [@luh0907](https://github.com/luh0907))
 - Add `--font_dir` argument to specify the fonts to use
 - Add `--output_mask` to output character-level mask for each image
