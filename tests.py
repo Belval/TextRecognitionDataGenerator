@@ -735,11 +735,15 @@ class DataGenerator(unittest.TestCase):
         )
 
         self.assertTrue(
-            md5("tests/out/TEST TEST TEST_14.png")
-            == md5("tests/expected_results/TEST TEST TEST_14.png")
+            diff(
+                "tests/out/TEST TEST TEST_14.png",
+                "tests/expected_results/TEST TEST TEST_14.png",
+                delete_diff_file=True,
+            )
+            < 0.01
         )
 
-        os.remove("tests/out/TEST TEST TEST_14.png")
+        #os.remove("tests/out/TEST TEST TEST_14.jpg")
 
     def test_generate_string_with_letters(self):
         s = create_strings_randomly(1, False, 1, True, False, False, "en")[0]
