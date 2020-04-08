@@ -94,7 +94,7 @@ def _generate_vertical_text(
     txt_mask = Image.new("RGBA", (text_width, text_height), (0, 0, 0, 0))
 
     txt_img_draw = ImageDraw.Draw(txt_img)
-    txt_mask_draw = ImageDraw.Draw(txt_img)
+    txt_mask_draw = ImageDraw.Draw(txt_mask)
 
     colors = [ImageColor.getrgb(c) for c in text_color.split(",")]
     c1, c2 = colors[0], colors[-1]
