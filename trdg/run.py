@@ -23,7 +23,7 @@ from multiprocessing import Pool
 def margins(margin):
     margins = margin.split(",")
     if len(margins) == 1:
-        return [margins[0]] * 4
+        return [int(margins[0])] * 4
     return [int(m) for m in margins]
 
 
