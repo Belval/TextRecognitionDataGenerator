@@ -171,7 +171,7 @@ def parse_arguments():
         "--background",
         type=int,
         nargs="?",
-        help="Define what kind of background to use. 0: Gaussian Noise, 1: Plain white, 2: Quasicrystal, 3: Pictures",
+        help="Define what kind of background to use. 0: Gaussian Noise, 1: Plain white, 2: Quasicrystal, 3: Image",
         default=0,
     )
     parser.add_argument(
@@ -282,6 +282,14 @@ def parse_arguments():
         type=str,
         nargs="?",
         help="Define a font directory to be used",
+    )
+    parser.add_argument(
+        "-id",
+        "--image_dir",
+        type=str,
+        nargs="?",
+        help="Define an image directory to use when background is set to image",
+        default=os.path.join(os.path.split(os.path.realpath(__file__))[0], "images")
     )
     parser.add_argument(
         "-ca",
@@ -409,6 +417,7 @@ def main():
                 [args.fit] * string_count,
                 [args.output_mask] * string_count,
                 [args.word_split] * string_count,
+                [args.image_dir] * string_count,
             ),
         ),
         total=args.count,
