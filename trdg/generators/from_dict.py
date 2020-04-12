@@ -1,3 +1,5 @@
+import os
+
 from .from_strings import GeneratorFromStrings
 from ..data_generator import FakeTextDataGenerator
 from ..string_generator import create_strings_from_dict
@@ -33,6 +35,7 @@ class GeneratorFromDict:
         fit=False,
         output_mask=False,
         word_split=False,
+        image_dir=os.path.join("..", os.path.split(os.path.realpath(__file__))[0], "images"),
     ):
         self.count = count
         self.length = length
@@ -62,6 +65,7 @@ class GeneratorFromDict:
             fit,
             output_mask,
             word_split,
+            image_dir,
         )
 
     def __iter__(self):

@@ -36,4 +36,5 @@ RUN git clone https://github.com/python-pillow/Pillow.git \
  && python3 setup.py build_ext --enable-freetype install
 
 RUN python3 setup.py install
+RUN pip3 install -r requirements-hw.txt
 
