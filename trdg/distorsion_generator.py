@@ -18,10 +18,10 @@ def _apply_func_distorsion(image, mask, vertical, horizontal, max_offset, func):
 
     # FIXME: From looking at the code I think both are already RGBA
     rgb_image = image.convert("RGBA")
-    rgb_mask = image.convert("RGB")
+    rgb_mask = mask.convert("RGB")
 
     img_arr = np.array(rgb_image)
-    mask_arr = np.array(mask)
+    mask_arr = np.array(rgb_mask)
 
     vertical_offsets = [func(i) for i in range(img_arr.shape[1])]
     horizontal_offsets = [
