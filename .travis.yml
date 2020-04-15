@@ -1,11 +1,11 @@
 language: python
-python:
-  - "3.6"
-install:
-  - pip install -r requirements-hw.txt
-  - pip install codecov
-  - python3 setup.py install
+
+services:
+  - docker
+
+before_install:
+  - docker build -t trdg .
+
 script:
-  - python3 tests.py
-  - coverage run tests.py
+  - docker run -v $(pwd):/app/ -t trdg:latest coverage run tests.py
   - codecov

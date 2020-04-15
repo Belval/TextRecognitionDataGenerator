@@ -1,5 +1,5 @@
 # We use Ubuntu as base image
-FROM ubuntu:18.04
+FROM ubuntu
 
 WORKDIR /app
 
@@ -24,11 +24,11 @@ RUN apt-get update \
 # Set the locale
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
     locale-gen
-ENV LANG en_US.UTF-8  
-ENV LANGUAGE en_US:en  
-ENV LC_ALL en_US.UTF-8  
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
 
-COPY . /app
+COPY . /app/
 
 RUN git clone https://github.com/python-pillow/Pillow.git \
  && cd Pillow \
@@ -37,4 +37,5 @@ RUN git clone https://github.com/python-pillow/Pillow.git \
 
 RUN python3 setup.py install
 RUN pip3 install -r requirements-hw.txt
+RUN pip3 install codecov
 
