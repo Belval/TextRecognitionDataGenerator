@@ -55,17 +55,16 @@ def quasicrystal(height, width):
     return image.convert("RGBA")
 
 
-def picture(height, width):
+def image(height, width, image_dir):
     """
-        Create a background with a picture
+        Create a background with a image
     """
-    script_path = os.path.split(os.path.realpath(__file__))[0]
-    pictures = os.listdir(os.path.join(script_path, "pictures"))
+    images = os.listdir(image_dir)
 
-    if len(pictures) > 0:
+    if len(images) > 0:
         pic = Image.open(
             os.path.join(
-                script_path, "pictures", pictures[rnd.randint(0, len(pictures) - 1)]
+                image_dir, images[rnd.randint(0, len(images) - 1)]
             )
         )
 
@@ -89,4 +88,4 @@ def picture(height, width):
 
         return pic.crop((x, y, x + width, y + height))
     else:
-        raise Exception("No images where found in the pictures folder!")
+        raise Exception("No images where found in the images folder!")

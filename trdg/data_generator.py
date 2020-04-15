@@ -48,6 +48,7 @@ class FakeTextDataGenerator(object):
         fit,
         output_mask,
         word_split,
+        image_dir,
     ):
         image = None
 
@@ -161,8 +162,8 @@ class FakeTextDataGenerator(object):
                 background_height, background_width
             )
         else:
-            background_img = background_generator.picture(
-                background_height, background_width
+            background_img = background_generator.image(
+                background_height, background_width, image_dir
             )
         background_mask = Image.new(
             "RGB", (background_width, background_height), (0, 0, 0)

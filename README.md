@@ -119,14 +119,14 @@ But scanned document usually aren't that clear are they? Add `-bl` and `-rbl` to
 
 ### Background
 
-Maybe you want another background? Add `-b` to define one of the three available backgrounds: gaussian noise (0), plain white (1), quasicrystal (2) or picture (3).
+Maybe you want another background? Add `-b` to define one of the three available backgrounds: gaussian noise (0), plain white (1), quasicrystal (2) or image (3).
 
 ![15](samples/15.jpg "0")
 ![16](samples/16.jpg "1")
 ![17](samples/17.jpg "2")
 ![23](samples/23.jpg "3")
 
-When using picture background (3). A picture from the pictures/ folder will be randomly selected and the text will be written on it.
+When using image background (3). A image from the images/ folder will be randomly selected and the text will be written on it.
 
 ### Handwritten
 
