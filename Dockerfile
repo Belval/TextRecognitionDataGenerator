@@ -1,5 +1,5 @@
 # We use Ubuntu as base image
-FROM ubuntu
+FROM ubuntu:18.04
 
 WORKDIR /app
 
@@ -36,6 +36,7 @@ RUN git clone https://github.com/python-pillow/Pillow.git \
  && python3 setup.py build_ext --enable-freetype install
 
 RUN python3 setup.py install
-RUN pip3 install -r requirements-hw.txt
+RUN pip3 install -r requirements.txt
+RUN pip3 install pytest
 RUN pip3 install codecov
 

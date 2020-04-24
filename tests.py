@@ -761,6 +761,236 @@ class DataGenerator(unittest.TestCase):
 
         os.remove("tests/out/TEST TEST TEST_14.png")
 
+    def test_generate_data_with_first_name_format(self):
+        FakeTextDataGenerator.generate(
+            15,
+            "TEST TEST TEST",
+            "tests/font.ttf",
+            "tests/out/",
+            64,
+            "png",
+            0,
+            False,
+            0,
+            False,
+            1,
+            0,
+            0,
+            False,
+            0,
+            -1,
+            0,
+            "#010101",
+            0,
+            1,
+            0,
+            (5, 5, 5, 5),
+            0,
+            0,
+            True,
+            os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+        )
+
+        self.assertTrue(
+            diff(
+                "tests/out/TEST TEST TEST_15.png",
+                "tests/expected_results/TEST TEST TEST_15.png",
+                delete_diff_file=True,
+            )
+            < 0.01
+        )
+
+        os.remove("tests/out/TEST TEST TEST_15.png")
+
+    def test_generate_data_with_second_name_format(self):
+        FakeTextDataGenerator.generate(
+            16,
+            "TEST TEST TEST",
+            "tests/font.ttf",
+            "tests/out/",
+            64,
+            "png",
+            0,
+            False,
+            0,
+            False,
+            1,
+            0,
+            0,
+            False,
+            1,
+            -1,
+            0,
+            "#010101",
+            0,
+            1,
+            0,
+            (5, 5, 5, 5),
+            0,
+            0,
+            True,
+            os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+        )
+
+        self.assertTrue(
+            diff(
+                "tests/out/16_TEST TEST TEST.png",
+                "tests/expected_results/16_TEST TEST TEST.png",
+                delete_diff_file=True,
+            )
+            < 0.01
+        )
+
+        os.remove("tests/out/16_TEST TEST TEST.png")
+
+    def test_generate_data_with_third_name_format(self):
+        FakeTextDataGenerator.generate(
+            17,
+            "TEST TEST TEST",
+            "tests/font.ttf",
+            "tests/out/",
+            64,
+            "png",
+            0,
+            False,
+            0,
+            False,
+            1,
+            0,
+            0,
+            False,
+            2,
+            -1,
+            0,
+            "#010101",
+            0,
+            1,
+            0,
+            (5, 5, 5, 5),
+            0,
+            0,
+            True,
+            os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+        )
+
+        self.assertTrue(
+            diff(
+                "tests/out/17.png",
+                "tests/expected_results/17.png",
+                delete_diff_file=True,
+            )
+            < 0.01
+        )
+
+        os.remove("tests/out/17.png")
+
+    def test_generate_data_with_wrong_name_format(self):
+        FakeTextDataGenerator.generate(
+            18,
+            "TEST TEST TEST",
+            "tests/font.ttf",
+            "tests/out/",
+            64,
+            "png",
+            0,
+            False,
+            0,
+            False,
+            1,
+            0,
+            0,
+            False,
+            3,
+            -1,
+            0,
+            "#010101",
+            0,
+            1,
+            0,
+            (5, 5, 5, 5),
+            0,
+            0,
+            True,
+            os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+        )
+
+        self.assertTrue(
+            diff(
+                "tests/out/TEST TEST TEST_18.png",
+                "tests/expected_results/TEST TEST TEST_18.png",
+                delete_diff_file=True,
+            )
+            < 0.01
+        )
+
+        os.remove("tests/out/TEST TEST TEST_18.png")
+
+    def test_generate_data_with_quasicrystal_background_from_generate(self):
+        FakeTextDataGenerator.generate(
+            19,
+            "TEST TEST TEST",
+            "tests/font.ttf",
+            "tests/out/",
+            64,
+            "png",
+            0,
+            False,
+            0,
+            False,
+            2,
+            0,
+            0,
+            False,
+            0,
+            -1,
+            0,
+            "#010101",
+            0,
+            1,
+            0,
+            (5, 5, 5, 5),
+            0,
+            0,
+            True,
+            os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+        )
+
+        os.remove("tests/out/TEST TEST TEST_19.png")
+
+    def test_raise_if_invalid_orientation(self):
+        try:
+            FakeTextDataGenerator.generate(
+                20,
+                "TEST TEST TEST",
+                "tests/font.ttf",
+                "tests/out/",
+                64,
+                "jpg",
+                0,
+                False,
+                0,
+                False,
+                1,
+                0,
+                0,
+                False,
+                0,
+                1000,
+                2,
+                "#010101",
+                3,
+                1,
+                0,
+                (5, 5, 5, 5),
+                0,
+                0,
+                False,
+                os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+            )
+            raise Exception("Invalid orientation did not throw")
+        except ValueError:
+            pass
+
     def test_generate_string_with_letters(self):
         s = create_strings_randomly(1, False, 1, True, False, False, "en")[0]
 
@@ -1044,6 +1274,21 @@ class CommandLineInterface(unittest.TestCase):
         empty_directory("tests/out/")
 
     def test_personaldict_unlocated(self):
+        args = [
+            "python3",
+            "run.py",
+            "--dict",
+            "dicts/unlocatedDict.txt",
+            "-c",
+            "1",
+            "--output_dir",
+            "../tests/out/",
+        ]
+        subprocess.Popen(args, cwd="trdg/").wait()
+        self.assertTrue(len(os.listdir("tests/out/")) == 0)
+        empty_directory("tests/out/")
+
+    def test_first_name_format(self):
         args = [
             "python3",
             "run.py",
