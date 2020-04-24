@@ -991,6 +991,88 @@ class DataGenerator(unittest.TestCase):
         except ValueError:
             pass
 
+    def test_generate_data_with_arabic_text(self):
+        FakeTextDataGenerator.generate(
+            21,
+            "اختبار اختبار اختبار",
+            "tests/font_ar.ttf",
+            "tests/out/",
+            64,
+            "png",
+            0,
+            False,
+            0,
+            False,
+            1,
+            0,
+            0,
+            False,
+            1,
+            -1,
+            0,
+            "#010101",
+            0,
+            1,
+            0,
+            (5, 5, 5, 5),
+            0,
+            0,
+            True,
+            os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+        )
+
+        self.assertTrue(
+            diff(
+                "tests/out/21_اختبار اختبار اختبار.png",
+                "tests/expected_results/21_اختبار اختبار اختبار.png",
+                delete_diff_file=True,
+            )
+            < 0.01
+        )
+
+        os.remove("tests/out/21_اختبار اختبار اختبار.png")
+
+    def test_generate_data_with_hindi_text(self):
+        FakeTextDataGenerator.generate(
+            22,
+            "परीक्षा परीक्षा परीक्षा",
+            "tests/font_hi.ttf",
+            "tests/out/",
+            64,
+            "png",
+            0,
+            False,
+            0,
+            False,
+            1,
+            0,
+            0,
+            False,
+            1,
+            -1,
+            0,
+            "#010101",
+            0,
+            1,
+            0,
+            (5, 5, 5, 5),
+            0,
+            0,
+            True,
+            os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+        )
+
+        self.assertTrue(
+            diff(
+                "tests/out/22_परीक्षा परीक्षा परीक्षा.png",
+                "tests/expected_results/22_परीक्षा परीक्षा परीक्षा.png",
+                delete_diff_file=True,
+            )
+            < 0.01
+        )
+
+        os.remove("tests/out/22_परीक्षा परीक्षा परीक्षा.png")
+
     def test_generate_string_with_letters(self):
         s = create_strings_randomly(1, False, 1, True, False, False, "en")[0]
 
