@@ -195,6 +195,13 @@ def parse_arguments():
         default=0,
     )
     parser.add_argument(
+        "-obb",
+        "--output_bboxes",
+        type=int,
+        help="Define if the generator will return bounding boxes for the text",
+        default=0
+    )
+    parser.add_argument(
         "-d",
         "--distorsion",
         type=int,
@@ -418,6 +425,7 @@ def main():
                 [args.output_mask] * string_count,
                 [args.word_split] * string_count,
                 [args.image_dir] * string_count,
+                [args.output_bboxes] * string_count,
             ),
         ),
         total=args.count,

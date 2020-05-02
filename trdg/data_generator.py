@@ -4,6 +4,7 @@ import random as rnd
 from PIL import Image, ImageFilter
 
 from trdg import computer_text_generator, background_generator, distorsion_generator
+from trdg.utils import mask_to_bboxes
 
 try:
     from trdg import handwritten_text_generator
@@ -49,6 +50,7 @@ class FakeTextDataGenerator(object):
         output_mask,
         word_split,
         image_dir,
+        output_bboxes,
     ):
         image = None
 
@@ -126,7 +128,7 @@ class FakeTextDataGenerator(object):
             resized_img = distorted_img.resize(
                 (new_width, size - vertical_margin), Image.ANTIALIAS
             )
-            resized_mask = distorted_mask.resize((new_width, size - vertical_margin))
+            resized_mask = distorted_mask.resize((new_width, size - vertical_margin), Image.NEAREST)
             background_width = width if width > 0 else new_width + horizontal_margin
             background_height = size
         # Vertical text
@@ -139,7 +141,7 @@ class FakeTextDataGenerator(object):
                 (size - horizontal_margin, new_height), Image.ANTIALIAS
             )
             resized_mask = distorted_mask.resize(
-                (size - horizontal_margin, new_height), Image.ANTIALIAS
+                (size - horizontal_margin, new_height), Image.NEAREST
             )
             background_width = size
             background_height = new_height + vertical_margin
@@ -213,24 +215,29 @@ class FakeTextDataGenerator(object):
         # Generate name for resulting image #
         #####################################
         if name_format == 0:
-            image_name = "{}_{}.{}".format(text, str(index), extension)
-            mask_name = "{}_{}_mask.png".format(text, str(index))
+            name = "{}_{}".format(text, str(index))
         elif name_format == 1:
-            image_name = "{}_{}.{}".format(str(index), text, extension)
-            mask_name = "{}_{}_mask.png".format(str(index), text)
+            name = "{}_{}".format(str(index), text)
         elif name_format == 2:
-            image_name = "{}.{}".format(str(index), extension)
-            mask_name = "{}_mask.png".format(str(index))
+            name = str(index)
         else:
             print("{} is not a valid name format. Using default.".format(name_format))
-            image_name = "{}_{}.{}".format(text, str(index), extension)
-            mask_name = "{}_{}_mask.png".format(text, str(index))
+            name = "{}_{}".format(text, str(index))
+
+        image_name = "{}.{}".format(name, extension)
+        mask_name = "{}_mask.png".format(name)
+        box_name = "{}_boxes.txt".format(name)
 
         # Save the image
         if out_dir is not None:
             final_image.convert("RGB").save(os.path.join(out_dir, image_name))
             if output_mask == 1:
                 final_mask.convert("RGB").save(os.path.join(out_dir, mask_name))
+            if output_bboxes == 1:
+                bboxes = mask_to_bboxes(final_mask)
+                with open(os.path.join(out_dir, box_name), "w") as f:
+                    for bbox in bboxes:
+                        f.write(" ".join([str(v) for v in bbox]) + "\n")
         else:
             if output_mask == 1:
                 return final_image.convert("RGB"), final_mask.convert("RGB")

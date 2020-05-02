@@ -3,7 +3,8 @@ Utility functions
 """
 
 import os
-
+import numpy as np
+from PIL import Image
 
 def load_dict(lang):
     """Read the dictionnary file and returns all words in it.
@@ -36,3 +37,34 @@ def load_fonts(lang):
                 os.path.join(os.path.dirname(__file__), "fonts/latin")
             )
         ]
+
+def mask_to_bboxes(mask):
+    """Process the mask and turns it into a list of AABB bounding boxes
+    """
+
+    mask_arr = np.array(mask)
+
+    bboxes = []
+
+    i = 0
+    while True:
+        try:
+            color_tuple = ((i + 1) // (255 * 255), (i + 1) // 255, (i + 1) % 255)
+            letter = np.where(np.all(mask_arr == color_tuple, axis=-1))
+            bboxes.append((
+                max(0, np.min(letter[1]) - 1),
+                max(0, np.min(letter[0]) - 1),
+                min(mask_arr.shape[1] - 1, np.max(letter[1]) + 1),
+                min(mask_arr.shape[0] - 1, np.max(letter[0]) + 1),
+            ))
+            i += 1
+        except Exception as ex:
+            break
+
+    return bboxes        
+
+def draw_bounding_boxes(img, bboxes, color="green"):
+    d = ImageDraw.Draw(img)
+
+    for bbox in bboxes:
+        d.rectangle(bbox, outline=color)
