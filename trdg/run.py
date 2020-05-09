@@ -52,7 +52,7 @@ def parse_arguments():
         type=str,
         nargs="?",
         help="The language to use, should be fr (French), en (English), es (Spanish), de (German), ar (Arabic), cn (Chinese), or hi (Hindi)",
-        default="en"
+        default="en",
     )
     parser.add_argument(
         "-c",
@@ -289,7 +289,7 @@ def parse_arguments():
         type=str,
         nargs="?",
         help="Define an image directory to use when background is set to image",
-        default=os.path.join(os.path.split(os.path.realpath(__file__))[0], "images")
+        default=os.path.join(os.path.split(os.path.realpath(__file__))[0], "images"),
     )
     parser.add_argument(
         "-ca",
@@ -302,36 +302,14 @@ def parse_arguments():
         "-dt", "--dict", type=str, nargs="?", help="Define the dictionary to be used"
     )
     parser.add_argument(
-        "-ws", "--word_split",
+        "-ws",
+        "--word_split",
         action="store_true",
         help="Split on words instead of on characters (preserves ligatures, no character spacing)",
         default=False,
     )
     return parser.parse_args()
 
-def load_dict(lang):
-    """
-        Read the dictionnary file and returns all words in it.
-    """
-
-    lang_dict = []
-    with open(os.path.join('dicts', lang + '.txt'), 'r', encoding="utf8", errors='ignore') as d:
-        lang_dict = d.readlines()
-    return lang_dict
-
-def load_fonts(lang):
-    """
-        Load all fonts in the fonts directories
-    """
-
-    if lang == 'ar':
-        return [os.path.join('fonts/ar', font) for font in os.listdir('fonts/ar')]
-    elif lang == 'cn':
-        return [os.path.join('fonts/cn', font) for font in os.listdir('fonts/cn')]
-    elif lang == 'hi':
-        return [os.path.join('fonts/hi', font) for font in os.listdir('fonts/hi')]
-    else:
-        return [os.path.join('fonts/latin', font) for font in os.listdir('fonts/latin')]
 
 def main():
     """
@@ -403,10 +381,14 @@ def main():
             args.length, args.random, args.count, lang_dict
         )
 
-    if args.language == 'ar':
+    if args.language == "ar":
         from arabic_reshaper import ArabicReshaper
+
         arabic_reshaper = ArabicReshaper()
-        strings = [' '.join([arabic_reshaper.reshape(w) for w in s.split(' ')[::-1]]) for s in strings]
+        strings = [
+            " ".join([arabic_reshaper.reshape(w) for w in s.split(" ")[::-1]])
+            for s in strings
+        ]
     if args.case == "upper":
         strings = [x.upper() for x in strings]
     if args.case == "lower":
