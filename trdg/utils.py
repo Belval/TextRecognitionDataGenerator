@@ -19,7 +19,6 @@ def load_dict(lang):
         lang_dict = [l for l in d.read().splitlines() if len(l) > 0]
     return lang_dict
 
-
 def load_fonts(lang):
     """Load all fonts in the fonts directories
     """
