@@ -34,7 +34,9 @@ class GeneratorFromWikipedia:
         fit=False,
         output_mask=False,
         word_split=False,
-        image_dir=os.path.join("..", os.path.split(os.path.realpath(__file__))[0], "images"),
+        image_dir=os.path.join(
+            "..", os.path.split(os.path.realpath(__file__))[0], "images"
+        ),
     ):
         self.count = count
         self.minimum_length = minimum_length

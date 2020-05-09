@@ -4,11 +4,26 @@ from PIL import Image, ImageColor, ImageFont, ImageDraw, ImageFilter
 
 
 def generate(
-    text, font, text_color, font_size, orientation, space_width, character_spacing, fit, word_split
+    text,
+    font,
+    text_color,
+    font_size,
+    orientation,
+    space_width,
+    character_spacing,
+    fit,
+    word_split,
 ):
     if orientation == 0:
         return _generate_horizontal_text(
-            text, font, text_color, font_size, space_width, character_spacing, fit, word_split
+            text,
+            font,
+            text_color,
+            font_size,
+            space_width,
+            character_spacing,
+            fit,
+            word_split,
         )
     elif orientation == 1:
         return _generate_vertical_text(
@@ -27,14 +42,16 @@ def _generate_horizontal_text(
 
     if word_split:
         splitted_text = []
-        for w in text.split(' '):
+        for w in text.split(" "):
             splitted_text.append(w)
-            splitted_text.append(' ')
+            splitted_text.append(" ")
         splitted_text.pop()
     else:
         splitted_text = text
 
-    piece_widths = [image_font.getsize(p)[0] if p != " " else space_width for p in splitted_text]
+    piece_widths = [
+        image_font.getsize(p)[0] if p != " " else space_width for p in splitted_text
+    ]
     text_width = sum(piece_widths)
     if not word_split:
         text_width += character_spacing * (len(text) - 1)
