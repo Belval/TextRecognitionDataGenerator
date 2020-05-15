@@ -227,6 +227,8 @@ class FakeTextDataGenerator(object):
         image_name = "{}.{}".format(name, extension)
         mask_name = "{}_mask.png".format(name)
         box_name = "{}_boxes.txt".format(name)
+        tess_box_name = "{}.box".format(name)
+
 
         # Save the image
         if out_dir is not None:
@@ -238,6 +240,11 @@ class FakeTextDataGenerator(object):
                 with open(os.path.join(out_dir, box_name), "w") as f:
                     for bbox in bboxes:
                         f.write(" ".join([str(v) for v in bbox]) + "\n")
+            if output_bboxes == 2:
+                bboxes = mask_to_bboxes(final_mask)
+                with open(os.path.join(out_dir, tess_box_name), "w") as f:
+                    for bbox, char in zip(bboxes, text):
+                        f.write(" ".join([char] + [str(v) for v in bbox] + ['0']) + "\n")
         else:
             if output_mask == 1:
                 return final_image.convert("RGB"), final_mask.convert("RGB")

@@ -47,10 +47,18 @@ def mask_to_bboxes(mask):
     bboxes = []
 
     i = 0
+    space_thresh = 1
     while True:
         try:
             color_tuple = ((i + 1) // (255 * 255), (i + 1) // 255, (i + 1) % 255)
             letter = np.where(np.all(mask_arr == color_tuple, axis=-1))
+            if space_thresh == 0 and letter:
+                x1 = bboxes[-1][0] + 1
+                y1 = bboxes[-1][1] + 1
+                x2 = np.max(letter[1])
+                y2 = np.max(letter[0])
+                bboxes.append((x1, y1, x2, y2))
+                space_thresh += 1
             bboxes.append((
                 max(0, np.min(letter[1]) - 1),
                 max(0, np.min(letter[0]) - 1),
@@ -59,7 +67,10 @@ def mask_to_bboxes(mask):
             ))
             i += 1
         except Exception as ex:
-            break
+            if space_thresh == 0:
+                break
+            space_thresh -= 1
+            i += 1
 
     return bboxes        
 
