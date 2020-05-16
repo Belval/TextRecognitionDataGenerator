@@ -147,6 +147,7 @@ class DataGenerator(unittest.TestCase):
             0,
             False,
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+            0,
         )
 
         self.assertTrue(
@@ -188,6 +189,7 @@ class DataGenerator(unittest.TestCase):
             0,
             False,
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+            0,
         )
 
         self.assertTrue(
@@ -229,6 +231,7 @@ class DataGenerator(unittest.TestCase):
             0,
             False,
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+            0,
         )
 
         self.assertTrue(
@@ -270,6 +273,7 @@ class DataGenerator(unittest.TestCase):
             0,
             False,
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+            0,
         )
 
         self.assertTrue(
@@ -311,6 +315,7 @@ class DataGenerator(unittest.TestCase):
             0,
             False,
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+            0,
         )
 
         self.assertTrue(
@@ -352,6 +357,7 @@ class DataGenerator(unittest.TestCase):
             0,
             False,
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+            0,
         )
 
         self.assertTrue(
@@ -393,6 +399,7 @@ class DataGenerator(unittest.TestCase):
             0,
             False,
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+            0,
         )
 
         self.assertTrue(
@@ -434,6 +441,7 @@ class DataGenerator(unittest.TestCase):
             0,
             False,
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+            0,
         )
 
         self.assertTrue(
@@ -475,6 +483,7 @@ class DataGenerator(unittest.TestCase):
             0,
             False,
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+            0,
         )
 
         self.assertTrue(
@@ -517,6 +526,7 @@ class DataGenerator(unittest.TestCase):
                 0,
                 False,
                 os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+                0,
             )
             raise Exception("Vertical handwritten did not throw")
         except ValueError:
@@ -550,6 +560,7 @@ class DataGenerator(unittest.TestCase):
             0,
             False,
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+            0,
         )
 
         self.assertTrue(
@@ -591,6 +602,7 @@ class DataGenerator(unittest.TestCase):
             0,
             False,
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+            0,
         )
 
         self.assertTrue(
@@ -632,6 +644,7 @@ class DataGenerator(unittest.TestCase):
             0,
             False,
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+            0,
         )
 
         self.assertTrue(
@@ -674,6 +687,7 @@ class DataGenerator(unittest.TestCase):
                 0,
                 False,
                 os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+                0,
             )
             raise Exception("Unknown orientation did not throw")
         except ValueError:
@@ -707,6 +721,7 @@ class DataGenerator(unittest.TestCase):
             0,
             False,
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+            0,
         )
 
         self.assertTrue(
@@ -748,6 +763,7 @@ class DataGenerator(unittest.TestCase):
             0,
             True,
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+            0,
         )
 
         self.assertTrue(
@@ -789,6 +805,7 @@ class DataGenerator(unittest.TestCase):
             0,
             True,
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+            0,
         )
 
         self.assertTrue(
@@ -830,6 +847,7 @@ class DataGenerator(unittest.TestCase):
             0,
             True,
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+            0,
         )
 
         self.assertTrue(
@@ -871,6 +889,7 @@ class DataGenerator(unittest.TestCase):
             0,
             True,
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+            0,
         )
 
         self.assertTrue(
@@ -912,6 +931,7 @@ class DataGenerator(unittest.TestCase):
             0,
             True,
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+            0,
         )
 
         self.assertTrue(
@@ -953,6 +973,7 @@ class DataGenerator(unittest.TestCase):
             0,
             True,
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+            0,
         )
 
         os.remove("tests/out/TEST TEST TEST_19.png")
@@ -986,10 +1007,97 @@ class DataGenerator(unittest.TestCase):
                 0,
                 False,
                 os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+                0,
             )
             raise Exception("Invalid orientation did not throw")
         except ValueError:
             pass
+
+    def test_generate_data_with_output_bounding_box(self):
+        FakeTextDataGenerator.generate(
+            21,
+            "TEST TEST TEST",
+            "tests/font.ttf",
+            "tests/out/",
+            64,
+            "jpg",
+            0,
+            False,
+            0,
+            False,
+            1,
+            0,
+            0,
+            False,
+            0,
+            -1,
+            0,
+            "#010101",
+            0,
+            1,
+            0,
+            (5, 5, 5, 5),
+            0,
+            0,
+            False,
+            os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+            1,
+        )
+
+        self.assertTrue(
+            diff(
+                "tests/out/TEST TEST TEST_21.jpg",
+                "tests/expected_results/TEST TEST TEST_21.jpg",
+                delete_diff_file=True,
+            )
+            < 0.01
+        )
+
+        os.remove("tests/out/TEST TEST TEST_21.jpg")
+        os.remove("tests/out/TEST TEST TEST_21_boxes.txt")
+
+    def test_generate_data_with_tesseract_output_bounding_box(self):
+        FakeTextDataGenerator.generate(
+            22,
+            "TEST TEST TEST",
+            "tests/font.ttf",
+            "tests/out/",
+            64,
+            "jpg",
+            0,
+            False,
+            0,
+            False,
+            1,
+            0,
+            0,
+            False,
+            0,
+            -1,
+            0,
+            "#010101",
+            0,
+            1,
+            0,
+            (5, 5, 5, 5),
+            0,
+            0,
+            False,
+            os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+            2,
+        )
+
+        self.assertTrue(
+            diff(
+                "tests/out/TEST TEST TEST_22.jpg",
+                "tests/expected_results/TEST TEST TEST_22.jpg",
+                delete_diff_file=True,
+            )
+            < 0.01
+        )
+
+        os.remove("tests/out/TEST TEST TEST_22.jpg")
+        os.remove("tests/out/TEST TEST TEST_22.box")
 
     def test_generate_string_with_letters(self):
         s = create_strings_randomly(1, False, 1, True, False, False, "en")[0]

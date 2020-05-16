@@ -33,6 +33,7 @@ class GeneratorFromStrings:
         output_mask=False,
         word_split=False,
         image_dir=os.path.join("..", os.path.split(os.path.realpath(__file__))[0], "images"),
+        output_bboxes=0,
     ):
         self.count = count
         self.strings = strings
@@ -60,6 +61,7 @@ class GeneratorFromStrings:
         self.output_mask = output_mask
         self.word_split = word_split
         self.image_dir = image_dir
+        self.output_bboxes = output_bboxes
         self.generated_count = 0
 
     def __iter__(self):
@@ -100,6 +102,7 @@ class GeneratorFromStrings:
                 self.output_mask,
                 self.word_split,
                 self.image_dir,
+                self.output_bboxes,
             ),
             self.strings[(self.generated_count - 1) % len(self.strings)],
         )

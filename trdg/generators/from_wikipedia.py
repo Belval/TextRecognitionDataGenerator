@@ -35,6 +35,7 @@ class GeneratorFromWikipedia:
         output_mask=False,
         word_split=False,
         image_dir=os.path.join("..", os.path.split(os.path.realpath(__file__))[0], "images"),
+        output_bboxes=0,
     ):
         self.count = count
         self.minimum_length = minimum_length
@@ -64,6 +65,7 @@ class GeneratorFromWikipedia:
             output_mask,
             word_split,
             image_dir,
+            output_bboxes,
         )
 
     def __iter__(self):

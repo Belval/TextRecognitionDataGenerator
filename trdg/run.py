@@ -198,7 +198,7 @@ def parse_arguments():
         "-obb",
         "--output_bboxes",
         type=int,
-        help="Define if the generator will return bounding boxes for the text",
+        help="Define if the generator will return bounding boxes for the text, 1: Bounding box file, 2: Tesseract format",
         default=0
     )
     parser.add_argument(
