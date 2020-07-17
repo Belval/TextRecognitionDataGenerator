@@ -170,6 +170,7 @@ The script picks a font at random from the *fonts* directory.
 |:----|:-----|
 | fonts/latin | English, French, Spanish, German |
 | fonts/cn | Chinese |
+| fonts/ko | Korean |
 
 Simply add/remove fonts until you get the desired output.
 
