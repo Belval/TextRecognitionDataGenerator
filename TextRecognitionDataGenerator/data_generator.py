@@ -124,6 +124,6 @@ class FakeTextDataGenerator(object):
         file_poth = os.path.join(out_dir, image_name)
         # Save the image
         with open('/content/bgg.txt', 'a',encoding="utf8") as the_file:
-          the_file.write(file_poth+" "+text+"\n")
+          the_file.write(file_poth+" "+text+"⬤\n")
  
         final_image.convert('RGB').save(file_poth)
