@@ -1,6 +1,6 @@
 import os
 import random
-
+import uuid
 from PIL import Image, ImageFilter
 
 from computer_text_generator import ComputerTextGenerator
@@ -119,15 +119,11 @@ class FakeTextDataGenerator(object):
         #####################################
         # Generate name for resulting image #
         #####################################
-        if name_format == 0:
-            image_name = '{}_{}.{}'.format(text, str(index), extension)
-        elif name_format == 1:
-            image_name = '{}_{}.{}'.format(str(index), text, extension)
-        elif name_format == 2:
-            image_name = '{}.{}'.format(str(index),extension)
-        else:
-            print('{} is not a valid name format. Using default.'.format(name_format))
-            image_name = '{}_{}.{}'.format(text, str(index), extension)
-
+ 
+        image_name = '{}.{}'.format(str(uuid.uuid4()),extension)
+        file_poth = os.path.join(out_dir, image_name)
         # Save the image
-        final_image.convert('RGB').save(os.path.join(out_dir, image_name))
+        with open('/content/bgg.txt', 'a',encoding="utf8") as the_file:
+          the_file.write(file_poth+" "+text+"\n")
+ 
+        final_image.convert('RGB').save(file_poth)
