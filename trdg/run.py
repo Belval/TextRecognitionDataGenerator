@@ -308,6 +308,22 @@ def parse_arguments():
         help="Split on words instead of on characters (preserves ligatures, no character spacing)",
         default=False,
     )
+    parser.add_argument(
+        "-stw",
+        "--stroke_width",
+        type=int, 
+        nargs="?",
+        help="Define the width of the strokes.",
+        default=0,
+    )
+    parser.add_argument(
+        "-stf",
+        "--stroke_fill",
+        type=str, 
+        nargs="?",
+        help="Define the color of the contour of the strokes, if stroke_width is bigger than 0.",
+        default="#282828",
+    )
     return parser.parse_args()
 
 
@@ -427,6 +443,8 @@ def main():
                 [args.output_mask] * string_count,
                 [args.word_split] * string_count,
                 [args.image_dir] * string_count,
+                [args.stroke_width] * string_count,
+                [args.stroke_fill] * string_count,
             ),
         ),
         total=args.count,
