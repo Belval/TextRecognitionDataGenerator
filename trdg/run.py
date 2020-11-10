@@ -313,7 +313,7 @@ def parse_arguments():
         "--stroke_width",
         type=int, 
         nargs="?",
-        help="Define the width of the strokes.",
+        help="Define the width of the strokes",
         default=0,
     )
     parser.add_argument(
@@ -321,8 +321,16 @@ def parse_arguments():
         "--stroke_fill",
         type=str, 
         nargs="?",
-        help="Define the color of the contour of the strokes, if stroke_width is bigger than 0.",
+        help="Define the color of the contour of the strokes, if stroke_width is bigger than 0",
         default="#282828",
+    )
+    parser.add_argument(
+        "-im",
+        "--image_mode",
+        type=str,
+        nargs="?",
+        help="Define the image mode to be used. RGB is default, L means 8-bit grayscale images, 1 means 1-bit binary images stored with one pixel per byte, etc.",
+        default="RGB",
     )
     return parser.parse_args()
 
@@ -445,6 +453,7 @@ def main():
                 [args.image_dir] * string_count,
                 [args.stroke_width] * string_count,
                 [args.stroke_fill] * string_count,
+                [args.image_mode] * string_count,
             ),
         ),
         total=args.count,
