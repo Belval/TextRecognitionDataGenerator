@@ -30,6 +30,8 @@ ENV LC_ALL en_US.UTF-8
 
 COPY . /app/
 
+RUN pip3 install --upgrade pip
+
 RUN git clone https://github.com/python-pillow/Pillow.git \
  && cd Pillow \
  && git checkout 7.0.x \
