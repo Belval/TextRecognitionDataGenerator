@@ -41,6 +41,9 @@ class GeneratorFromRandom:
         image_dir=os.path.join(
             "..", os.path.split(os.path.realpath(__file__))[0], "images"
         ),
+        stroke_width=0, 
+        stroke_fill="#282828",
+        image_mode="RGB",
     ):
         self.count = count
         self.length = length
@@ -82,6 +85,9 @@ class GeneratorFromRandom:
             output_mask,
             word_split,
             image_dir,
+            stroke_width,
+            stroke_fill,
+            image_mode,
         )
 
     def __iter__(self):

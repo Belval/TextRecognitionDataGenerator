@@ -49,6 +49,9 @@ class FakeTextDataGenerator(object):
         output_mask,
         word_split,
         image_dir,
+        stroke_width=0, 
+        stroke_fill="#282828",
+        image_mode="RGB", 
     ):
         image = None
 
@@ -74,6 +77,8 @@ class FakeTextDataGenerator(object):
                 character_spacing,
                 fit,
                 word_split,
+                stroke_width, 
+                stroke_fill,
             )
         random_angle = rnd.randint(0 - skewing_angle, skewing_angle)
 
@@ -199,15 +204,22 @@ class FakeTextDataGenerator(object):
                 (background_width - new_text_width - margin_right, margin_top),
             )
 
-        ##################################
+        #######################
         # Apply gaussian blur #
-        ##################################
+        #######################
 
         gaussian_filter = ImageFilter.GaussianBlur(
             radius=blur if not random_blur else rnd.randint(0, blur)
         )
         final_image = background_img.filter(gaussian_filter)
         final_mask = background_mask.filter(gaussian_filter)
+        
+        ############################################
+        # Change image mode (RGB, grayscale, etc.) #
+        ############################################
+        
+        final_image = final_image.convert(image_mode)
+        final_mask = final_mask.convert(image_mode) 
 
         #####################################
         # Generate name for resulting image #
@@ -228,10 +240,10 @@ class FakeTextDataGenerator(object):
 
         # Save the image
         if out_dir is not None:
-            final_image.convert("RGB").save(os.path.join(out_dir, image_name))
+            final_image.save(os.path.join(out_dir, image_name))
             if output_mask == 1:
-                final_mask.convert("RGB").save(os.path.join(out_dir, mask_name))
+                final_mask.save(os.path.join(out_dir, mask_name))
         else:
             if output_mask == 1:
-                return final_image.convert("RGB"), final_mask.convert("RGB")
-            return final_image.convert("RGB")
+                return final_image, final_mask
+            return final_image
