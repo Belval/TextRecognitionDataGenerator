@@ -19,6 +19,7 @@ RUN apt-get update \
     libfreetype6-dev \
     libxext6 \
     libraqm-dev \
+    virtualenv \
  && rm -rf /var/lib/apt/lists/*
 
 # Set the locale
@@ -28,15 +29,19 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
+RUN virtualenv --python python3 /env
+ENV PATH="/env/bin:$PATH"
 COPY . /app/
+
+RUN pip install --upgrade pip
+RUN pip install codecov
 
 RUN git clone https://github.com/python-pillow/Pillow.git \
  && cd Pillow \
  && git checkout 7.0.x \
- && python3 setup.py build_ext --enable-freetype install
+ && python setup.py build_ext --enable-freetype install
 
-RUN python3 setup.py install
-RUN pip3 install -r requirements.txt
-RUN pip3 install pytest
-RUN pip3 install codecov
+RUN python setup.py install
+RUN pip install -r requirements.txt
+RUN pip install pytest
 
