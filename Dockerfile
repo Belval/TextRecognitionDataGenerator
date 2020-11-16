@@ -29,11 +29,12 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
+RUN virtualenv --python python3 /env/
+ENV PATH="/env/bin:$PATH"
 COPY . /app/
 
-RUN virtualenv --python python3 env/
-ENV PATH="/app/env/bin:$PATH"
 RUN pip install --upgrade pip
+RUN pip install codecov
 
 RUN git clone https://github.com/python-pillow/Pillow.git \
  && cd Pillow \
@@ -43,5 +44,4 @@ RUN git clone https://github.com/python-pillow/Pillow.git \
 RUN python setup.py install
 RUN pip install -r requirements.txt
 RUN pip install pytest
-RUN pip install codecov
 
