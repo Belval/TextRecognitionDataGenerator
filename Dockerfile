@@ -29,7 +29,7 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
-RUN virtualenv --python python3 /env/
+RUN virtualenv --python python3 /env
 ENV PATH="/env/bin:$PATH"
 COPY . /app/
 
