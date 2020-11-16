@@ -20,6 +20,7 @@ RUN apt-get update \
     libxext6 \
     libraqm-dev \
     virtualenv \
+    libgl1-mesa-glx \
  && rm -rf /var/lib/apt/lists/*
 
 # Set the locale
