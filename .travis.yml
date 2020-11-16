@@ -8,5 +8,5 @@ before_install:
 install:
   - pip install codecov
 script:
-  - docker run -v $(pwd):/app/ -t trdg:latest coverage run tests.py
+  - docker run -v $(pwd):/app/ -it trdg:latest coverage run tests.py
   - codecov
