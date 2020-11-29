@@ -224,6 +224,9 @@ class FakeTextDataGenerator(object):
         #####################################
         # Generate name for resulting image #
         #####################################
+        # We remove spaces if space_width == 0
+        if space_width == 0:
+            text = text.replace(" ", "")
         if name_format == 0:
             image_name = "{}_{}.{}".format(text, str(index), extension)
             mask_name = "{}_{}_mask.png".format(text, str(index))
