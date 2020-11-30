@@ -468,6 +468,8 @@ def main():
         ) as f:
             for i in range(string_count):
                 file_name = str(i) + "." + args.extension
+                if args.space_width == 0:
+                    file_name = file_name.replace(" ", "")
                 f.write("{} {}\n".format(file_name, strings[i]))
 
 
