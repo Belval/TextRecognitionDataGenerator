@@ -51,9 +51,9 @@ def create_strings_from_wikipedia(minimum_length, count, lang):
     while len(sentences) < count:
         # We fetch a random page
 
-        page = requests.get("https://{}.wikipedia.org/wiki/Special:Random".format(lang))
+        page_url = "https://{}.wikipedia.org/wiki/Special:Random".format(lang)
         try:
-            page = requests.get(page, timeout=3.0)  # take into account timeouts
+            page = requests.get(page_url, timeout=3.0)  # take into account timeouts
         except requests.exceptions.Timeout:
             continue
 
