@@ -19,7 +19,7 @@ def create_strings_from_file(filename, count):
             raise Exception("No lines could be read in file")
         while len(strings) < count:
             if len(lines) >= count - len(strings):
-                strings.extend(lines[0 : count - len(strings)])
+                strings.extend(lines[0: count - len(strings)])
             else:
                 strings.extend(lines)
 
@@ -50,7 +50,12 @@ def create_strings_from_wikipedia(minimum_length, count, lang):
 
     while len(sentences) < count:
         # We fetch a random page
-        page = requests.get("https://{}.wikipedia.org/wiki/Special:Random".format(lang))
+
+        page_url = "https://{}.wikipedia.org/wiki/Special:Random".format(lang)
+        try:
+            page = requests.get(page_url, timeout=3.0)  # take into account timeouts
+        except requests.exceptions.Timeout:
+            continue
 
         soup = BeautifulSoup(page.text, "html.parser")
 
@@ -61,8 +66,8 @@ def create_strings_from_wikipedia(minimum_length, count, lang):
         lines = list(
             filter(
                 lambda s: len(s.split(" ")) > minimum_length
-                and not "Wikipedia" in s
-                and not "wikipedia" in s,
+                          and not "Wikipedia" in s
+                          and not "wikipedia" in s,
                 [
                     " ".join(re.findall(r"[\w']+", s.strip()))[0:200]
                     for s in soup.get_text().splitlines()
@@ -71,7 +76,7 @@ def create_strings_from_wikipedia(minimum_length, count, lang):
         )
 
         # Remove the last lines that talks about contributing
-        sentences.extend(lines[0 : max([1, len(lines) - 5])])
+        sentences.extend(lines[0: max([1, len(lines) - 5])])
 
     return sentences[0:count]
 

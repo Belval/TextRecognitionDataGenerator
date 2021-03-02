@@ -10,37 +10,38 @@ class GeneratorFromWikipedia:
     """Generator that uses sentences taken from random Wikipedia articles"""
 
     def __init__(
-        self,
-        count=-1,
-        minimum_length=1,
-        fonts=[],
-        language="en",
-        size=32,
-        skewing_angle=0,
-        random_skew=False,
-        blur=0,
-        random_blur=False,
-        background_type=0,
-        distorsion_type=0,
-        distorsion_orientation=0,
-        is_handwritten=False,
-        width=-1,
-        alignment=1,
-        text_color="#282828",
-        orientation=0,
-        space_width=1.0,
-        character_spacing=0,
-        margins=(5, 5, 5, 5),
-        fit=False,
-        output_mask=False,
-        word_split=False,
-        image_dir=os.path.join(
-            "..", os.path.split(os.path.realpath(__file__))[0], "images"
-        ),
-        stroke_width=0, 
-        stroke_fill="#282828",
-        image_mode="RGB", 
+            self,
+            count=-1,
+            minimum_length=1,
+            fonts=[],
+            language="en",
+            size=32,
+            skewing_angle=0,
+            random_skew=False,
+            blur=0,
+            random_blur=False,
+            background_type=0,
+            distorsion_type=0,
+            distorsion_orientation=0,
+            is_handwritten=False,
+            width=-1,
+            alignment=1,
+            text_color="#282828",
+            orientation=0,
+            space_width=1.0,
+            character_spacing=0,
+            margins=(5, 5, 5, 5),
+            fit=False,
+            output_mask=False,
+            word_split=False,
+            image_dir=os.path.join(
+                "..", os.path.split(os.path.realpath(__file__))[0], "images"
+            ),
+            stroke_width=0,
+            stroke_fill="#282828",
+            image_mode="RGB",
     ):
+        self.generated_count = 0
         self.count = count
         self.minimum_length = minimum_length
         self.language = language
@@ -75,9 +76,12 @@ class GeneratorFromWikipedia:
         )
 
     def __iter__(self):
-        return self.generator
+        return self
 
     def __next__(self):
+        if self.generated_count == self.count:
+            raise StopIteration
+        self.generated_count += 1
         return self.next()
 
     def next(self):
