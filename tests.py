@@ -1095,6 +1095,13 @@ class DataGenerator(unittest.TestCase):
 
         self.assertTrue(all([l in cn_chars for l in s]))
 
+    def test_generate_japanese_string(self):
+        s = create_strings_randomly(1, False, 1, True, False, False, "ja")[0]
+
+        ja_chars = [chr(i) for i in range(12288, 12543)] + [chr(i) for i in range(65280, 65519)] + [chr(i) for i in range(19968, 40908)]
+
+        self.assertTrue(all([l in ja_chars for l in s]))
+
     def test_generate_data_with_white_background(self):
         background_generator.plain_white(64, 128).convert("RGB").save(
             "tests/out/white_background.jpg"
