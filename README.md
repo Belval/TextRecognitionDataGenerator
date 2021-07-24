@@ -172,6 +172,14 @@ Output
 
 ![29](samples/29.jpg "2")
 
+## Create images with Yoruba text 
+
+It is simple! Just do `trdg -l yo -c 1000 -w 5`!
+
+Output 
+
+![30](samples/30.jpg "2")
+
 
 ## Add new fonts
 
