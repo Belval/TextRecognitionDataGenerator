@@ -101,3 +101,5 @@ ENV/
 .mypy_cache/
 
 .vscode/*
+
+trdg/out/
