@@ -96,6 +96,23 @@ def create_strings_randomly(length, allow_variable, count, let, num, sym, lang):
             pool += "".join(
                 [chr(i) for i in range(19968, 40908)]
             )  # Unicode range of CHK characters
+        elif lang == "ja":
+            pool += "".join(
+                [chr(i) for i in range(12288, 12351)]
+            )   # unicode range for japanese-style punctuation
+            pool += "".join(
+                [chr(i) for i in range(12352, 12447)]
+            )   # unicode range for Hiragana
+            pool += "".join(
+                [chr(i) for i in range(12448, 12543)]
+            )   # unicode range for Katakana
+            pool += "".join(
+                [chr(i) for i in range(65280, 65519)]
+            )   # unicode range for Full-width roman characters and half-width katakana 
+            pool += "".join(
+                [chr(i) for i in range(19968, 40908)]
+            )   # unicode range for common and uncommon kanji
+            # https://stackoverflow.com/questions/19899554/unicode-range-for-japanese
         else:
             pool += string.ascii_letters
     if num:
@@ -104,6 +121,9 @@ def create_strings_randomly(length, allow_variable, count, let, num, sym, lang):
         pool += "!\"#$%&'()*+,-./:;?@[\\]^_`{|}~"
 
     if lang == "cn":
+        min_seq_len = 1
+        max_seq_len = 2
+    elif lang == "ja":
         min_seq_len = 1
         max_seq_len = 2
     else:

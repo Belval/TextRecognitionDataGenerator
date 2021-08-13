@@ -164,6 +164,15 @@ Simplified:
 
 ![28](samples/28.jpg "1")
 
+## Create images with Japanese text 
+
+It is simple! Just do `trdg -l ja -c 1000 -w 5`!
+
+Output 
+
+![29](samples/29.jpg "2")
+
+
 ## Add new fonts
 
 The script picks a font at random from the *fonts* directory.
@@ -173,6 +182,7 @@ The script picks a font at random from the *fonts* directory.
 | fonts/latin | English, French, Spanish, German |
 | fonts/cn | Chinese |
 | fonts/ko | Korean |
+| fonts/ja | Japanese |
 
 Simply add/remove fonts until you get the desired output.
 

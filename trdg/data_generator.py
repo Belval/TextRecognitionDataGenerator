@@ -1,7 +1,7 @@
 import os
 import random as rnd
 
-from PIL import Image, ImageFilter
+from PIL import Image, ImageFilter, ImageStat
 
 from trdg import computer_text_generator, background_generator, distorsion_generator
 
@@ -173,6 +173,26 @@ class FakeTextDataGenerator(object):
         background_mask = Image.new(
             "RGB", (background_width, background_height), (0, 0, 0)
         )
+
+        ##############################################################
+        # Comparing average pixel value of text and background image #
+        ##############################################################
+        try:
+            resized_img_st = ImageStat.Stat(resized_img, resized_mask.split()[2])
+            background_img_st = ImageStat.Stat(background_img) 
+
+            resized_img_px_mean = sum(resized_img_st.mean[:2]) / 3
+            background_img_px_mean = sum(background_img_st.mean) / 3
+
+            if abs(resized_img_px_mean - background_img_px_mean) < 15:
+                print("value of mean pixel is too similar. Ignore this image")
+
+                print("resized_img_st \n {}".format(resized_img_st.mean))
+                print("background_img_st \n {}".format(background_img_st.mean))
+
+                return
+        except Exception as err:
+            return
 
         #############################
         # Place text with alignment #
