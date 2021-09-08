@@ -25,6 +25,7 @@ class FakeTextDataGenerator(object):
         cls,
         index,
         text,
+        language,
         font,
         out_dir,
         size,
@@ -244,9 +245,17 @@ class FakeTextDataGenerator(object):
         #####################################
         # Generate name for resulting image #
         #####################################
+        if language == "ar" or language == "fa":
+            from arabic_reshaper import ArabicReshaper
+            from bidi.algorithm import get_display
+
+            arabic_reshaper = ArabicReshaper()
+            text = " ".join([get_display(arabic_reshaper.reshape(w)) for w in text.split(" ")[::-1]])
+
         # We remove spaces if space_width == 0
         if space_width == 0:
             text = text.replace(" ", "")
+
         if name_format == 0:
             image_name = "{}_{}.{}".format(text, str(index), extension)
             mask_name = "{}_{}_mask.png".format(text, str(index))

@@ -101,3 +101,7 @@ ENV/
 .mypy_cache/
 
 .vscode/*
+/.vs
+/out
+/tests
+/trdg/dicts/ar - Copy.txt
