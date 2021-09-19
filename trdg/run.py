@@ -469,9 +469,10 @@ def main():
         ) as f:
             for i in range(string_count):
                 file_name = str(i) + "." + args.extension
+                label = strings[i]
                 if args.space_width == 0:
-                    file_name = file_name.replace(" ", "")
-                f.write("{} {}\n".format(file_name, strings[i]))
+                    label = label.replace(" ", "")
+                f.write("{} {}\n".format(file_name, label))
 
 
 if __name__ == "__main__":
