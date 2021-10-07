@@ -1205,6 +1205,21 @@ class CommandLineInterface(unittest.TestCase):
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
         empty_directory("tests/out/")
+    
+    def test_language_yoruba(self):
+        args = [
+            "python3",
+            "run.py",
+            "-l",
+            "yo",
+            "-c",
+            "1",
+            "--output_dir",
+            "../tests/out/",
+        ]
+        subprocess.Popen(args, cwd="trdg/").wait()
+        self.assertTrue(len(os.listdir("tests/out/")) == 1)
+        empty_directory("tests/out/")
 
     def test_count_parameter(self):
         args = ["python3", "run.py", "-c", "10", "--output_dir", "../tests/out/"]
