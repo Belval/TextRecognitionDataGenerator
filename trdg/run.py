@@ -1,5 +1,6 @@
 import argparse
-import os, errno
+import errno
+import os
 import sys
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
@@ -7,17 +8,16 @@ sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 import random as rnd
 import string
 import sys
+from multiprocessing import Pool
 
 from tqdm import tqdm
-from trdg.string_generator import (
-    create_strings_from_dict,
-    create_strings_from_file,
-    create_strings_from_wikipedia,
-    create_strings_randomly,
-)
-from trdg.utils import load_dict, load_fonts
+
 from trdg.data_generator import FakeTextDataGenerator
-from multiprocessing import Pool
+from trdg.string_generator import (create_strings_from_dict,
+                                   create_strings_from_file,
+                                   create_strings_from_wikipedia,
+                                   create_strings_randomly)
+from trdg.utils import load_dict, load_fonts
 
 
 def margins(margin):
@@ -407,10 +407,11 @@ def main():
 
     if args.language == "ar":
         from arabic_reshaper import ArabicReshaper
+        from bidi.algorithm import get_display
 
         arabic_reshaper = ArabicReshaper()
         strings = [
-            " ".join([arabic_reshaper.reshape(w) for w in s.split(" ")[::-1]])
+            " ".join([get_display(arabic_reshaper.reshape(w)) for w in s.split(" ")[::-1]])
             for s in strings
         ]
     if args.case == "upper":
@@ -468,9 +469,10 @@ def main():
         ) as f:
             for i in range(string_count):
                 file_name = str(i) + "." + args.extension
+                label = strings[i]
                 if args.space_width == 0:
-                    file_name = file_name.replace(" ", "")
-                f.write("{} {}\n".format(file_name, strings[i]))
+                    label = label.replace(" ", "")
+                f.write("{} {}\n".format(file_name, label))
 
 
 if __name__ == "__main__":
