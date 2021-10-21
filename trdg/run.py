@@ -16,7 +16,8 @@ from trdg.data_generator import FakeTextDataGenerator
 from trdg.string_generator import (create_strings_from_dict,
                                    create_strings_from_file,
                                    create_strings_from_wikipedia,
-                                   create_strings_randomly)
+                                   create_strings_randomly,
+                                   create_strings_from_regex)
 from trdg.utils import load_dict, load_fonts
 
 
@@ -44,6 +45,14 @@ def parse_arguments():
         type=str,
         nargs="?",
         help="When set, this argument uses a specified text file as source for the text",
+        default="",
+    )
+    parser.add_argument(
+        "-re",
+        "--regex",
+        type=str,
+        nargs="?",
+        help="Generate strings according to regex. For example serial numbers,  licence plates.",
         default="",
     )
     parser.add_argument(
@@ -383,6 +392,8 @@ def main():
         strings = create_strings_from_wikipedia(args.length, args.count, args.language)
     elif args.input_file != "":
         strings = create_strings_from_file(args.input_file, args.count)
+    elif args.regex:
+        strings = create_strings_from_regex(args.length, args.regex, args.count)
     elif args.random_sequences:
         strings = create_strings_randomly(
             args.length,

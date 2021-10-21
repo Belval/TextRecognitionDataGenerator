@@ -4,6 +4,7 @@ import string
 import requests
 
 from bs4 import BeautifulSoup
+from xeger import Xeger
 
 
 def create_strings_from_file(filename, count):
@@ -138,4 +139,14 @@ def create_strings_randomly(length, allow_variable, count, let, num, sym, lang):
             current_string += "".join([rnd.choice(pool) for _ in range(seq_len)])
             current_string += " "
         strings.append(current_string[:-1])
+    return strings
+
+
+def create_strings_from_regex(length, regex, count):
+    re = Xeger(limit=length)
+    strings = []
+
+    for _ in range(0, count):
+        current_string = re.xeger(regex)
+        strings.append(current_string)
     return strings

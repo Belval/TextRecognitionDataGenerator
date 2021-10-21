@@ -261,6 +261,8 @@ class FakeTextDataGenerator(object):
             image_name = "{}_{}.{}".format(text, str(index), extension)
             mask_name = "{}_{}_mask.png".format(text, str(index))
 
+        image_name = image_name.replace(" ", "_")
+        image_name = image_name.replace("/", "-")
         # Save the image
         if out_dir is not None:
             final_image.save(os.path.join(out_dir, image_name))
