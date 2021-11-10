@@ -149,13 +149,13 @@ class DataGenerator(unittest.TestCase):
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
         )
 
-        self.assertTrue(
+        self.assertLess(
             diff(
                 "tests/out/TEST TEST TEST_0.jpg",
                 "tests/expected_results/TEST TEST TEST_0.jpg",
                 delete_diff_file=True,
-            )
-            < 0.01
+            ),
+            0.11
         )
 
         os.remove("tests/out/TEST TEST TEST_0.jpg")
@@ -190,13 +190,13 @@ class DataGenerator(unittest.TestCase):
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
         )
 
-        self.assertTrue(
+        self.assertLess(
             diff(
                 "tests/out/TEST TEST TEST_1.png",
                 "tests/expected_results/TEST TEST TEST_1.png",
                 delete_diff_file=True,
-            )
-            < 0.01
+            ),
+            0.07
         )
 
         os.remove("tests/out/TEST TEST TEST_1.png")
@@ -231,13 +231,13 @@ class DataGenerator(unittest.TestCase):
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
         )
 
-        self.assertTrue(
+        self.assertLess(
             diff(
                 "tests/out/TEST TEST TEST_2.jpg",
                 "tests/expected_results/TEST TEST TEST_2.jpg",
                 delete_diff_file=True,
-            )
-            < 0.01
+            ),
+            0.05
         )
 
         os.remove("tests/out/TEST TEST TEST_2.jpg")
@@ -272,13 +272,13 @@ class DataGenerator(unittest.TestCase):
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
         )
 
-        self.assertTrue(
+        self.assertLess(
             diff(
                 "tests/out/TEST TEST TEST_3.jpg",
                 "tests/expected_results/TEST TEST TEST_3.jpg",
                 delete_diff_file=True,
-            )
-            < 0.01
+            ),
+            0.06
         )
 
         os.remove("tests/out/TEST TEST TEST_3.jpg")
@@ -313,13 +313,13 @@ class DataGenerator(unittest.TestCase):
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
         )
 
-        self.assertTrue(
+        self.assertLess(
             diff(
                 "tests/out/TEST TEST TEST_4.jpg",
                 "tests/expected_results/TEST TEST TEST_4.jpg",
                 delete_diff_file=True,
-            )
-            < 0.01
+            ),
+            0.05
         )
 
         os.remove("tests/out/TEST TEST TEST_4.jpg")
@@ -354,13 +354,13 @@ class DataGenerator(unittest.TestCase):
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
         )
 
-        self.assertTrue(
+        self.assertLess(
             diff(
                 "tests/out/TEST TEST TEST_5.jpg",
                 "tests/expected_results/TEST TEST TEST_5.jpg",
                 delete_diff_file=True,
-            )
-            < 0.01
+            ),
+            0.05
         )
 
         os.remove("tests/out/TEST TEST TEST_5.jpg")
@@ -395,13 +395,13 @@ class DataGenerator(unittest.TestCase):
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
         )
 
-        self.assertTrue(
+        self.assertLess(
             diff(
                 "tests/out/TEST TEST TEST_6.jpg",
                 "tests/expected_results/TEST TEST TEST_6.jpg",
                 delete_diff_file=True,
-            )
-            < 0.01
+            ),
+            0.07
         )
 
         os.remove("tests/out/TEST TEST TEST_6.jpg")
@@ -436,13 +436,13 @@ class DataGenerator(unittest.TestCase):
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
         )
 
-        self.assertTrue(
+        self.assertLess(
             diff(
                 "tests/out/TEST TEST TEST_7.jpg",
                 "tests/expected_results/TEST TEST TEST_7.jpg",
                 delete_diff_file=True,
-            )
-            < 0.01
+            ),
+            0.05
         )
 
         os.remove("tests/out/TEST TEST TEST_7.jpg")
@@ -477,13 +477,13 @@ class DataGenerator(unittest.TestCase):
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
         )
 
-        self.assertTrue(
+        self.assertLess(
             diff(
                 "tests/out/TEST TEST TEST_8.jpg",
                 "tests/expected_results/TEST TEST TEST_8.jpg",
                 delete_diff_file=True,
-            )
-            < 0.01
+            ),
+            0.05
         )
 
         os.remove("tests/out/TEST TEST TEST_8.jpg")
@@ -552,13 +552,13 @@ class DataGenerator(unittest.TestCase):
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
         )
 
-        self.assertTrue(
+        self.assertLess(
             diff(
                 "tests/out/TEST TEST TEST_10.jpg",
                 "tests/expected_results/TEST TEST TEST_10.jpg",
                 delete_diff_file=True,
-            )
-            < 0.01
+            ),
+            0.05
         )
 
         os.remove("tests/out/TEST TEST TEST_10.jpg")
@@ -593,13 +593,13 @@ class DataGenerator(unittest.TestCase):
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
         )
 
-        self.assertTrue(
+        self.assertLess(
             diff(
                 "tests/out/TEST TEST TEST_11.jpg",
                 "tests/expected_results/TEST TEST TEST_11.jpg",
                 delete_diff_file=True,
-            )
-            < 0.01
+            ),
+            0.09
         )
 
         os.remove("tests/out/TEST TEST TEST_11.jpg")
@@ -634,13 +634,13 @@ class DataGenerator(unittest.TestCase):
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
         )
 
-        self.assertTrue(
+        self.assertLess(
             diff(
                 "tests/out/TEST TEST TEST_12.jpg",
                 "tests/expected_results/TEST TEST TEST_12.jpg",
                 delete_diff_file=True,
-            )
-            < 0.01
+            ),
+            0.05
         )
 
         os.remove("tests/out/TEST TEST TEST_12.jpg")
@@ -709,13 +709,13 @@ class DataGenerator(unittest.TestCase):
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
         )
 
-        self.assertTrue(
+        self.assertLess(
             diff(
                 "tests/out/TEST TEST TEST_13.jpg",
                 "tests/expected_results/TEST TEST TEST_13.jpg",
                 delete_diff_file=True,
-            )
-            < 0.01
+            ),
+            0.19
         )
 
         os.remove("tests/out/TEST TEST TEST_13.jpg")
@@ -750,13 +750,13 @@ class DataGenerator(unittest.TestCase):
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
         )
 
-        self.assertTrue(
+        self.assertLess(
             diff(
                 "tests/out/TEST TEST TEST_14.png",
                 "tests/expected_results/TEST TEST TEST_14.png",
                 delete_diff_file=True,
-            )
-            < 0.01
+            ),
+            0.05
         )
 
         os.remove("tests/out/TEST TEST TEST_14.png")
@@ -791,13 +791,13 @@ class DataGenerator(unittest.TestCase):
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
         )
 
-        self.assertTrue(
+        self.assertLess(
             diff(
                 "tests/out/TEST TEST TEST_15.png",
                 "tests/expected_results/TEST TEST TEST_15.png",
                 delete_diff_file=True,
-            )
-            < 0.01
+            ),
+            0.05
         )
 
         os.remove("tests/out/TEST TEST TEST_15.png")
@@ -832,13 +832,13 @@ class DataGenerator(unittest.TestCase):
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
         )
 
-        self.assertTrue(
+        self.assertLess(
             diff(
                 "tests/out/16_TEST TEST TEST.png",
                 "tests/expected_results/16_TEST TEST TEST.png",
                 delete_diff_file=True,
-            )
-            < 0.01
+            ),
+            0.05
         )
 
         os.remove("tests/out/16_TEST TEST TEST.png")
@@ -873,13 +873,13 @@ class DataGenerator(unittest.TestCase):
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
         )
 
-        self.assertTrue(
+        self.assertLess(
             diff(
                 "tests/out/17.png",
                 "tests/expected_results/17.png",
                 delete_diff_file=True,
-            )
-            < 0.01
+            ),
+            0.05
         )
 
         os.remove("tests/out/17.png")
@@ -914,13 +914,13 @@ class DataGenerator(unittest.TestCase):
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
         )
 
-        self.assertTrue(
+        self.assertLess(
             diff(
                 "tests/out/TEST TEST TEST_18.png",
                 "tests/expected_results/TEST TEST TEST_18.png",
                 delete_diff_file=True,
-            )
-            < 0.01
+            ),
+            0.05
         )
 
         os.remove("tests/out/TEST TEST TEST_18.png")
@@ -1021,13 +1021,13 @@ class DataGenerator(unittest.TestCase):
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
         )
 
-        self.assertTrue(
+        self.assertLess(
             diff(
                 "tests/out/21_اختبار اختبار اختبار.png",
                 "tests/expected_results/21_اختبار اختبار اختبار.png",
                 delete_diff_file=True,
-            )
-            < 0.01
+            ),
+            0.05
         )
 
         os.remove("tests/out/21_اختبار اختبار اختبار.png")
@@ -1062,13 +1062,13 @@ class DataGenerator(unittest.TestCase):
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
         )
 
-        self.assertTrue(
+        self.assertLess(
             diff(
                 "tests/out/22_परीक्षा परीक्षा परीक्षा.png",
                 "tests/expected_results/22_परीक्षा परीक्षा परीक्षा.png",
                 delete_diff_file=True,
-            )
-            < 0.01
+            ),
+            0.17
         )
 
         os.remove("tests/out/22_परीक्षा परीक्षा परीक्षा.png")
