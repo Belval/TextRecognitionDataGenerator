@@ -1,6 +1,5 @@
 import argparse
-import errno
-import os
+import os, errno
 import sys
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
@@ -8,16 +7,18 @@ sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 import random as rnd
 import string
 import sys
-from multiprocessing import Pool
 
 from tqdm import tqdm
-
-from trdg.data_generator import FakeTextDataGenerator
-from trdg.string_generator import (create_strings_from_dict,
-                                   create_strings_from_file,
-                                   create_strings_from_wikipedia,
-                                   create_strings_randomly)
+from trdg.string_generator import (
+    create_strings_from_dict,
+    create_strings_from_file,
+    create_strings_from_wikipedia,
+    create_strings_randomly,
+    create_strings_from_regex
+)
 from trdg.utils import load_dict, load_fonts
+from trdg.data_generator import FakeTextDataGenerator
+from multiprocessing import Pool
 
 
 def margins(margin):
@@ -47,11 +48,19 @@ def parse_arguments():
         default="",
     )
     parser.add_argument(
+        "-re",
+        "--regex",
+        type=str,
+        nargs="?",
+        help="Generate words with some regex. For example emails/account numbers/....",
+        default="",
+    )
+    parser.add_argument(
         "-l",
         "--language",
         type=str,
         nargs="?",
-        help="The language to use, should be fr (French), en (English), es (Spanish), de (German), ar (Arabic), cn (Chinese), ja (Japanese) or hi (Hindi)",
+        help="The language to use, should be fr (French), en (English), es (Spanish), de (German), ar (Arabic), cn (Chinese), or hi (Hindi)",
         default="en",
     )
     parser.add_argument(
@@ -264,7 +273,7 @@ def parse_arguments():
         type=margins,
         nargs="?",
         help="Define the margins around the text when rendered. In pixels",
-        default=(5, 5, 5, 5),
+        default=(64, 64, 64, 64),
     )
     parser.add_argument(
         "-fi",
@@ -309,28 +318,18 @@ def parse_arguments():
         default=False,
     )
     parser.add_argument(
-        "-stw",
-        "--stroke_width",
-        type=int, 
-        nargs="?",
-        help="Define the width of the strokes",
-        default=0,
+        "-bb",
+        "--save_bbox",
+        action="store_true",
+        help="generates and saves bounding boxes of texts",
+        default=False
     )
     parser.add_argument(
-        "-stf",
-        "--stroke_fill",
-        type=str, 
-        nargs="?",
-        help="Define the color of the contour of the strokes, if stroke_width is bigger than 0",
-        default="#282828",
-    )
-    parser.add_argument(
-        "-im",
-        "--image_mode",
+        "-bbdir",
+        "--save_bbox_dir",
         type=str,
-        nargs="?",
-        help="Define the image mode to be used. RGB is default, L means 8-bit grayscale images, 1 means 1-bit binary images stored with one pixel per byte, etc.",
-        default="RGB",
+        help="Directory path to save bounding boxes",
+        default="./bboxes"
     )
     return parser.parse_args()
 
@@ -349,6 +348,13 @@ def main():
     except OSError as e:
         if e.errno != errno.EEXIST:
             raise
+
+    if args.save_bbox:
+        try:
+            os.makedirs(args.save_bbox_dir)
+        except OSError as e:
+            if e.errno != errno.EEXIST:
+                raise
 
     # Creating word list
     if args.dict:
@@ -383,6 +389,8 @@ def main():
         strings = create_strings_from_wikipedia(args.length, args.count, args.language)
     elif args.input_file != "":
         strings = create_strings_from_file(args.input_file, args.count)
+    elif args.regex:
+        strings = create_strings_from_regex(args.length, args.regex, args.count)
     elif args.random_sequences:
         strings = create_strings_randomly(
             args.length,
@@ -407,11 +415,10 @@ def main():
 
     if args.language == "ar":
         from arabic_reshaper import ArabicReshaper
-        from bidi.algorithm import get_display
 
         arabic_reshaper = ArabicReshaper()
         strings = [
-            " ".join([get_display(arabic_reshaper.reshape(w)) for w in s.split(" ")[::-1]])
+            " ".join([arabic_reshaper.reshape(w) for w in s.split(" ")[::-1]])
             for s in strings
         ]
     if args.case == "upper":
@@ -452,9 +459,8 @@ def main():
                 [args.output_mask] * string_count,
                 [args.word_split] * string_count,
                 [args.image_dir] * string_count,
-                [args.stroke_width] * string_count,
-                [args.stroke_fill] * string_count,
-                [args.image_mode] * string_count,
+                [args.save_bbox] * string_count,
+                [args.save_bbox_dir] * string_count,
             ),
         ),
         total=args.count,
@@ -469,10 +475,7 @@ def main():
         ) as f:
             for i in range(string_count):
                 file_name = str(i) + "." + args.extension
-                label = strings[i]
-                if args.space_width == 0:
-                    label = label.replace(" ", "")
-                f.write("{} {}\n".format(file_name, label))
+                f.write("{} {}\n".format(file_name, strings[i]))
 
 
 if __name__ == "__main__":

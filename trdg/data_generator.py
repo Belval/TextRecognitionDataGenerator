@@ -1,7 +1,7 @@
 import os
 import random as rnd
 
-from PIL import Image, ImageFilter, ImageStat
+from PIL import Image, ImageFilter
 
 from trdg import computer_text_generator, background_generator, distorsion_generator
 
@@ -49,9 +49,8 @@ class FakeTextDataGenerator(object):
         output_mask,
         word_split,
         image_dir,
-        stroke_width=0, 
-        stroke_fill="#282828",
-        image_mode="RGB", 
+        save_bbox,
+        save_bbox_dir
     ):
         image = None
 
@@ -77,8 +76,6 @@ class FakeTextDataGenerator(object):
                 character_spacing,
                 fit,
                 word_split,
-                stroke_width, 
-                stroke_fill,
             )
         random_angle = rnd.randint(0 - skewing_angle, skewing_angle)
 
@@ -131,7 +128,7 @@ class FakeTextDataGenerator(object):
             resized_img = distorted_img.resize(
                 (new_width, size - vertical_margin), Image.ANTIALIAS
             )
-            resized_mask = distorted_mask.resize((new_width, size - vertical_margin), Image.NEAREST)
+            resized_mask = distorted_mask.resize((new_width, size - vertical_margin))
             background_width = width if width > 0 else new_width + horizontal_margin
             background_height = size
         # Vertical text
@@ -144,7 +141,7 @@ class FakeTextDataGenerator(object):
                 (size - horizontal_margin, new_height), Image.ANTIALIAS
             )
             resized_mask = distorted_mask.resize(
-                (size - horizontal_margin, new_height), Image.NEAREST
+                (size - horizontal_margin, new_height), Image.ANTIALIAS
             )
             background_width = size
             background_height = new_height + vertical_margin
@@ -173,26 +170,6 @@ class FakeTextDataGenerator(object):
         background_mask = Image.new(
             "RGB", (background_width, background_height), (0, 0, 0)
         )
-
-        ##############################################################
-        # Comparing average pixel value of text and background image #
-        ##############################################################
-        try:
-            resized_img_st = ImageStat.Stat(resized_img, resized_mask.split()[2])
-            background_img_st = ImageStat.Stat(background_img) 
-
-            resized_img_px_mean = sum(resized_img_st.mean[:2]) / 3
-            background_img_px_mean = sum(background_img_st.mean) / 3
-
-            if abs(resized_img_px_mean - background_img_px_mean) < 15:
-                print("value of mean pixel is too similar. Ignore this image")
-
-                print("resized_img_st \n {}".format(resized_img_st.mean))
-                print("background_img_st \n {}".format(background_img_st.mean))
-
-                return
-        except Exception as err:
-            return
 
         #############################
         # Place text with alignment #
@@ -224,29 +201,19 @@ class FakeTextDataGenerator(object):
                 (background_width - new_text_width - margin_right, margin_top),
             )
 
-        #######################
+        ##################################
         # Apply gaussian blur #
-        #######################
+        ##################################
 
         gaussian_filter = ImageFilter.GaussianBlur(
             radius=blur if not random_blur else rnd.randint(0, blur)
         )
         final_image = background_img.filter(gaussian_filter)
         final_mask = background_mask.filter(gaussian_filter)
-        
-        ############################################
-        # Change image mode (RGB, grayscale, etc.) #
-        ############################################
-        
-        final_image = final_image.convert(image_mode)
-        final_mask = final_mask.convert(image_mode) 
 
         #####################################
         # Generate name for resulting image #
         #####################################
-        # We remove spaces if space_width == 0
-        if space_width == 0:
-            text = text.replace(" ", "")
         if name_format == 0:
             image_name = "{}_{}.{}".format(text, str(index), extension)
             mask_name = "{}_{}_mask.png".format(text, str(index))
@@ -261,12 +228,23 @@ class FakeTextDataGenerator(object):
             image_name = "{}_{}.{}".format(text, str(index), extension)
             mask_name = "{}_{}_mask.png".format(text, str(index))
 
+        image_name = image_name.replace(" ", "_")
+        image_name = image_name.replace("/", "-")
+        
+        mask_name = mask_name.replace(" ", "_")
+        mask_name = mask_name.replace("/", "-")
+        
         # Save the image
         if out_dir is not None:
-            final_image.save(os.path.join(out_dir, image_name))
+            final_image.convert("RGB").save(os.path.join(out_dir, image_name))
             if output_mask == 1:
-                final_mask.save(os.path.join(out_dir, mask_name))
+                final_mask.convert("RGB").save(os.path.join(out_dir, mask_name))
         else:
             if output_mask == 1:
-                return final_image, final_mask
-            return final_image
+                return final_image.convert("RGB"), final_mask.convert("RGB")
+            return final_image.convert("RGB")
+
+        if save_bbox:
+            with open(os.path.join(save_bbox_dir, image_name.rsplit('.', 1)[0]) + ".txt", "w") as f:
+                bbox = final_mask.getbbox()
+                f.write(f"{bbox[0]}, {bbox[1]}, {bbox[2]}, {bbox[3]}") #x1, y1, x2, y2
