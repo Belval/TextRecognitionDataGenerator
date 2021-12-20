@@ -49,8 +49,12 @@ class GeneratorFromStrings:
         if len(fonts) == 0:
             self.fonts = load_fonts(language)
         self.rtl = rtl
+        self.orig_strings = []
         if self.rtl:
             self.rtl_shaper = ArabicReshaper(configuration={"delete_harakat":False})
+            # save a backup of the original strings before arabic-reshaping
+            self.orig_strings = self.strings
+            # reshape the strings
             self.strings = self.reshape_rtl(self.strings, self.rtl_shaper)
         self.language = language
         self.size = size
@@ -120,7 +124,7 @@ class GeneratorFromStrings:
                 self.stroke_fill,
                 self.image_mode, 
             ),
-            self.strings[(self.generated_count - 1) % len(self.strings)],
+            self.orig_strings[(self.generated_count - 1) % len(self.orig_strings)] if self.rtl else self.strings[(self.generated_count - 1) % len(self.strings)],
         )
 
     def reshape_rtl(self, strings: list, rtl_shaper: ArabicReshaper):
