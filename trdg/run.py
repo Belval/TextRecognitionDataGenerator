@@ -195,6 +195,13 @@ def parse_arguments():
         default=0,
     )
     parser.add_argument(
+        "-obb",
+        "--output_bboxes",
+        type=int,
+        help="Define if the generator will return bounding boxes for the text, 1: Bounding box file, 2: Tesseract format",
+        default=0
+    )
+    parser.add_argument(
         "-d",
         "--distorsion",
         type=int,
@@ -455,6 +462,7 @@ def main():
                 [args.stroke_width] * string_count,
                 [args.stroke_fill] * string_count,
                 [args.image_mode] * string_count,
+                [args.output_bboxes] * string_count,
             ),
         ),
         total=args.count,

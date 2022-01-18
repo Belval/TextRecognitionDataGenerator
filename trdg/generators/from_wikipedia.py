@@ -40,6 +40,7 @@ class GeneratorFromWikipedia:
             stroke_width=0,
             stroke_fill="#282828",
             image_mode="RGB",
+            output_bboxes=0,
     ):
         self.generated_count = 0
         self.count = count
@@ -73,6 +74,7 @@ class GeneratorFromWikipedia:
             stroke_width,
             stroke_fill,
             image_mode,
+            output_bboxes,
         )
 
     def __iter__(self):
