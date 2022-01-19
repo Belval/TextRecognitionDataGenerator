@@ -1,7 +1,7 @@
 import os
 
-from ..data_generator import FakeTextDataGenerator
-from ..utils import load_dict, load_fonts
+from trdg.data_generator import FakeTextDataGenerator
+from trdg.utils import load_dict, load_fonts
 
 # support RTL
 from arabic_reshaper import ArabicReshaper
@@ -16,7 +16,6 @@ class GeneratorFromStrings:
         count=-1,
         fonts=[],
         language="en",
-        rtl=False,
         size=32,
         skewing_angle=0,
         random_skew=False,
@@ -43,6 +42,7 @@ class GeneratorFromStrings:
         stroke_fill="#282828",
         image_mode="RGB",
         output_bboxes=0,
+        rtl=False,
     ):
         self.count = count
         self.strings = strings
@@ -138,4 +138,7 @@ class GeneratorFromStrings:
             rtl_strings.append(get_display(reshaped_string))
         return rtl_strings
 
-
+if __name__ == '__main__':
+    from trdg.generators.from_wikipedia import GeneratorFromWikipedia
+    s = GeneratorFromWikipedia("test")
+    next(s)
