@@ -42,6 +42,7 @@ class GeneratorFromStrings:
         stroke_width=0, 
         stroke_fill="#282828",
         image_mode="RGB",
+        output_bboxes=0,
     ):
         self.count = count
         self.strings = strings
@@ -77,6 +78,7 @@ class GeneratorFromStrings:
         self.output_mask = output_mask
         self.word_split = word_split
         self.image_dir = image_dir
+        self.output_bboxes = output_bboxes
         self.generated_count = 0
         self.stroke_width = stroke_width
         self.stroke_fill = stroke_fill
@@ -123,6 +125,7 @@ class GeneratorFromStrings:
                 self.stroke_width,
                 self.stroke_fill,
                 self.image_mode, 
+                self.output_bboxes,
             ),
             self.orig_strings[(self.generated_count - 1) % len(self.orig_strings)] if self.rtl else self.strings[(self.generated_count - 1) % len(self.strings)],
         )

@@ -132,6 +132,7 @@ def _generate_vertical_text(
 
     txt_img_draw = ImageDraw.Draw(txt_img)
     txt_mask_draw = ImageDraw.Draw(txt_mask)
+    txt_mask_draw.fontmode = "1"
 
     colors = [ImageColor.getrgb(c) for c in text_color.split(",")]
     c1, c2 = colors[0], colors[-1]
@@ -163,7 +164,7 @@ def _generate_vertical_text(
         txt_mask_draw.text(
             (0, sum(char_heights[0:i]) + i * character_spacing),
             c,
-            fill=(i // (255 * 255), i // 255, i % 255),
+            fill=((i + 1) // (255 * 255), (i + 1) // 255, (i + 1) % 255),
             font=image_font,
             stroke_width=stroke_width,
             stroke_fill=stroke_fill,
