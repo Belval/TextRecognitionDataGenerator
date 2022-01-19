@@ -3,6 +3,9 @@ import os
 from ..data_generator import FakeTextDataGenerator
 from ..utils import load_dict, load_fonts
 
+# support RTL
+from arabic_reshaper import ArabicReshaper
+from bidi.algorithm import get_display
 
 class GeneratorFromStrings:
     """Generator that uses a given list of strings"""
@@ -13,6 +16,7 @@ class GeneratorFromStrings:
         count=-1,
         fonts=[],
         language="en",
+        rtl=False,
         size=32,
         skewing_angle=0,
         random_skew=False,
@@ -44,6 +48,14 @@ class GeneratorFromStrings:
         self.fonts = fonts
         if len(fonts) == 0:
             self.fonts = load_fonts(language)
+        self.rtl = rtl
+        self.orig_strings = []
+        if self.rtl:
+            self.rtl_shaper = ArabicReshaper(configuration={"delete_harakat":False})
+            # save a backup of the original strings before arabic-reshaping
+            self.orig_strings = self.strings
+            # reshape the strings
+            self.strings = self.reshape_rtl(self.strings, self.rtl_shaper)
         self.language = language
         self.size = size
         self.skewing_angle = skewing_angle
@@ -112,5 +124,15 @@ class GeneratorFromStrings:
                 self.stroke_fill,
                 self.image_mode, 
             ),
-            self.strings[(self.generated_count - 1) % len(self.strings)],
+            self.orig_strings[(self.generated_count - 1) % len(self.orig_strings)] if self.rtl else self.strings[(self.generated_count - 1) % len(self.strings)],
         )
+
+    def reshape_rtl(self, strings: list, rtl_shaper: ArabicReshaper):
+        # reshape RTL characters before generating any image
+        rtl_strings = []
+        for string in strings:
+            reshaped_string = rtl_shaper.reshape(string)
+            rtl_strings.append(get_display(reshaped_string))
+        return rtl_strings
+
+
