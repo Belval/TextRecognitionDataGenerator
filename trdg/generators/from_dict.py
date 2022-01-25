@@ -42,11 +42,15 @@ class GeneratorFromDict:
         stroke_fill="#282828",
         image_mode="RGB",
         output_bboxes=0,
+        path='',
     ):
         self.count = count
         self.length = length
         self.allow_variable = allow_variable
-        self.dict = load_dict(language)
+        if path == '':
+            self.dict = load_dict(os.path.join(os.path.dirname(__file__), "dicts", lang + ".txt"))    
+        else:
+            self.dict = load_dict(path)
         self.generator = GeneratorFromStrings(
             create_strings_from_dict(self.length, self.allow_variable, 1000, self.dict),
             count,
