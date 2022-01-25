@@ -6,20 +6,20 @@ import os
 import numpy as np
 from PIL import Image
 
-def load_dict(lang):
+def load_dict(lang, path):
     """Read the dictionnary file and returns all words in it.
     """
-
-    lang_dict = []
-    with open(
-        os.path.join(os.path.dirname(__file__), "dicts", lang + ".txt"),
-        "r",
-        encoding="utf8",
-        errors="ignore",
-    ) as d:
-        lang_dict = [l for l in d.read().splitlines() if len(l) > 0]
-    return lang_dict
-
+    
+    word_dict = []
+        with open(
+            path,
+            "r",
+            encoding="utf8",
+            errors="ignore",
+        ) as d:
+            word_dict = [l for l in d.read().splitlines() if len(l) > 0]
+            
+    return word_dict
 
 def load_fonts(lang):
     """Load all fonts in the fonts directories
