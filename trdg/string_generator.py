@@ -118,7 +118,8 @@ def create_strings_randomly(length, allow_variable, count, let, num, sym, lang):
     if num:
         pool += "0123456789"
     if sym:
-        pool += "!\"#$%&'()*+,-./:;?@[\\]^_`{|}~"
+        pool += "!\"#$%&'()*+,-./:;?@[\\]^_`{|}~®"
+        # pool += "®©™℠℻"
 
     if lang == "cn":
         min_seq_len = 1
@@ -127,8 +128,10 @@ def create_strings_randomly(length, allow_variable, count, let, num, sym, lang):
         min_seq_len = 1
         max_seq_len = 2
     else:
-        min_seq_len = 2
-        max_seq_len = 10
+        min_seq_len = 5
+        max_seq_len = 15
+        # min_seq_len = 0
+        # max_seq_len = 1
 
     strings = []
     for _ in range(0, count):

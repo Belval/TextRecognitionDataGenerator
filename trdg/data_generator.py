@@ -174,25 +174,28 @@ class FakeTextDataGenerator(object):
             "RGB", (background_width, background_height), (0, 0, 0)
         )
 
+        background_image_fault = None
         ##############################################################
         # Comparing average pixel value of text and background image #
         ##############################################################
         try:
             resized_img_st = ImageStat.Stat(resized_img, resized_mask.split()[2])
-            background_img_st = ImageStat.Stat(background_img) 
+            background_img_st = ImageStat.Stat(background_img)
 
             resized_img_px_mean = sum(resized_img_st.mean[:2]) / 3
             background_img_px_mean = sum(background_img_st.mean) / 3
 
             if abs(resized_img_px_mean - background_img_px_mean) < 15:
+                background_image_fault = True
                 print("value of mean pixel is too similar. Ignore this image")
 
                 print("resized_img_st \n {}".format(resized_img_st.mean))
                 print("background_img_st \n {}".format(background_img_st.mean))
 
-                return
+                # return
         except Exception as err:
-            return
+            background_image_fault = True
+            # return
 
         #############################
         # Place text with alignment #
@@ -263,7 +266,10 @@ class FakeTextDataGenerator(object):
 
         # Save the image
         if out_dir is not None:
-            final_image.save(os.path.join(out_dir, image_name))
+            if background_image_fault:
+                final_image.save(os.path.join('faults', image_name))
+            else:
+                final_image.save(os.path.join(out_dir, image_name))
             if output_mask == 1:
                 final_mask.save(os.path.join(out_dir, mask_name))
         else:
