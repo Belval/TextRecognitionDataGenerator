@@ -26,11 +26,11 @@ def create_strings_from_file(filename, count):
     return strings
 
 
-def create_strings_from_dict(length, allow_variable, count, lang_dict):
+def create_strings_from_dict(length, allow_variable, count, lang_dict, random_seed):
     """
         Create all strings by picking X random word in the dictionnary
     """
-
+    rnd.seed(random_seed)
     dict_len = len(lang_dict)
     strings = []
     for _ in range(0, count):
@@ -81,11 +81,11 @@ def create_strings_from_wikipedia(minimum_length, count, lang):
     return sentences[0:count]
 
 
-def create_strings_randomly(length, allow_variable, count, let, num, sym, lang):
+def create_strings_randomly(length, allow_variable, count, let, num, sym, lang, random_seed):
     """
         Create all strings by randomly sampling from a pool of characters.
     """
-
+    rnd.seed(random_seed)
     # If none specified, use all three
     if True not in (let, num, sym):
         let, num, sym = True, True, True

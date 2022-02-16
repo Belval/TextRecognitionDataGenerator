@@ -114,10 +114,20 @@ class DataGenerator(unittest.TestCase):
 
     def test_create_strings_from_dict(self):
         strings = create_strings_from_dict(
-            3, False, 2, ["TEST", "TEST", "TEST", "TEST"]
+            3, False, 2, ["TEST", "TEST", "TEST", "TEST"], None
         )
 
         self.assertTrue(len(strings) == 2 and len(strings[0].split(" ")) == 3)
+
+    def test_create_strings_from_dict_with_random_seed(self):
+        strings_1 = create_strings_from_dict(
+            3, False, 2, ["TEST_1", "TEST_2", "TEST_3", "TEST_4", "TEST_5"], 0
+        )
+        strings_2 = create_strings_from_dict(
+            3, False, 2, ["TEST_1", "TEST_2", "TEST_3", "TEST_4", "TEST_5"], 0
+        )
+
+        self.assertTrue(strings_1 == strings_2)
 
     def test_generate_data_with_format(self):
         FakeTextDataGenerator.generate(
@@ -1160,29 +1170,35 @@ class DataGenerator(unittest.TestCase):
         os.remove("tests/out/TEST TEST TEST_22.box")
 
     def test_generate_string_with_letters(self):
-        s = create_strings_randomly(1, False, 1, True, False, False, "en")[0]
+        s = create_strings_randomly(1, False, 1, True, False, False, "en", None)[0]
 
         self.assertTrue(all([l in string.ascii_letters for l in s]))
 
     def test_generate_string_with_numbers(self):
-        s = create_strings_randomly(1, False, 1, False, True, False, "en")[0]
+        s = create_strings_randomly(1, False, 1, False, True, False, "en", None)[0]
 
         self.assertTrue(all([l in "0123456789" for l in s]))
 
     def test_generate_string_with_symbols(self):
-        s = create_strings_randomly(1, False, 1, False, False, True, "en")[0]
+        s = create_strings_randomly(1, False, 1, False, False, True, "en", None)[0]
 
         self.assertTrue(all([l in "!\"#$%&'()*+,-./:;?@[\\]^_`{|}~" for l in s]))
 
+    def test_generate_string_with_random_seed(self):
+        s_1 = create_strings_randomly(3, False, 3, True, True, True, "en", 0)
+        s_2 = create_strings_randomly(3, False, 3, True, True, True, "en", 0)
+
+        self.assertTrue(s_1 == s_2)
+
     def test_generate_chinese_string(self):
-        s = create_strings_randomly(1, False, 1, True, False, False, "cn")[0]
+        s = create_strings_randomly(1, False, 1, True, False, False, "cn", None)[0]
 
         cn_chars = [chr(i) for i in range(19968, 40908)]
 
         self.assertTrue(all([l in cn_chars for l in s]))
 
     def test_generate_japanese_string(self):
-        s = create_strings_randomly(1, False, 1, True, False, False, "ja")[0]
+        s = create_strings_randomly(1, False, 1, True, False, False, "ja", None)[0]
 
         ja_chars = [chr(i) for i in range(12288, 12543)] + [chr(i) for i in range(65280, 65519)] + [chr(i) for i in range(19968, 40908)]
 

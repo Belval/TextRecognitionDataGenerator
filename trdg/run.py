@@ -339,6 +339,14 @@ def parse_arguments():
         help="Define the image mode to be used. RGB is default, L means 8-bit grayscale images, 1 means 1-bit binary images stored with one pixel per byte, etc.",
         default="RGB",
     )
+    parser.add_argument(
+        "-rsd",
+        "--random_seed",
+        type=int,
+        nargs="?",
+        help="Define the random seed to initialize the random number generator, if want to reproduce exactly the same dataset for several times (use the same seed for that purpose).",
+        default=None,
+    )
     return parser.parse_args()
 
 
@@ -399,6 +407,7 @@ def main():
             args.include_numbers,
             args.include_symbols,
             args.language,
+            args.random_seed,
         )
         # Set a name format compatible with special characters automatically if they are used
         if args.include_symbols or True not in (
@@ -409,7 +418,7 @@ def main():
             args.name_format = 2
     else:
         strings = create_strings_from_dict(
-            args.length, args.random, args.count, lang_dict
+            args.length, args.random, args.count, lang_dict, args.random_seed
         )
 
     if args.language == "ar":
@@ -469,7 +478,10 @@ def main():
     ):
         pass
     p.terminate()
-    fault_strings = os.listdir('faults')
+    try:
+        fault_strings = os.listdir('faults')
+    except FileNotFoundError:
+        fault_strings = ""
 
     if args.name_format == 2:
         # Create file with filename-to-label connections
