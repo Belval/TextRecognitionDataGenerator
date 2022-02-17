@@ -31,6 +31,8 @@ docker run -v /output/path/:/app/out/ -t belval/trdg:latest trdg [args]
 The path (`/output/path/`) must be absolute.
 
 ## New
+- Add `--random_seed` argument to initialize the random number generator for reating strings from dictionary or generating random character sequence.
+- Add `--proceed` argument to continue generation from the last created image. Only works with generating random character sequence.
 - Add `--stroke_width` argument to set the width of the text stroke (Thank you [@SunHaozhe](https://github.com/SunHaozhe))
 - Add `--stroke_fill` argument to set the color of the text contour if stroke > 0 (Thank you [@SunHaozhe](https://github.com/SunHaozhe))
 - Add `--word_split` argument to split on word instead of per-character. This is useful for ligature-based languages
