@@ -17,6 +17,7 @@ class GeneratorFromRandom:
             use_letters=True,
             use_numbers=True,
             use_symbols=True,
+            from_characters="",
             fonts=[],
             language="en",
             size=32,
@@ -45,6 +46,7 @@ class GeneratorFromRandom:
             stroke_fill="#282828",
             image_mode="RGB",
             output_bboxes=0,
+            random_seed=None,
     ):
         self.generated_count = 0
         self.count = count
@@ -53,7 +55,9 @@ class GeneratorFromRandom:
         self.use_letters = use_letters
         self.use_numbers = use_numbers
         self.use_symbols = use_symbols
+        self.from_characters = from_characters
         self.language = language
+        self.random_seed = random_seed
         self.generator = GeneratorFromStrings(
             create_strings_randomly(
                 self.length,
@@ -62,7 +66,9 @@ class GeneratorFromRandom:
                 self.use_letters,
                 self.use_numbers,
                 self.use_symbols,
+                self.from_characters,
                 self.language,
+                self.random_seed,
             ),
             count,
             fonts if len(fonts) else load_fonts(language),

@@ -1170,35 +1170,40 @@ class DataGenerator(unittest.TestCase):
         os.remove("tests/out/TEST TEST TEST_22.box")
 
     def test_generate_string_with_letters(self):
-        s = create_strings_randomly(1, False, 1, True, False, False, "en", None)[0]
+        s = create_strings_randomly(1, False, 1, True, False, False, None, "en", None)[0]
 
         self.assertTrue(all([l in string.ascii_letters for l in s]))
 
     def test_generate_string_with_numbers(self):
-        s = create_strings_randomly(1, False, 1, False, True, False, "en", None)[0]
+        s = create_strings_randomly(1, False, 1, False, True, False, None, "en", None)[0]
 
         self.assertTrue(all([l in "0123456789" for l in s]))
 
     def test_generate_string_with_symbols(self):
-        s = create_strings_randomly(1, False, 1, False, False, True, "en", None)[0]
+        s = create_strings_randomly(1, False, 1, False, False, True, None, "en", None)[0]
 
         self.assertTrue(all([l in "!\"#$%&'()*+,-./:;?@[\\]^_`{|}~" for l in s]))
 
+    def test_generate_string_with_custom_character_set(self):
+        s = create_strings_randomly(1, False, 1, False, False, False, "qwerty", "en", None)[0]
+
+        self.assertTrue(all([l in "qwerty" for l in s]))
+
     def test_generate_string_with_random_seed(self):
-        s_1 = create_strings_randomly(3, False, 3, True, True, True, "en", 0)
-        s_2 = create_strings_randomly(3, False, 3, True, True, True, "en", 0)
+        s_1 = create_strings_randomly(3, False, 3, True, True, True, None, "en", 0)
+        s_2 = create_strings_randomly(3, False, 3, True, True, True, None, "en", 0)
 
         self.assertTrue(s_1 == s_2)
 
     def test_generate_chinese_string(self):
-        s = create_strings_randomly(1, False, 1, True, False, False, "cn", None)[0]
+        s = create_strings_randomly(1, False, 1, True, False, False, None, "cn", None)[0]
 
         cn_chars = [chr(i) for i in range(19968, 40908)]
 
         self.assertTrue(all([l in cn_chars for l in s]))
 
     def test_generate_japanese_string(self):
-        s = create_strings_randomly(1, False, 1, True, False, False, "ja", None)[0]
+        s = create_strings_randomly(1, False, 1, True, False, False, None, "ja", None)[0]
 
         ja_chars = [chr(i) for i in range(12288, 12543)] + [chr(i) for i in range(65280, 65519)] + [chr(i) for i in range(19968, 40908)]
 

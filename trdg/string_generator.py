@@ -81,13 +81,13 @@ def create_strings_from_wikipedia(minimum_length, count, lang):
     return sentences[0:count]
 
 
-def create_strings_randomly(length, allow_variable, count, let, num, sym, lang, random_seed):
+def create_strings_randomly(length, allow_variable, count, let, num, sym, chars, lang, random_seed):
     """
         Create all strings by randomly sampling from a pool of characters.
     """
     rnd.seed(random_seed)
-    # If none specified, use all three
-    if True not in (let, num, sym):
+    # If none specified, use letters + numbers + symbols
+    if not any((let, num, sym, chars)):
         let, num, sym = True, True, True
 
     pool = ""
@@ -118,8 +118,10 @@ def create_strings_randomly(length, allow_variable, count, let, num, sym, lang, 
     if num:
         pool += "0123456789"
     if sym:
-        pool += "!\"#$%&'()*+,-./:;?@[\\]^_`{|}~®"
+        pool += "!\"#$%&'()*+,-./:;?@[\\]^_`{|}~"
         # pool += "®©™℠℻"
+    if chars:
+        pool += chars
 
     if lang == "cn":
         min_seq_len = 1

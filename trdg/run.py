@@ -355,6 +355,13 @@ def parse_arguments():
         help="Continue generation from the last image. Only works with -rs (generation of random sequences of chars).",
         default=False,
     )
+    parser.add_argument(
+        "-ch",
+        "--from_characters",
+        action="store_true",
+        help="Define characters to be used in generation, if you need specific set. Only works with -rs (generation of random sequences of chars).",
+        default=None,
+    )
     return parser.parse_args()
 
 
@@ -374,6 +381,7 @@ def main():
             raise
 
     # Check if need to proceed generation or start from scratch.
+    start = 0
     if args.proceed:
         labels = os.path.join(args.output_dir, "labels.csv")
         if os.path.exists(labels) and os.path.getsize(labels):
@@ -383,7 +391,6 @@ def main():
         else:
             print("Cannot proceed generation due to invalid parameters or missing file \"labels.csv\". "
                   "Starting generation from scratch.")
-            start = 0
 
     if start >= args.count:
         print(f"There are {args.count} images generated already.")
@@ -430,6 +437,7 @@ def main():
             args.include_letters,
             args.include_numbers,
             args.include_symbols,
+            args.from_characters,
             args.language,
             args.random_seed,
         )

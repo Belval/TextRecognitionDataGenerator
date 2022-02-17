@@ -42,13 +42,15 @@ class GeneratorFromDict:
         stroke_fill="#282828",
         image_mode="RGB",
         output_bboxes=0,
+        random_seed=None,
     ):
         self.count = count
         self.length = length
         self.allow_variable = allow_variable
         self.dict = load_dict(language)
+        self.random_seed = random_seed
         self.generator = GeneratorFromStrings(
-            create_strings_from_dict(self.length, self.allow_variable, 1000, self.dict),
+            create_strings_from_dict(self.length, self.allow_variable, 1000, self.dict, self.random_seed),
             count,
             fonts if len(fonts) else load_fonts(language),
             language,
