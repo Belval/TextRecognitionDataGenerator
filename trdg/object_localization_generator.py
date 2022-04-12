@@ -209,8 +209,15 @@ class FakeObjectDataGenerator(object):
                 (int(background_width / 2 - new_text_width / 2), margin_top),
             )
         else:
-            object_offset_x = rnd.randint(0,background_img.size[0] - resized_img.size[0] )
-            object_offset_y = rnd.randint(0, background_img.size[1] - resized_img.size[1])
+            print(" bg.x: {}, object.x: {}".format(background_img.size[0], resized_img.size[0] ))
+            if resized_img.size[0] > background_img.size[0]:
+                object_offset_x = 0
+            else:
+                object_offset_x = rnd.randint(0,background_img.size[0] - resized_img.size[0] )
+            if resized_img.size[1] > background_img.size[1]:
+                object_offset_y = 0
+            else:
+                object_offset_y = rnd.randint(0, background_img.size[1] - resized_img.size[1])
             background_img.paste(
                 resized_img.copy(),
                 ((object_offset_x , object_offset_y)),
