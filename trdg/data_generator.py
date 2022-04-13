@@ -134,6 +134,8 @@ class FakeTextDataGenerator(object):
                 (new_width, size - vertical_margin), Image.ANTIALIAS
             )
             resized_mask = distorted_mask.resize((new_width, size - vertical_margin), Image.NEAREST)
+            if new_width + horizontal_margin <= 0:
+                horizontal_margin = 1 - new_width
             background_width = width if width > 0 else new_width + horizontal_margin
             background_height = size
         # Vertical text
