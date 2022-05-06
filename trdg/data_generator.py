@@ -225,6 +225,13 @@ class FakeTextDataGenerator(object):
                 resized_mask,
                 (background_width - new_text_width - margin_right, margin_top),
             )
+                    
+        ############################################
+        # Change image mode (RGB, grayscale, etc.) #
+        ############################################
+        
+        background_img = background_img.convert(image_mode)
+        background_mask = background_mask.convert(image_mode) 
 
         #######################
         # Apply gaussian blur #
@@ -236,13 +243,6 @@ class FakeTextDataGenerator(object):
         final_image = background_img.filter(gaussian_filter)
         final_mask = background_mask.filter(gaussian_filter)
         
-        ############################################
-        # Change image mode (RGB, grayscale, etc.) #
-        ############################################
-        
-        final_image = final_image.convert(image_mode)
-        final_mask = final_mask.convert(image_mode) 
-
         #####################################
         # Generate name for resulting image #
         #####################################
