@@ -1,6 +1,20 @@
 import random as rnd
 
-from PIL import Image, ImageColor, ImageFont, ImageDraw, ImageFilter
+from PIL import Image, ImageColor, ImageDraw, ImageFilter, ImageFont
+
+# Thai Unicode reference: https://jrgraphix.net/r/Unicode/0E00-0E7F
+TH_TONE_MARKS = [
+    "0xe47",
+    "0xe48",
+    "0xe49",
+    "0xe4a",
+    "0xe4b",
+    "0xe4c",
+    "0xe4d",
+    "0xe4e",
+]
+TH_UNDER_VOWELS = ["0xe38", "0xe39", "\0xe3A"]
+TH_UPPER_VOWELS = ["0xe31", "0xe34", "0xe35", "0xe36", "0xe37"]
 
 
 def generate(
@@ -13,7 +27,7 @@ def generate(
     character_spacing,
     fit,
     word_split,
-    stroke_width=0, 
+    stroke_width=0,
     stroke_fill="#282828",
 ):
     if orientation == 0:
@@ -31,16 +45,40 @@ def generate(
         )
     elif orientation == 1:
         return _generate_vertical_text(
-            text, font, text_color, font_size, space_width, character_spacing, fit,
-            stroke_width, stroke_fill, 
+            text,
+            font,
+            text_color,
+            font_size,
+            space_width,
+            character_spacing,
+            fit,
+            stroke_width,
+            stroke_fill,
         )
     else:
         raise ValueError("Unknown orientation " + str(orientation))
 
 
+def _compute_character_width(image_font, character):
+    if (
+        "{0:#x}".format(ord(character))
+        in TH_TONE_MARKS + TH_UNDER_VOWELS + TH_UNDER_VOWELS + TH_UPPER_VOWELS
+    ):
+        return 0
+    return image_font.getsize(character)[0]
+
+
 def _generate_horizontal_text(
-    text, font, text_color, font_size, space_width, character_spacing, fit, word_split, 
-    stroke_width=0, stroke_fill="#282828"
+    text,
+    font,
+    text_color,
+    font_size,
+    space_width,
+    character_spacing,
+    fit,
+    word_split,
+    stroke_width=0,
+    stroke_fill="#282828",
 ):
     image_font = ImageFont.truetype(font=font, size=font_size)
 
@@ -56,7 +94,8 @@ def _generate_horizontal_text(
         splitted_text = text
 
     piece_widths = [
-        image_font.getsize(p)[0] if p != " " else space_width for p in splitted_text
+        _compute_character_width(image_font, p) if p != " " else space_width
+        for p in splitted_text
     ]
     text_width = sum(piece_widths)
     if not word_split:
@@ -114,8 +153,15 @@ def _generate_horizontal_text(
 
 
 def _generate_vertical_text(
-    text, font, text_color, font_size, space_width, character_spacing, fit,
-    stroke_width=0, stroke_fill="#282828"
+    text,
+    font,
+    text_color,
+    font_size,
+    space_width,
+    character_spacing,
+    fit,
+    stroke_width=0,
+    stroke_fill="#282828",
 ):
     image_font = ImageFont.truetype(font=font, size=font_size)
 
@@ -144,7 +190,7 @@ def _generate_vertical_text(
     )
 
     stroke_colors = [ImageColor.getrgb(c) for c in stroke_fill.split(",")]
-    stroke_c1, stroke_c2 = stroke_colors[0], stroke_colors[-1] 
+    stroke_c1, stroke_c2 = stroke_colors[0], stroke_colors[-1]
 
     stroke_fill = (
         rnd.randint(stroke_c1[0], stroke_c2[0]),
