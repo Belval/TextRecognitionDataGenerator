@@ -1,1 +1,2 @@
+This file should be removed before this BT 101 branch is merged into master
 DONE - BT Initiate Fork
