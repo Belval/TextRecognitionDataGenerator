@@ -42,6 +42,7 @@ class GeneratorFromDict:
         stroke_fill="#282828",
         image_mode="RGB",
         output_bboxes=0,
+        rtl=False
     ):
         self.count = count
         self.length = length
@@ -76,6 +77,7 @@ class GeneratorFromDict:
             stroke_fill,
             image_mode,
             output_bboxes,
+            rtl
         )
 
     def __iter__(self):
