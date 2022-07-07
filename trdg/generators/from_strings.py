@@ -1,7 +1,5 @@
 import os
 
-from numpy.lib.function_base import delete
-
 from trdg.data_generator import FakeTextDataGenerator
 from trdg.utils import load_dict, load_fonts
 
