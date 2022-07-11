@@ -40,6 +40,15 @@ def create_strings_from_dict(length, allow_variable, count, lang_dict):
     return strings
 
 
+def get_random_page_content() -> str:
+    page_title = wikipedia.random(1)
+    try:
+        page_content = wikipedia.page(page_title).summary
+    except (wikipedia.DisambiguationError, wikipedia.PageError):
+        return get_random_page_content()
+    return page_content
+
+
 def create_strings_from_wikipedia(minimum_length, count, lang):
     """
         Create all string by randomly picking Wikipedia articles and taking sentences from them.
@@ -48,15 +57,7 @@ def create_strings_from_wikipedia(minimum_length, count, lang):
     sentences = []
 
     while len(sentences) < count:
-        try:
-            page_title = wikipedia.random(1)
-            page_content = wikipedia.page(page_title).summary
-        except wikipedia.DisambiguationError as e:
-            contents = [wikipedia.page(page_title).summary for page_title in e.options]
-            page_content = " ".join(contents)
-        except wikipedia.PageError:
-            continue
-
+        page_content = get_random_page_content()
         processed_content = page_content.replace("\n", " ").split(". ")
         sentence_candidates = [s.strip() for s in processed_content if len(s.split(" ")) > minimum_length]
         sentences.extend(sentence_candidates)
