@@ -259,7 +259,7 @@ class FakeTextDataGenerator(object):
             print("{} is not a valid name format. Using default.".format(name_format))
             name = "{}_{}".format(text, str(index))
 
-        name = make_filename_valid(name)
+        name = make_filename_valid(name, allow_unicode=True)
         image_name = "{}.{}".format(name, extension)
         mask_name = "{}_mask.png".format(name)
         box_name = "{}_boxes.txt".format(name)
