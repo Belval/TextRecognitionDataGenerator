@@ -1,9 +1,7 @@
 import random as rnd
-import re
 import string
-import requests
 
-from bs4 import BeautifulSoup
+import wikipedia
 
 
 def create_strings_from_file(filename, count):
@@ -46,37 +44,22 @@ def create_strings_from_wikipedia(minimum_length, count, lang):
     """
         Create all string by randomly picking Wikipedia articles and taking sentences from them.
     """
+    wikipedia.set_lang(lang)
     sentences = []
 
     while len(sentences) < count:
-        # We fetch a random page
-
-        page_url = "https://{}.wikipedia.org/wiki/Special:Random".format(lang)
         try:
-            page = requests.get(page_url, timeout=3.0)  # take into account timeouts
-        except requests.exceptions.Timeout:
+            page_title = wikipedia.random(1)
+            page_content = wikipedia.page(page_title).summary
+        except wikipedia.DisambiguationError as e:
+            contents = [wikipedia.page(page_title).summary for page_title in e.options]
+            page_content = " ".join(contents)
+        except wikipedia.PageError:
             continue
 
-        soup = BeautifulSoup(page.text, "html.parser")
-
-        for script in soup(["script", "style"]):
-            script.extract()
-
-        # Only take a certain length
-        lines = list(
-            filter(
-                lambda s: len(s.split(" ")) > minimum_length
-                          and not "Wikipedia" in s
-                          and not "wikipedia" in s,
-                [
-                    " ".join(re.findall(r"[\w']+", s.strip()))[0:200]
-                    for s in soup.get_text().splitlines()
-                ],
-            )
-        )
-
-        # Remove the last lines that talks about contributing
-        sentences.extend(lines[0: max([1, len(lines) - 5])])
+        processed_content = page_content.replace("\n", " ").split(". ")
+        sentence_candidates = [s.strip() for s in processed_content if len(s.split(" ")) > minimum_length]
+        sentences.extend(sentence_candidates)
 
     return sentences[0:count]
 
