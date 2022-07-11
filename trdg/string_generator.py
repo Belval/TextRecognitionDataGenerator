@@ -59,7 +59,7 @@ def create_strings_from_wikipedia(minimum_length, count, lang):
     while len(sentences) < count:
         page_content = get_random_page_content()
         processed_content = page_content.replace("\n", " ").split(". ")
-        sentence_candidates = [s.strip() for s in processed_content if len(s.split(" ")) > minimum_length]
+        sentence_candidates = [s.strip() for s in processed_content if len(s.split()) > minimum_length]
         sentences.extend(sentence_candidates)
 
     return sentences[0:count]
