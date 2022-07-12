@@ -43,7 +43,7 @@ setup(
         "requests>=2.20.0",
         "opencv-python>=4.2.0.32",
         "tqdm>=4.23.0",
-        "beautifulsoup4>=4.6.0",
+        "wikipedia>=1.4.0",
         "diffimg==0.2.3",
         "arabic-reshaper==2.1.3",
         "python-bidi==0.4.2",
