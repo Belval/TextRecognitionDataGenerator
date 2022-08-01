@@ -4,7 +4,7 @@ import random as rnd
 from PIL import Image, ImageFilter, ImageStat
 
 from trdg import computer_text_generator, background_generator, distorsion_generator
-from trdg.utils import mask_to_bboxes
+from trdg.utils import mask_to_bboxes, make_filename_valid
 
 try:
     from trdg import handwritten_text_generator
@@ -259,11 +259,11 @@ class FakeTextDataGenerator(object):
             print("{} is not a valid name format. Using default.".format(name_format))
             name = "{}_{}".format(text, str(index))
 
+        name = make_filename_valid(name, allow_unicode=True)
         image_name = "{}.{}".format(name, extension)
         mask_name = "{}_mask.png".format(name)
         box_name = "{}_boxes.txt".format(name)
         tess_box_name = "{}.box".format(name)
-
 
         # Save the image
         if out_dir is not None:

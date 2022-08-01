@@ -1064,14 +1064,14 @@ class DataGenerator(unittest.TestCase):
 
         self.assertLess(
             diff(
-                "tests/out/22_परीक्षा परीक्षा परीक्षा.png",
+                "tests/out/22_परकष परकष परकष.png",
                 "tests/expected_results/22_परीक्षा परीक्षा परीक्षा.png",
                 delete_diff_file=True,
             ),
             0.17
         )
 
-        os.remove("tests/out/22_परीक्षा परीक्षा परीक्षा.png")
+        os.remove("tests/out/22_परकष परकष परकष.png")
 
     def test_generate_data_with_output_bounding_box(self):
         FakeTextDataGenerator.generate(
