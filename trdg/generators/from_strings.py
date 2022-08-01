@@ -52,7 +52,11 @@ class GeneratorFromStrings:
         self.rtl = rtl
         self.orig_strings = []
         if self.rtl:
-            self.rtl_shaper = ArabicReshaper(configuration={"delete_harakat":False})
+            if language == "ckb":
+                ar_reshaper_config = {"delete_harakat": True, "language": "Kurdish"}
+            else:
+                ar_reshaper_config = {"delete_harakat": False}
+            self.rtl_shaper = ArabicReshaper(configuration=ar_reshaper_config)
             # save a backup of the original strings before arabic-reshaping
             self.orig_strings = self.strings
             # reshape the strings
