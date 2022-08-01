@@ -43,16 +43,27 @@ class GeneratorFromDict:
         image_mode="RGB",
         output_bboxes=0,
         path='',
+        rtl=False
     ):
         self.count = count
         self.length = length
         self.allow_variable = allow_variable
+
         if path == '':
             self.dict = load_dict(os.path.join(os.path.dirname(__file__), "dicts", lang + ".txt"))    
         else:
             self.dict = load_dict(path)
+
+        self.batch_size = min(max(count, 1), 1000)
+        self.steps_until_regeneration = self.batch_size
+
         self.generator = GeneratorFromStrings(
-            create_strings_from_dict(self.length, self.allow_variable, 1000, self.dict),
+            create_strings_from_dict(
+                self.length,
+                self.allow_variable,
+                self.batch_size,
+                self.dict
+            ),
             count,
             fonts if len(fonts) else load_fonts(language),
             language,
@@ -80,6 +91,7 @@ class GeneratorFromDict:
             stroke_fill,
             image_mode,
             output_bboxes,
+            rtl
         )
 
     def __iter__(self):
@@ -89,8 +101,12 @@ class GeneratorFromDict:
         return self.next()
 
     def next(self):
-        if self.generator.generated_count >= 999:
+        if self.generator.generated_count >= self.steps_until_regeneration:
             self.generator.strings = create_strings_from_dict(
-                self.length, self.allow_variable, 1000, self.dict
+                self.length,
+                self.allow_variable,
+                self.batch_size,
+                self.dict
             )
+            self.steps_until_regeneration += self.batch_size
         return self.generator.next()

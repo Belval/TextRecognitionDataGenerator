@@ -1,5 +1,5 @@
 # We use Ubuntu as base image
-FROM ubuntu:18.04
+FROM ubuntu:22.04
 
 WORKDIR /app
 
@@ -36,11 +36,6 @@ COPY . /app/
 
 RUN pip install --upgrade pip
 RUN pip install codecov
-
-RUN git clone https://github.com/python-pillow/Pillow.git \
- && cd Pillow \
- && git checkout 7.0.x \
- && python setup.py build_ext --enable-freetype install
 
 RUN python setup.py install
 RUN pip install -r requirements.txt

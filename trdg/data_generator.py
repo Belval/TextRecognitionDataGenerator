@@ -4,7 +4,7 @@ import random as rnd
 from PIL import Image, ImageFilter, ImageStat
 
 from trdg import computer_text_generator, background_generator, distorsion_generator
-from trdg.utils import mask_to_bboxes
+from trdg.utils import mask_to_bboxes, make_filename_valid
 
 try:
     from trdg import handwritten_text_generator
@@ -225,6 +225,13 @@ class FakeTextDataGenerator(object):
                 resized_mask,
                 (background_width - new_text_width - margin_right, margin_top),
             )
+                    
+        ############################################
+        # Change image mode (RGB, grayscale, etc.) #
+        ############################################
+        
+        background_img = background_img.convert(image_mode)
+        background_mask = background_mask.convert(image_mode) 
 
         #######################
         # Apply gaussian blur #
@@ -236,13 +243,6 @@ class FakeTextDataGenerator(object):
         final_image = background_img.filter(gaussian_filter)
         final_mask = background_mask.filter(gaussian_filter)
         
-        ############################################
-        # Change image mode (RGB, grayscale, etc.) #
-        ############################################
-        
-        final_image = final_image.convert(image_mode)
-        final_mask = final_mask.convert(image_mode) 
-
         #####################################
         # Generate name for resulting image #
         #####################################
@@ -259,11 +259,11 @@ class FakeTextDataGenerator(object):
             print("{} is not a valid name format. Using default.".format(name_format))
             name = "{}_{}".format(text, str(index))
 
+        name = make_filename_valid(name, allow_unicode=True)
         image_name = "{}.{}".format(name, extension)
         mask_name = "{}_mask.png".format(name)
         box_name = "{}_boxes.txt".format(name)
         tess_box_name = "{}.box".format(name)
-
 
         # Save the image
         if out_dir is not None:

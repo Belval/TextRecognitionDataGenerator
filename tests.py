@@ -1032,6 +1032,47 @@ class DataGenerator(unittest.TestCase):
 
         os.remove("tests/out/21_اختبار اختبار اختبار.png")
 
+    def test_generate_data_with_sorani_kurdish_text(self):
+        FakeTextDataGenerator.generate(
+            23,
+            "تاقیکردنەوە تاقیکردنەوە تاقیکردنەوە",
+            "tests/font_ckb.ttf",
+            "tests/out/",
+            64,
+            "png",
+            0,
+            False,
+            0,
+            False,
+            1,
+            0,
+            0,
+            False,
+            1,
+            -1,
+            0,
+            "#010101",
+            0,
+            1,
+            0,
+            (5, 5, 5, 5),
+            0,
+            0,
+            True,
+            os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+        )
+
+        self.assertLess(
+            diff(
+                "tests/out/23_تاقیکردنەوە تاقیکردنەوە تاقیکردنەوە.png",
+                "tests/expected_results/23_تاقیکردنەوە تاقیکردنەوە تاقیکردنەوە.png",
+                delete_diff_file=True,
+            ),
+            0.05
+        )
+
+        os.remove("tests/out/23_تاقیکردنەوە تاقیکردنەوە تاقیکردنەوە.png")
+
     def test_generate_data_with_hindi_text(self):
         FakeTextDataGenerator.generate(
             22,
@@ -1064,14 +1105,14 @@ class DataGenerator(unittest.TestCase):
 
         self.assertLess(
             diff(
-                "tests/out/22_परीक्षा परीक्षा परीक्षा.png",
+                "tests/out/22_परकष परकष परकष.png",
                 "tests/expected_results/22_परीक्षा परीक्षा परीक्षा.png",
                 delete_diff_file=True,
             ),
             0.17
         )
 
-        os.remove("tests/out/22_परीक्षा परीक्षा परीक्षा.png")
+        os.remove("tests/out/22_परकष परकष परकष.png")
 
     def test_generate_data_with_output_bounding_box(self):
         FakeTextDataGenerator.generate(

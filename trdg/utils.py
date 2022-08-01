@@ -3,6 +3,9 @@ Utility functions
 """
 
 import os
+import re
+import unicodedata
+
 import numpy as np
 from PIL import Image
 
@@ -74,10 +77,34 @@ def mask_to_bboxes(mask, tess=False):
             space_thresh -= 1
             i += 1
 
-    return bboxes        
+    return bboxes
 
 def draw_bounding_boxes(img, bboxes, color="green"):
     d = ImageDraw.Draw(img)
 
     for bbox in bboxes:
         d.rectangle(bbox, outline=color)
+
+
+def make_filename_valid(value, allow_unicode=False):
+    """
+    Code adapted from: https://docs.djangoproject.com/en/4.0/_modules/django/utils/text/#slugify
+
+    Convert to ASCII if 'allow_unicode' is False. Convert spaces or repeated
+    dashes to single dashes. Remove characters that aren't alphanumerics,
+    underscores, or hyphens. Convert to lowercase. Also strip leading and
+    trailing whitespace, dashes, and underscores.
+    """
+    value = str(value)
+    if allow_unicode:
+        value = unicodedata.normalize("NFKC", value)
+    else:
+        value = (
+            unicodedata.normalize("NFKD", value)
+            .encode("ascii", "ignore")
+            .decode("ascii")
+        )
+    value = re.sub(r"[^\w\s-]", "", value)
+
+    # Image names will be shortened to avoid exceeding the max filename length
+    return value[:200]

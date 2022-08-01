@@ -54,11 +54,14 @@ class GeneratorFromRandom:
         self.use_numbers = use_numbers
         self.use_symbols = use_symbols
         self.language = language
+
+        self.batch_size = min(max(count, 1), 1000)
+        self.steps_until_regeneration = self.batch_size
         self.generator = GeneratorFromStrings(
             create_strings_randomly(
                 self.length,
                 self.allow_variable,
-                1000,
+                self.batch_size,
                 self.use_letters,
                 self.use_numbers,
                 self.use_symbols,
@@ -103,14 +106,15 @@ class GeneratorFromRandom:
         return self.next()
 
     def next(self):
-        if self.generator.generated_count >= 999:
+        if self.generator.generated_count >= self.steps_until_regeneration:
             self.generator.strings = create_strings_randomly(
                 self.length,
                 self.allow_variable,
-                1000,
+                self.batch_size,
                 self.use_letters,
                 self.use_numbers,
                 self.use_symbols,
                 self.language,
             )
+            self.steps_until_regeneration += self.batch_size
         return self.generator.next()
