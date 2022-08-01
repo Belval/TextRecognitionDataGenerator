@@ -183,6 +183,7 @@ The script picks a font at random from the *fonts* directory.
 | fonts/cn | Chinese |
 | fonts/ko | Korean |
 | fonts/ja | Japanese |
+| fonts/th | Thai |
 
 Simply add/remove fonts until you get the desired output.
 
