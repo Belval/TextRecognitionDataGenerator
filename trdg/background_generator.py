@@ -33,13 +33,15 @@ def quasicrystal(height, width):
     """
         Create a background with quasicrystal (https://en.wikipedia.org/wiki/Quasicrystal)
     """
-
     image = Image.new("L", (width, height))
     pixels = image.load()
 
     frequency = rnd.random() * 30 + 20  # frequency
     phase = rnd.random() * 2 * math.pi  # phase
     rotation_count = rnd.randint(10, 20)  # of rotations
+    
+    if width == 1 or height == 1:
+        return image.convert("RGBA")
 
     for kw in range(width):
         y = float(kw) / (width - 1) * 4 * math.pi - 2 * math.pi
