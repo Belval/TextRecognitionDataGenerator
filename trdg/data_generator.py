@@ -16,7 +16,7 @@ class FakeTextDataGenerator(object):
     @classmethod
     def generate_from_tuple(cls, t):
         """
-            Same as generate, but takes all parameters as one tuple
+        Same as generate, but takes all parameters as one tuple
         """
 
         cls.generate(*t)
@@ -50,9 +50,9 @@ class FakeTextDataGenerator(object):
         output_mask: bool,
         word_split: bool,
         image_dir: str,
-        stroke_width: int = 0, 
+        stroke_width: int = 0,
         stroke_fill: str = "#282828",
-        image_mode: str = "RGB", 
+        image_mode: str = "RGB",
         output_bboxes: int = 0,
     ) -> Image:
         image = None
@@ -79,7 +79,7 @@ class FakeTextDataGenerator(object):
                 character_spacing,
                 fit,
                 word_split,
-                stroke_width, 
+                stroke_width,
                 stroke_fill,
             )
         random_angle = rnd.randint(0 - skewing_angle, skewing_angle)
@@ -133,7 +133,9 @@ class FakeTextDataGenerator(object):
             resized_img = distorted_img.resize(
                 (new_width, size - vertical_margin), Image.Resampling.LANCZOS
             )
-            resized_mask = distorted_mask.resize((new_width, size - vertical_margin), Image.Resampling.NEAREST)
+            resized_mask = distorted_mask.resize(
+                (new_width, size - vertical_margin), Image.Resampling.NEAREST
+            )
             background_width = width if width > 0 else new_width + horizontal_margin
             background_height = size
         # Vertical text
@@ -181,7 +183,7 @@ class FakeTextDataGenerator(object):
         ##############################################################
         try:
             resized_img_st = ImageStat.Stat(resized_img, resized_mask.split()[2])
-            background_img_st = ImageStat.Stat(background_img) 
+            background_img_st = ImageStat.Stat(background_img)
 
             resized_img_px_mean = sum(resized_img_st.mean[:2]) / 3
             background_img_px_mean = sum(background_img_st.mean) / 3
@@ -225,13 +227,13 @@ class FakeTextDataGenerator(object):
                 resized_mask,
                 (background_width - new_text_width - margin_right, margin_top),
             )
-                    
+
         ############################################
         # Change image mode (RGB, grayscale, etc.) #
         ############################################
-        
+
         background_img = background_img.convert(image_mode)
-        background_mask = background_mask.convert(image_mode) 
+        background_mask = background_mask.convert(image_mode)
 
         #######################
         # Apply gaussian blur #
@@ -242,7 +244,7 @@ class FakeTextDataGenerator(object):
         )
         final_image = background_img.filter(gaussian_filter)
         final_mask = background_mask.filter(gaussian_filter)
-        
+
         #####################################
         # Generate name for resulting image #
         #####################################
@@ -279,7 +281,9 @@ class FakeTextDataGenerator(object):
                 bboxes = mask_to_bboxes(final_mask, tess=True)
                 with open(os.path.join(out_dir, tess_box_name), "w") as f:
                     for bbox, char in zip(bboxes, text):
-                        f.write(" ".join([char] + [str(v) for v in bbox] + ['0']) + "\n")
+                        f.write(
+                            " ".join([char] + [str(v) for v in bbox] + ["0"]) + "\n"
+                        )
         else:
             if output_mask == 1:
                 return final_image, final_mask

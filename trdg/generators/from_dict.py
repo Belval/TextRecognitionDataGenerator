@@ -33,25 +33,29 @@ class GeneratorFromDict:
         space_width: float = 1.0,
         character_spacing: int = 0,
         margins: Tuple[int, int, int, int] = (5, 5, 5, 5),
-        fit: bool = False, 
+        fit: bool = False,
         output_mask: bool = False,
         word_split: bool = False,
         image_dir: str = os.path.join(
             "..", os.path.split(os.path.realpath(__file__))[0], "images"
         ),
-        stroke_width: int = 0, 
+        stroke_width: int = 0,
         stroke_fill: str = "#282828",
         image_mode: str = "RGB",
         output_bboxes: int = 0,
-        path: str = '',
-        rtl: bool = False
+        path: str = "",
+        rtl: bool = False,
     ):
         self.count = count
         self.length = length
         self.allow_variable = allow_variable
 
-        if path == '':
-            self.dict = load_dict(os.path.join(os.path.dirname(__file__), "..", "dicts", language + ".txt"))    
+        if path == "":
+            self.dict = load_dict(
+                os.path.join(
+                    os.path.dirname(__file__), "..", "dicts", language + ".txt"
+                )
+            )
         else:
             self.dict = load_dict(path)
 
@@ -60,10 +64,7 @@ class GeneratorFromDict:
 
         self.generator = GeneratorFromStrings(
             create_strings_from_dict(
-                self.length,
-                self.allow_variable,
-                self.batch_size,
-                self.dict
+                self.length, self.allow_variable, self.batch_size, self.dict
             ),
             count,
             fonts if len(fonts) else load_fonts(language),
@@ -92,7 +93,7 @@ class GeneratorFromDict:
             stroke_fill,
             image_mode,
             output_bboxes,
-            rtl
+            rtl,
         )
 
     def __iter__(self):
@@ -104,10 +105,7 @@ class GeneratorFromDict:
     def next(self):
         if self.generator.generated_count >= self.steps_until_regeneration:
             self.generator.strings = create_strings_from_dict(
-                self.length,
-                self.allow_variable,
-                self.batch_size,
-                self.dict
+                self.length, self.allow_variable, self.batch_size, self.dict
             )
             self.steps_until_regeneration += self.batch_size
         return self.generator.next()

@@ -5,12 +5,14 @@ import random as rnd
 import numpy as np
 from typing import Tuple
 
-from PIL import Image, ImageDraw, ImageFilter
+from PIL import Image
 
 
-def _apply_func_distorsion(image: Image, mask: Image, vertical: bool, horizontal: bool, max_offset: int, func) -> Tuple:
+def _apply_func_distorsion(
+    image: Image, mask: Image, vertical: bool, horizontal: bool, max_offset: int, func
+) -> Tuple:
     """
-        Apply a distorsion to an image
+    Apply a distorsion to an image
     """
 
     # Nothing to do!
@@ -98,12 +100,14 @@ def _apply_func_distorsion(image: Image, mask: Image, vertical: bool, horizontal
     )
 
 
-def sin(image: Image, mask: Image, vertical: bool = False, horizontal: bool = False) -> Tuple:
+def sin(
+    image: Image, mask: Image, vertical: bool = False, horizontal: bool = False
+) -> Tuple:
     """
-        Apply a sine distorsion on one or both of the specified axis
+    Apply a sine distorsion on one or both of the specified axis
     """
 
-    max_offset = int(image.height ** 0.5)
+    max_offset = int(image.height**0.5)
 
     return _apply_func_distorsion(
         image,
@@ -115,12 +119,14 @@ def sin(image: Image, mask: Image, vertical: bool = False, horizontal: bool = Fa
     )
 
 
-def cos(image: Image, mask: Image, vertical: bool = False, horizontal: bool = False) -> Tuple:
+def cos(
+    image: Image, mask: Image, vertical: bool = False, horizontal: bool = False
+) -> Tuple:
     """
-        Apply a cosine distorsion on one or both of the specified axis
+    Apply a cosine distorsion on one or both of the specified axis
     """
 
-    max_offset = int(image.height ** 0.5)
+    max_offset = int(image.height**0.5)
 
     return _apply_func_distorsion(
         image,
@@ -132,12 +138,14 @@ def cos(image: Image, mask: Image, vertical: bool = False, horizontal: bool = Fa
     )
 
 
-def random(image: Image, mask: Image, vertical: bool = False, horizontal: bool = False) -> Tuple:
+def random(
+    image: Image, mask: Image, vertical: bool = False, horizontal: bool = False
+) -> Tuple:
     """
-        Apply a random distorsion on one or both of the specified axis
+    Apply a random distorsion on one or both of the specified axis
     """
 
-    max_offset = int(image.height ** 0.4)
+    max_offset = int(image.height**0.4)
 
     return _apply_func_distorsion(
         image,

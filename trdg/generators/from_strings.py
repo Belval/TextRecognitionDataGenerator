@@ -8,6 +8,7 @@ from trdg.utils import load_dict, load_fonts
 from arabic_reshaper import ArabicReshaper
 from bidi.algorithm import get_display
 
+
 class GeneratorFromStrings:
     """Generator that uses a given list of strings"""
 
@@ -39,7 +40,7 @@ class GeneratorFromStrings:
         image_dir: str = os.path.join(
             "..", os.path.split(os.path.realpath(__file__))[0], "images"
         ),
-        stroke_width: int = 0, 
+        stroke_width: int = 0,
         stroke_fill: str = "#282828",
         image_mode: str = "RGB",
         output_bboxes: int = 0,
@@ -87,7 +88,7 @@ class GeneratorFromStrings:
         self.generated_count = 0
         self.stroke_width = stroke_width
         self.stroke_fill = stroke_fill
-        self.image_mode = image_mode 
+        self.image_mode = image_mode
 
     def __iter__(self):
         return self
@@ -129,10 +130,12 @@ class GeneratorFromStrings:
                 self.image_dir,
                 self.stroke_width,
                 self.stroke_fill,
-                self.image_mode, 
+                self.image_mode,
                 self.output_bboxes,
             ),
-            self.orig_strings[(self.generated_count - 1) % len(self.orig_strings)] if self.rtl else self.strings[(self.generated_count - 1) % len(self.strings)],
+            self.orig_strings[(self.generated_count - 1) % len(self.orig_strings)]
+            if self.rtl
+            else self.strings[(self.generated_count - 1) % len(self.strings)],
         )
 
     def reshape_rtl(self, strings: list, rtl_shaper: ArabicReshaper):
@@ -143,7 +146,9 @@ class GeneratorFromStrings:
             rtl_strings.append(get_display(reshaped_string))
         return rtl_strings
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     from trdg.generators.from_wikipedia import GeneratorFromWikipedia
+
     s = GeneratorFromWikipedia("test")
     next(s)
