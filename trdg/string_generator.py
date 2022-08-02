@@ -97,8 +97,15 @@ def create_strings_randomly(length, allow_variable, count, let, num, sym, lang):
                 [chr(i) for i in range(19968, 40908)]
             )   # unicode range for common and uncommon kanji
             # https://stackoverflow.com/questions/19899554/unicode-range-for-japanese
+        elif lang == "yo":
+            char_encoding = [97,225,224,98,100,101,233,232,7865,769,768,102,103,104,112,237,236,106,
+                107,108,109,110,111,243,242,7885,114,115,7779,116,117,250,249,119,121]
+            pool += "".join(
+                [chr(i) for i in char_encoding]
+            )
         else:
             pool += string.ascii_letters
+       
     if num:
         pool += "0123456789"
     if sym:
