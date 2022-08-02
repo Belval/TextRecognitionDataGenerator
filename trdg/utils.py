@@ -5,11 +5,12 @@ Utility functions
 import os
 import re
 import unicodedata
+from typing import List, Tuple
 
 import numpy as np
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
-def load_dict(path):
+def load_dict(path: str) -> List[str]:
     """Read the dictionnary file and returns all words in it.
     """
     
@@ -24,7 +25,7 @@ def load_dict(path):
             
     return word_dict
 
-def load_fonts(lang):
+def load_fonts(lang: str) -> List[str]:
     """Load all fonts in the fonts directories
     """
 
@@ -43,7 +44,7 @@ def load_fonts(lang):
             )
         ]
 
-def mask_to_bboxes(mask, tess=False):
+def mask_to_bboxes(mask: List[Tuple[int, int, int, int]], tess: bool = False):
     """Process the mask and turns it into a list of AABB bounding boxes
     """
 
@@ -79,14 +80,14 @@ def mask_to_bboxes(mask, tess=False):
 
     return bboxes
 
-def draw_bounding_boxes(img, bboxes, color="green"):
+def draw_bounding_boxes(img: Image, bboxes: List[Tuple[int, int, int, int]], color: str = "green") -> None:
     d = ImageDraw.Draw(img)
 
     for bbox in bboxes:
         d.rectangle(bbox, outline=color)
 
 
-def make_filename_valid(value, allow_unicode=False):
+def make_filename_valid(value: str, allow_unicode: bool = False) -> str:
     """
     Code adapted from: https://docs.djangoproject.com/en/4.0/_modules/django/utils/text/#slugify
 
@@ -109,13 +110,13 @@ def make_filename_valid(value, allow_unicode=False):
     # Image names will be shortened to avoid exceeding the max filename length
     return value[:200]
 
-def get_text_width(image_font, text):
+def get_text_width(image_font: ImageFont, text: str) -> int:
     """
     Get the width of a string when rendered with a given font
     """
     return round(image_font.getlength(text))
 
-def get_text_height(image_font, text):
+def get_text_height(image_font: ImageFont, text: str) -> int:
     """
     Get the width of a string when rendered with a given font
     """

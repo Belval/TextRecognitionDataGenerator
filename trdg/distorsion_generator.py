@@ -3,11 +3,12 @@ import math
 import os
 import random as rnd
 import numpy as np
+from typing import Tuple
 
 from PIL import Image, ImageDraw, ImageFilter
 
 
-def _apply_func_distorsion(image, mask, vertical, horizontal, max_offset, func):
+def _apply_func_distorsion(image: Image, mask: Image, vertical: bool, horizontal: bool, max_offset: int, func) -> Tuple:
     """
         Apply a distorsion to an image
     """
@@ -97,7 +98,7 @@ def _apply_func_distorsion(image, mask, vertical, horizontal, max_offset, func):
     )
 
 
-def sin(image, mask, vertical=False, horizontal=False):
+def sin(image: Image, mask: Image, vertical: bool = False, horizontal: bool = False) -> Tuple:
     """
         Apply a sine distorsion on one or both of the specified axis
     """
@@ -114,7 +115,7 @@ def sin(image, mask, vertical=False, horizontal=False):
     )
 
 
-def cos(image, mask, vertical=False, horizontal=False):
+def cos(image: Image, mask: Image, vertical: bool = False, horizontal: bool = False) -> Tuple:
     """
         Apply a cosine distorsion on one or both of the specified axis
     """
@@ -131,7 +132,7 @@ def cos(image, mask, vertical=False, horizontal=False):
     )
 
 
-def random(image, mask, vertical=False, horizontal=False):
+def random(image: Image, mask: Image, vertical: bool = False, horizontal: bool = False) -> Tuple:
     """
         Apply a random distorsion on one or both of the specified axis
     """

@@ -1,10 +1,11 @@
 import random as rnd
 import string
+from typing import List
 
 import wikipedia
 
 
-def create_strings_from_file(filename, count):
+def create_strings_from_file(filename: str, count: int) -> List[str]:
     """
         Create all strings by reading lines in specified files
     """
@@ -24,7 +25,7 @@ def create_strings_from_file(filename, count):
     return strings
 
 
-def create_strings_from_dict(length, allow_variable, count, lang_dict):
+def create_strings_from_dict(length: int, allow_variable: bool, count: int, lang_dict: List[str]) -> List[str]:
     """
         Create all strings by picking X random word in the dictionnary
     """
@@ -49,7 +50,7 @@ def get_random_page_content() -> str:
     return page_content
 
 
-def create_strings_from_wikipedia(minimum_length, count, lang):
+def create_strings_from_wikipedia(minimum_length: int, count: int, lang: str) -> List[str]:
     """
         Create all string by randomly picking Wikipedia articles and taking sentences from them.
     """
@@ -65,7 +66,7 @@ def create_strings_from_wikipedia(minimum_length, count, lang):
     return sentences[0:count]
 
 
-def create_strings_randomly(length, allow_variable, count, let, num, sym, lang):
+def create_strings_randomly(length: int, allow_variable: bool, count: int, let: bool, num: bool, sym: bool, lang: str) -> List[str]:
     """
         Create all strings by randomly sampling from a pool of characters.
     """

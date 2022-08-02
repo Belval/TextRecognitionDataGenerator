@@ -7,7 +7,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
 
-def gaussian_noise(height, width):
+def gaussian_noise(height: int, width: int) -> Image:
     """
         Create a background with Gaussian noise (to mimic paper)
     """
@@ -21,7 +21,7 @@ def gaussian_noise(height, width):
     return Image.fromarray(image).convert("RGBA")
 
 
-def plain_white(height, width):
+def plain_white(height: int, width: int) -> Image:
     """
         Create a plain white background
     """
@@ -29,7 +29,7 @@ def plain_white(height, width):
     return Image.new("L", (width, height), 255).convert("RGBA")
 
 
-def quasicrystal(height, width):
+def quasicrystal(height: int, width: int) -> Image:
     """
         Create a background with quasicrystal (https://en.wikipedia.org/wiki/Quasicrystal)
     """
@@ -55,7 +55,7 @@ def quasicrystal(height, width):
     return image.convert("RGBA")
 
 
-def image(height, width, image_dir):
+def image(height: int, width: int, image_dir: str) -> Image:
     """
         Create a background with a image
     """
