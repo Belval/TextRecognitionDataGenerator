@@ -2,6 +2,8 @@ import random as rnd
 
 from PIL import Image, ImageColor, ImageDraw, ImageFilter, ImageFont
 
+from trdg.utils import get_text_width, get_text_height
+
 # Thai Unicode reference: https://jrgraphix.net/r/Unicode/0E00-0E7F
 TH_TONE_MARKS = [
     "0xe47",
@@ -60,12 +62,13 @@ def generate(
 
 
 def _compute_character_width(image_font, character):
-    if (
+    if len(character) == 1 and (
         "{0:#x}".format(ord(character))
         in TH_TONE_MARKS + TH_UNDER_VOWELS + TH_UNDER_VOWELS + TH_UPPER_VOWELS
     ):
         return 0
-    return image_font.getsize(character)[0]
+    # Casting as int to preserve the old behavior
+    return round(image_font.getlength(character))
 
 
 def _generate_horizontal_text(
@@ -82,7 +85,7 @@ def _generate_horizontal_text(
 ):
     image_font = ImageFont.truetype(font=font, size=font_size)
 
-    space_width = int(image_font.getsize(" ")[0] * space_width)
+    space_width = int(get_text_width(image_font, " ") * space_width)
 
     if word_split:
         splitted_text = []
@@ -101,7 +104,7 @@ def _generate_horizontal_text(
     if not word_split:
         text_width += character_spacing * (len(text) - 1)
 
-    text_height = max([image_font.getsize(p)[1] for p in splitted_text])
+    text_height = max([get_text_height(image_font, p) for p in splitted_text])
 
     txt_img = Image.new("RGBA", (text_width, text_height), (0, 0, 0, 0))
     txt_mask = Image.new("RGB", (text_width, text_height), (0, 0, 0))
@@ -165,12 +168,12 @@ def _generate_vertical_text(
 ):
     image_font = ImageFont.truetype(font=font, size=font_size)
 
-    space_height = int(image_font.getsize(" ")[1] * space_width)
+    space_height = int(get_text_height(image_font, " ") * space_width)
 
     char_heights = [
-        image_font.getsize(c)[1] if c != " " else space_height for c in text
+        get_text_height(image_font, c) if c != " " else space_height for c in text
     ]
-    text_width = max([image_font.getsize(c)[0] for c in text])
+    text_width = max([get_text_width(image_font, c) for c in text])
     text_height = sum(char_heights) + character_spacing * len(text)
 
     txt_img = Image.new("RGBA", (text_width, text_height), (0, 0, 0, 0))

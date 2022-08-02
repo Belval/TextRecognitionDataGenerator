@@ -7,20 +7,20 @@ import re
 import unicodedata
 
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageDraw
 
-def load_dict(lang, path):
+def load_dict(path):
     """Read the dictionnary file and returns all words in it.
     """
     
     word_dict = []
-        with open(
-            path,
-            "r",
-            encoding="utf8",
-            errors="ignore",
-        ) as d:
-            word_dict = [l for l in d.read().splitlines() if len(l) > 0]
+    with open(
+        path,
+        "r",
+        encoding="utf8",
+        errors="ignore",
+    ) as d:
+        word_dict = [l for l in d.read().splitlines() if len(l) > 0]
             
     return word_dict
 
@@ -108,3 +108,16 @@ def make_filename_valid(value, allow_unicode=False):
 
     # Image names will be shortened to avoid exceeding the max filename length
     return value[:200]
+
+def get_text_width(image_font, text):
+    """
+    Get the width of a string when rendered with a given font
+    """
+    return round(image_font.getlength(text))
+
+def get_text_height(image_font, text):
+    """
+    Get the width of a string when rendered with a given font
+    """
+    return image_font.getsize(text)[1]
+

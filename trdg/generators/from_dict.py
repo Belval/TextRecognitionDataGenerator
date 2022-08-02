@@ -50,7 +50,7 @@ class GeneratorFromDict:
         self.allow_variable = allow_variable
 
         if path == '':
-            self.dict = load_dict(os.path.join(os.path.dirname(__file__), "dicts", lang + ".txt"))    
+            self.dict = load_dict(os.path.join(os.path.dirname(__file__), "..", "dicts", language + ".txt"))    
         else:
             self.dict = load_dict(path)
 

@@ -366,7 +366,13 @@ def main():
         else:
             sys.exit("Cannot open dict")
     else:
-        lang_dict = load_dict(args.language)
+        lang_dict = load_dict(
+            os.path.join(
+                os.path.dirname(__file__),
+                "dicts",
+                args.language + ".txt"
+            )
+        )
 
     # Create font (path) list
     if args.font_dir:

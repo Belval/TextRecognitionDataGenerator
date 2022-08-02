@@ -68,11 +68,11 @@ def image(height, width, image_dir):
 
         if pic.size[0] < width:
             pic = pic.resize(
-                [width, int(pic.size[1] * (width / pic.size[0]))], Image.ANTIALIAS
+                [width, int(pic.size[1] * (width / pic.size[0]))], Image.Resampling.LANCZOS
             )
         if pic.size[1] < height:
             pic = pic.resize(
-                [int(pic.size[0] * (height / pic.size[1])), height], Image.ANTIALIAS
+                [int(pic.size[0] * (height / pic.size[1])), height], Image.Resampling.LANCZOS
             )
 
         if pic.size[0] == width:
