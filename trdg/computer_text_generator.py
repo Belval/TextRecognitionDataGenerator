@@ -1,5 +1,5 @@
 import random as rnd
-
+from typing import Tuple
 from PIL import Image, ImageColor, ImageDraw, ImageFilter, ImageFont
 
 from trdg.utils import get_text_width, get_text_height
@@ -20,18 +20,18 @@ TH_UPPER_VOWELS = ["0xe31", "0xe34", "0xe35", "0xe36", "0xe37"]
 
 
 def generate(
-    text,
-    font,
-    text_color,
-    font_size,
-    orientation,
-    space_width,
-    character_spacing,
-    fit,
-    word_split,
-    stroke_width=0,
-    stroke_fill="#282828",
-):
+    text: str,
+    font: str,
+    text_color: str,
+    font_size: int,
+    orientation: int,
+    space_width: int,
+    character_spacing: int,
+    fit: bool,
+    word_split: bool,
+    stroke_width: int = 0,
+    stroke_fill: str = "#282828",
+) -> Tuple:
     if orientation == 0:
         return _generate_horizontal_text(
             text,
@@ -61,7 +61,7 @@ def generate(
         raise ValueError("Unknown orientation " + str(orientation))
 
 
-def _compute_character_width(image_font, character):
+def _compute_character_width(image_font: ImageFont, character: str) -> int:
     if len(character) == 1 and (
         "{0:#x}".format(ord(character))
         in TH_TONE_MARKS + TH_UNDER_VOWELS + TH_UNDER_VOWELS + TH_UPPER_VOWELS
@@ -72,17 +72,17 @@ def _compute_character_width(image_font, character):
 
 
 def _generate_horizontal_text(
-    text,
-    font,
-    text_color,
-    font_size,
-    space_width,
-    character_spacing,
-    fit,
-    word_split,
-    stroke_width=0,
-    stroke_fill="#282828",
-):
+    text: str,
+    font: str,
+    text_color: str,
+    font_size: int,
+    space_width: int,
+    character_spacing: int,
+    fit: bool,
+    word_split: bool,
+    stroke_width: int = 0,
+    stroke_fill: str = "#282828",
+) -> Tuple:
     image_font = ImageFont.truetype(font=font, size=font_size)
 
     space_width = int(get_text_width(image_font, " ") * space_width)
@@ -156,16 +156,16 @@ def _generate_horizontal_text(
 
 
 def _generate_vertical_text(
-    text,
-    font,
-    text_color,
-    font_size,
-    space_width,
-    character_spacing,
-    fit,
-    stroke_width=0,
-    stroke_fill="#282828",
-):
+    text: str,
+    font: str,
+    text_color: str,
+    font_size: int,
+    space_width: int,
+    character_spacing: int,
+    fit: bool,
+    stroke_width: int = 0,
+    stroke_fill: str = "#282828",
+) -> Tuple:
     image_font = ImageFont.truetype(font=font, size=font_size)
 
     space_height = int(get_text_height(image_font, " ") * space_width)
