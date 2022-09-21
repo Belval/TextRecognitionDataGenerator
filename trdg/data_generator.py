@@ -274,12 +274,12 @@ class FakeTextDataGenerator(object):
                 final_mask.save(os.path.join(out_dir, mask_name))
             if output_bboxes == 1:
                 bboxes = mask_to_bboxes(final_mask)
-                with open(os.path.join(out_dir, box_name), "w") as f:
+                with open(os.path.join(out_dir, box_name), "w", encoding='utf8') as f:
                     for bbox in bboxes:
                         f.write(" ".join([str(v) for v in bbox]) + "\n")
             if output_bboxes == 2:
                 bboxes = mask_to_bboxes(final_mask, tess=True)
-                with open(os.path.join(out_dir, tess_box_name), "w") as f:
+                with open(os.path.join(out_dir, tess_box_name), "w", encoding='utf8') as f:
                     for bbox, char in zip(bboxes, text):
                         f.write(
                             " ".join([char] + [str(v) for v in bbox] + ["0"]) + "\n"
