@@ -270,6 +270,10 @@ class FakeTextDataGenerator(object):
         # Save the image
         if out_dir is not None:
             final_image.save(os.path.join(out_dir, image_name))
+
+            with open(os.path.join(out_dir, "{}.txt".format(name)), "w", encoding='utf8') as f:
+                f.write(text)
+
             if output_mask == 1:
                 final_mask.save(os.path.join(out_dir, mask_name))
             if output_bboxes == 1:
