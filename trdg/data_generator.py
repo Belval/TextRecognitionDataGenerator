@@ -118,12 +118,12 @@ class FakeTextDataGenerator(object):
                 distorted_img = rotated_img  # Mind = blown
                 distorted_mask = rotated_mask
             else:
-            distorted_img, distorted_mask = distorsion_generator.random(
-                rotated_img,
-                rotated_mask,
-                vertical=(distorsion_orientation == 0 or distorsion_orientation == 2),
-                horizontal=(distorsion_orientation == 1 or distorsion_orientation == 2),
-            )
+                distorted_img, distorted_mask = distorsion_generator.random(
+                    rotated_img,
+                    rotated_mask,
+                    vertical=(distorsion_orientation == 0 or distorsion_orientation == 2),
+                    horizontal=(distorsion_orientation == 1 or distorsion_orientation == 2),
+                )
 
         ##################################
         # Resize image to desired format #
