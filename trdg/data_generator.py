@@ -113,6 +113,11 @@ class FakeTextDataGenerator(object):
                 horizontal=(distorsion_orientation == 1 or distorsion_orientation == 2),
             )
         else:
+            import random
+            if random.random() < 0.5:
+                distorted_img = rotated_img  # Mind = blown
+                distorted_mask = rotated_mask
+            else:
             distorted_img, distorted_mask = distorsion_generator.random(
                 rotated_img,
                 rotated_mask,
