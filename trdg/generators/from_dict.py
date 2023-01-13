@@ -12,7 +12,7 @@ class GeneratorFromDict:
 
     def __init__(
         self,
-        count: int = -1,
+        count: int  = -1,
         length: int = 1,
         allow_variable: bool = False,
         fonts: List[str] = [],

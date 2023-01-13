@@ -53,7 +53,7 @@ def parse_arguments():
         "--language",
         type=str,
         nargs="?",
-        help="The language to use, should be fr (French), en (English), es (Spanish), de (German), ar (Arabic), cn (Chinese), ja (Japanese) or hi (Hindi)",
+        help="The language to use, should be fr (French), en (English), es (Spanish), de (German), ar (Arabic), cn (Chinese), ja (Japanese) , hi (Hindi) or hu (Hungarain)",
         default="en",
     )
     parser.add_argument(
@@ -129,7 +129,7 @@ def parse_arguments():
         type=str,
         nargs="?",
         help="Define the extension to save the image with",
-        default="jpg",
+        default="jpg", # png
     )
     parser.add_argument(
         "-k",
