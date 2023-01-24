@@ -12,14 +12,14 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 def load_dict(path: str) -> List[str]:
-    """Read the dictionnary file and returns all words in it."""
+    """Read the dictionary file and returns all words in it."""
 
     word_dict = []
     with open(
         path,
         "r",
         encoding="utf8",
-        errors="ignore",
+        errors  ="ignore",
     ) as d:
         word_dict = [l for l in d.read().splitlines() if len(l) > 0]
 

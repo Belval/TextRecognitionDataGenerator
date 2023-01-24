@@ -29,7 +29,7 @@ def create_strings_from_dict(
     length: int, allow_variable: bool, count: int, lang_dict: List[str]
 ) -> List[str]:
     """
-    Create all strings by picking X random word in the dictionnary
+    Create all strings by picking X random word in the dictionary
     """
 
     dict_len = len(lang_dict)
@@ -95,6 +95,12 @@ def create_strings_randomly(
             pool += "".join(
                 [chr(i) for i in range(19968, 40908)]
             )  # Unicode range of CHK characters
+
+        # The Hungarian alphabet is an extension of ﻿﻿ the Latin alphabet ﻿0041–007A used for writing the Hungarian language.
+        # elif lang =="hu":
+        #     pool += "".join(
+        #             [chr(i) for i in range(start, end)]
+        #     ) 
         elif lang == "ja":
             pool += "".join(
                 [chr(i) for i in range(12288, 12351)]
@@ -122,6 +128,9 @@ def create_strings_randomly(
     if lang == "cn":
         min_seq_len = 1
         max_seq_len = 2
+    # elif lang == "hu":
+    #     min_seq_len = 1
+    #     max_seq_len = 3
     elif lang == "ja":
         min_seq_len = 1
         max_seq_len = 2

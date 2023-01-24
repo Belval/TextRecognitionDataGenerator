@@ -182,10 +182,10 @@ class FakeTextDataGenerator(object):
         # Comparing average pixel value of text and background image #
         ##############################################################
         try:
-            resized_img_st = ImageStat.Stat(resized_img, resized_mask.split()[2])
+            resized_img_st    = ImageStat.Stat(resized_img, resized_mask.split()[2])
             background_img_st = ImageStat.Stat(background_img)
 
-            resized_img_px_mean = sum(resized_img_st.mean[:2]) / 3
+            resized_img_px_mean    = sum(resized_img_st.mean[:2]) / 3
             background_img_px_mean = sum(background_img_st.mean) / 3
 
             if abs(resized_img_px_mean - background_img_px_mean) < 15:

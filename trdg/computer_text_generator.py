@@ -58,7 +58,7 @@ def generate(
             stroke_fill,
         )
     else:
-        raise ValueError("Unknown orientation " + str(orientation))
+        raise ValueError("Unknown orientation - can be either 0 or 1" + str(orientation))
 
 
 def _compute_character_width(image_font: ImageFont, character: str) -> int:
@@ -106,7 +106,7 @@ def _generate_horizontal_text(
 
     text_height = max([get_text_height(image_font, p) for p in splitted_text])
 
-    txt_img = Image.new("RGBA", (text_width, text_height), (0, 0, 0, 0))
+    txt_img  = Image.new("RGBA", (text_width, text_height), (0, 0, 0, 0))
     txt_mask = Image.new("RGB", (text_width, text_height), (0, 0, 0))
 
     txt_img_draw = ImageDraw.Draw(txt_img)
@@ -170,13 +170,11 @@ def _generate_vertical_text(
 
     space_height = int(get_text_height(image_font, " ") * space_width)
 
-    char_heights = [
-        get_text_height(image_font, c) if c != " " else space_height for c in text
-    ]
-    text_width = max([get_text_width(image_font, c) for c in text])
-    text_height = sum(char_heights) + character_spacing * len(text)
+    char_heights = [get_text_height(image_font, c) if c != " " else space_height for c in text]
+    text_width   = max([get_text_width(image_font, c) for c in text])
+    text_height  = sum(char_heights) + character_spacing * len(text)
 
-    txt_img = Image.new("RGBA", (text_width, text_height), (0, 0, 0, 0))
+    txt_img  = Image.new("RGBA", (text_width, text_height), (0, 0, 0, 0))
     txt_mask = Image.new("RGBA", (text_width, text_height), (0, 0, 0, 0))
 
     txt_img_draw = ImageDraw.Draw(txt_img)

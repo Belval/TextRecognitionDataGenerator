@@ -39,16 +39,16 @@ def download_model_weights() -> str:
 
 
 def _sample(e, mu1, mu2, std1, std2, rho):
-    cov = np.array([[std1 * std1, std1 * std2 * rho], [std1 * std2 * rho, std2 * std2]])
+    cov  = np.array([[std1 * std1, std1 * std2 * rho], [std1 * std2 * rho, std2 * std2]])
     mean = np.array([mu1, mu2])
 
     x, y = np.random.multivariate_normal(mean, cov)
-    end = np.random.binomial(1, e)
+    end  = np.random.binomial(1, e)
     return np.array([x, y, end])
 
 
 def _split_strokes(points):
-    points = np.array(points)
+    points  = np.array(points)
     strokes = []
     b = 0
     for e in range(len(points)):
@@ -94,7 +94,7 @@ def _sample_text(sess, args_text, translation):
         np.concatenate([sequence, np.zeros((1, len(translation)))]), axis=0
     )
 
-    coord = np.array([0.0, 0.0, 1.0])
+    coord  = np.array([0.0, 0.0, 1.0])
     coords = [coord]
 
     phi_data, window_data, kappa_data, stroke_data = [], [], [], []
@@ -209,7 +209,7 @@ def generate(text, text_color):
 
             strokes = np.array(stroke_data)
             strokes[:, :2] = np.cumsum(strokes[:, :2], axis=0)
-            _, maxx = np.min(strokes[:, 0]), np.max(strokes[:, 0])
+            _, maxx    = np.min(strokes[:, 0]), np.max(strokes[:, 0])
             miny, maxy = np.min(strokes[:, 1]), np.max(strokes[:, 1])
 
             fig, ax = plt.subplots(1, 1)
@@ -227,7 +227,7 @@ def generate(text, text_color):
 
             s, (width, height) = canvas.print_to_buffer()
             image = Image.frombytes("RGBA", (width, height), s)
-            mask = Image.new("RGB", (width, height), (0, 0, 0))
+            mask  = Image.new("RGB", (width, height), (0, 0, 0))
 
             images.append(_crop_white_borders(image))
 
