@@ -121,31 +121,31 @@ class DataGenerator(unittest.TestCase):
 
     def test_generate_data_with_format(self):
         FakeTextDataGenerator.generate(
-            0,
-            "TEST TEST TEST",
-            "tests/font.ttf",
-            "tests/out/",
-            64,
-            "jpg",
-            0,
-            False,
-            0,
-            False,
-            1,
-            0,
-            0,
-            False,
-            0,
-            -1,
-            0,
-            "#010101",
-            0,
-            1,
-            0,
-            (5, 5, 5, 5),
-            0,
-            0,
-            False,
+            0,                  # index
+            "TEST TEST TEST",   # text
+            "tests/font.ttf",   # font
+            "tests/out/",       # out_dir
+            64,                 # size
+            "jpg",              # extension
+            0,                  # skewing_angle
+            False,              # random_skew
+            0,                  # blur
+            False,              # random_blur
+            1,                  # background_type
+            0,                  # distorsion_type
+            0,                  # distorsion_orientation
+            False,              # is_handwritten
+            0,                  # name_format
+            -1,                 # width
+            0,                  # alignment
+            "#010101",          # text_color
+            0,                  # orientation
+            1,                  # space_width
+            0,                  # character_spacing
+            (5, 5, 5, 5),       # margins
+            0,                  # fit
+            0,                  # output_mask
+            False,              # word_split or word_siplit?
             os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
         )
 
@@ -648,7 +648,7 @@ class DataGenerator(unittest.TestCase):
     def test_generate_text_with_unknown_orientation(self):
         try:
             FakeTextDataGenerator.generate(
-                12,
+                12,   # index repated her !?
                 "TEST TEST TEST",
                 "tests/font.ttf",
                 "tests/out/",
@@ -1032,47 +1032,6 @@ class DataGenerator(unittest.TestCase):
 
         os.remove("tests/out/21_اختبار اختبار اختبار.png")
 
-    def test_generate_data_with_sorani_kurdish_text(self):
-        FakeTextDataGenerator.generate(
-            23,
-            "تاقیکردنەوە تاقیکردنەوە تاقیکردنەوە",
-            "tests/font_ckb.ttf",
-            "tests/out/",
-            64,
-            "png",
-            0,
-            False,
-            0,
-            False,
-            1,
-            0,
-            0,
-            False,
-            1,
-            -1,
-            0,
-            "#010101",
-            0,
-            1,
-            0,
-            (5, 5, 5, 5),
-            0,
-            0,
-            True,
-            os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
-        )
-
-        self.assertLess(
-            diff(
-                "tests/out/23_تاقیکردنەوە تاقیکردنەوە تاقیکردنەوە.png",
-                "tests/expected_results/23_تاقیکردنەوە تاقیکردنەوە تاقیکردنەوە.png",
-                delete_diff_file=True,
-            ),
-            0.05
-        )
-
-        os.remove("tests/out/23_تاقیکردنەوە تاقیکردنەوە تاقیکردنەوە.png")
-
     def test_generate_data_with_hindi_text(self):
         FakeTextDataGenerator.generate(
             22,
@@ -1114,9 +1073,93 @@ class DataGenerator(unittest.TestCase):
 
         os.remove("tests/out/22_परकष परकष परकष.png")
 
+    def test_generate_data_with_sorani_kurdish_text(self):
+        FakeTextDataGenerator.generate(
+            23,
+            "تاقیکردنەوە تاقیکردنەوە تاقیکردنەوە",
+            "tests/font_ckb.ttf",
+            "tests/out/",
+            64,
+            "png",
+            0,
+            False,
+            0,
+            False,
+            1,
+            0,
+            0,
+            False,
+            1,
+            -1,
+            0,
+            "#010101",
+            0,
+            1,
+            0,
+            (5, 5, 5, 5),
+            0,
+            0,
+            True,
+            os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+        )
+
+        self.assertLess(
+            diff(
+                "tests/out/23_تاقیکردنەوە تاقیکردنەوە تاقیکردنەوە.png",
+                "tests/expected_results/23_تاقیکردنەوە تاقیکردنەوە تاقیکردنەوە.png",
+                delete_diff_file=True,
+            ),
+            0.05
+        )
+
+        os.remove("tests/out/23_تاقیکردنەوە تاقیکردنەوە تاقیکردنەوە.png")
+
+
+    def test_generate_data_with_hungarain_text(self):
+        FakeTextDataGenerator.generate(
+            24,
+            "teszt teszt teszt teszt",
+            "tests/font_hu.ttf",
+            "tests/out/",
+            64,
+            "png",
+            0,
+            False,
+            0,
+            False,
+            1,
+            0,
+            0,
+            False,
+            1,
+            -1,
+            0,
+            "#010101",
+            0,
+            1,
+            0,
+            (5, 5, 5, 5),
+            0,
+            0,
+            True,
+            os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
+        )
+
+        self.assertLess(
+            diff(
+                "tests/out/24_teszt teszt teszt teszt.png",
+                "tests/expected_results/24_teszt teszt teszt teszt.png",
+                delete_diff_file=True,
+            ),
+            0.05
+        )
+
+        os.remove("tests/out/24_teszt teszt teszt teszt.png")
+
+
     def test_generate_data_with_output_bounding_box(self):
         FakeTextDataGenerator.generate(
-            21,
+            21, # repeated index issue 
             "TEST TEST TEST",
             "tests/font.ttf",
             "tests/out/",
@@ -1159,7 +1202,7 @@ class DataGenerator(unittest.TestCase):
 
     def test_generate_data_with_tesseract_output_bounding_box(self):
         FakeTextDataGenerator.generate(
-            22,
+            22, # repeated index issue 
             "TEST TEST TEST",
             "tests/font.ttf",
             "tests/out/",
@@ -1214,6 +1257,14 @@ class DataGenerator(unittest.TestCase):
         s = create_strings_randomly(1, False, 1, False, False, True, "en")[0]
 
         self.assertTrue(all([l in "!\"#$%&'()*+,-./:;?@[\\]^_`{|}~" for l in s]))
+
+    #  to do   11-1-2023
+    # def test_generate_hungarain_string(self):
+    #     s = create_strings_randomly(1, False, 1, True, False, False, "cn")[0]
+
+    #     cn_chars = [chr(i) for i in range(19968, 40908)]
+
+    #     self.assertTrue(all([l in cn_chars for l in s]))
 
     def test_generate_chinese_string(self):
         s = create_strings_randomly(1, False, 1, True, False, False, "cn")[0]
@@ -1332,6 +1383,21 @@ class CommandLineInterface(unittest.TestCase):
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
         empty_directory("tests/out/")
+    
+    # def test_language_hungarain(self):
+    #     args = [
+    #         "python3",
+    #         "run.py",
+    #         "-l",
+    #         "hu",
+    #         "-c",
+    #         "1",
+    #         "--output_dir",
+    #         "../tests/out/",
+    #     ]
+    #     subprocess.Popen(args, cwd="trdg/").wait()
+    #     self.assertTrue(len(os.listdir("tests/out/")) == 1)
+    #     empty_directory("tests/out/")
 
     def test_count_parameter(self):
         args = ["python3", "run.py", "-c", "10", "--output_dir", "../tests/out/"]

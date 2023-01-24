@@ -12,7 +12,7 @@ class GeneratorFromRandom:
 
     def __init__(
         self,
-        count: int = -1,
+        count: int  = -1,
         length: int = 1,
         allow_variable: bool = False,
         use_letters: bool = True,
@@ -48,13 +48,13 @@ class GeneratorFromRandom:
         output_bboxes: int = 0,
     ):
         self.generated_count = 0
-        self.count = count
+        self.count  = count
         self.length = length
         self.allow_variable = allow_variable
         self.use_letters = use_letters
         self.use_numbers = use_numbers
         self.use_symbols = use_symbols
-        self.language = language
+        self.language    = language
 
         self.batch_size = min(max(count, 1), 1000)
         self.steps_until_regeneration = self.batch_size

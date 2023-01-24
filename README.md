@@ -150,6 +150,20 @@ The text is chosen at random in a dictionary file (that can be found in the *dic
 
 There are a lot of parameters that you can tune to get the results you want, therefore I recommend checking out `trdg -h` for more information.
 
+## Create images with Hungarain  text
+
+It is simple! Just do `trdg -l hu -c 1000 -w 5`!
+
+Generated texts come both in simplified and traditional Hungarain scripts.
+
+Traditional:
+
+![30](samples/30.jpg "0")
+
+Simplified:
+
+![31](samples/31.jpg "1")
+
 ## Create images with Chinese text
 
 It is simple! Just do `trdg -l cn -c 1000 -w 5`!
@@ -184,6 +198,7 @@ The script picks a font at random from the *fonts* directory.
 | fonts/ko | Korean |
 | fonts/ja | Japanese |
 | fonts/th | Thai |
+| fonts/hu | Hungarian |
 
 Simply add/remove fonts until you get the desired output.
 
