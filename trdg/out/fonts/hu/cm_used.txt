@@ -1,1 +1,0 @@
-python3 run.py -c 5  -l hu -w 30 -i texts/fonts_test_hu.txt --name_format 2  -f 64 --thread_count 8   --font_dir fonts/hu/  --output_dir "out/fonts/hu/100/"

@@ -1,0 +1,2 @@
+in this folder I am doing font test  for list of english fonts (to see which font support  numbers ,symbols ,small &captial letters )
+python3 run.py -c 5  -l en -w 30 -i texts/fonts_test_en.txt --name_format 2  -f 64 --thread_count 8   --font_dir fonts/en/  --output_dir "out/fonts_test/en/174/"
