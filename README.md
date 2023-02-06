@@ -95,9 +95,9 @@ By default, they will be generated to `out/` in the current working directory.
 
 
 ### Testing (using python)
-The command that used to prepare test image (ground truth)
+The command that used to prepare test image (ground truth) . <br>
 `python3 run.py -c 1  -w 11 -i texts/hu_test.txt --name_format 0  --output_dir "out3/" -f 64 --thread_count 8 --font_dir fonts/hu_test/ `
-
+To test uints :
 ```
 cd TextRecognitionDataGeneratorHuMu23
 python3 tests.py
