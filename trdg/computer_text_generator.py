@@ -58,8 +58,8 @@ def generate(
             stroke_fill,
         )
     else:
-        raise ValueError("Unknown orientation - can be either 0 or 1" + str(orientation))
-
+        # raise ValueError("Unknown orientation " + str(orientation))
+        raise ValueError(f"Unknown orientation {orientation}")
 
 def _compute_character_width(image_font: ImageFont, character: str) -> int:
     if len(character) == 1 and (
@@ -90,8 +90,7 @@ def _generate_horizontal_text(
     if word_split:
         splitted_text = []
         for w in text.split(" "):
-            splitted_text.append(w)
-            splitted_text.append(" ")
+            splitted_text.extend((w, " "))
         splitted_text.pop()
     else:
         splitted_text = text
@@ -104,9 +103,9 @@ def _generate_horizontal_text(
     if not word_split:
         text_width += character_spacing * (len(text) - 1)
 
-    text_height = max([get_text_height(image_font, p) for p in splitted_text])
+    text_height = max(get_text_height(image_font, p) for p in splitted_text)
 
-    txt_img  = Image.new("RGBA", (text_width, text_height), (0, 0, 0, 0))
+    txt_img = Image.new("RGBA", (text_width, text_height), (0, 0, 0, 0))
     txt_mask = Image.new("RGB", (text_width, text_height), (0, 0, 0))
 
     txt_img_draw = ImageDraw.Draw(txt_img)
@@ -170,11 +169,14 @@ def _generate_vertical_text(
 
     space_height = int(get_text_height(image_font, " ") * space_width)
 
-    char_heights = [get_text_height(image_font, c) if c != " " else space_height for c in text]
-    text_width   = max([get_text_width(image_font, c) for c in text])
-    text_height  = sum(char_heights) + character_spacing * len(text)
+    char_heights = [
+        get_text_height(image_font, c) if c != " " else space_height for c in text
+    ]
+    # text_width = max([get_text_width(image_font, c) for c in text])
+    text_width = max(get_text_width(image_font, c) for c in text)
+    text_height = sum(char_heights) + character_spacing * len(text)
 
-    txt_img  = Image.new("RGBA", (text_width, text_height), (0, 0, 0, 0))
+    txt_img = Image.new("RGBA", (text_width, text_height), (0, 0, 0, 0))
     txt_mask = Image.new("RGBA", (text_width, text_height), (0, 0, 0, 0))
 
     txt_img_draw = ImageDraw.Draw(txt_img)
@@ -201,7 +203,8 @@ def _generate_vertical_text(
 
     for i, c in enumerate(text):
         txt_img_draw.text(
-            (0, sum(char_heights[0:i]) + i * character_spacing),
+            # (0, sum(char_heights[0:i]) + i * character_spacing),
+            (0, sum(char_heights[:i]) + i * character_spacing),
             c,
             fill=fill,
             font=image_font,
@@ -209,7 +212,8 @@ def _generate_vertical_text(
             stroke_fill=stroke_fill,
         )
         txt_mask_draw.text(
-            (0, sum(char_heights[0:i]) + i * character_spacing),
+            # (0, sum(char_heights[0:i]) + i * character_spacing),
+            (0, sum(char_heights[:i]) + i * character_spacing),
             c,
             fill=((i + 1) // (255 * 255), (i + 1) // 255, (i + 1) % 255),
             font=image_font,

@@ -53,11 +53,7 @@ def parse_arguments():
         "--language",
         type=str,
         nargs="?",
-<<<<<<< HEAD
-        help="The language to use, should be fr (French), en (English), es (Spanish), de (German), ar (Arabic), cn (Chinese), ja (Japanese) , hi (Hindi) or hu (Hungarian)",
-=======
         help="The language to use, should be fr (French), en (English), es (Spanish), de (German), ar (Arabic), cn (Chinese), ja (Japanese) , hi (Hindi) or hu (Hungarain)",
->>>>>>> f41bfb634e50f29f3efd5d13a217501eb0364545
         default="en",
     )
     parser.add_argument(
@@ -373,7 +369,9 @@ def main():
             sys.exit("Cannot open dict")
     else:
         lang_dict = load_dict(
-            os.path.join(os.path.dirname(__file__), "dicts", args.language + ".txt")
+            os.path.join(
+                os.path.dirname(__file__), "dicts", f"{args.language}.txt"
+            )
         )
 
     # Create font (path) list
@@ -381,7 +379,7 @@ def main():
         fonts = [
             os.path.join(args.font_dir, p)
             for p in os.listdir(args.font_dir)
-            if os.path.splitext(p)[1] == ".ttf"
+            if os.path.splitext(p)[1] == ".ttf"  # or os.path.splitext(p)[1] == ".otf"
         ]
     elif args.font:
         if os.path.isfile(args.font):
@@ -486,11 +484,11 @@ def main():
             os.path.join(args.output_dir, "labels.txt"), "w", encoding="utf8"
         ) as f:
             for i in range(string_count):
-                file_name = str(i) + "." + args.extension
+                file_name = f"{str(i)}.{args.extension}"
                 label = strings[i]
                 if args.space_width == 0:
                     label = label.replace(" ", "")
-                f.write("{} {}\n".format(file_name, label))
+                f.write(f"{file_name} {label}\n")
 
 
 if __name__ == "__main__":

@@ -93,6 +93,15 @@ You get 1,000 randomly generated images with random text on them like:
 
 By default, they will be generated to `out/` in the current working directory.
 
+
+### Testing (using python)
+The command that used to prepare test image (ground truth)
+`python3 run.py -c 1  -w 11 -i texts/hu_test.txt --name_format 0  --output_dir "out3/" -f 64 --thread_count 8 --font_dir fonts/hu_test/ `
+
+```
+cd TextRecognitionDataGeneratorHuMu23
+python3 tests.py
+```
 ### Text skewing
 
 What if you want random skewing? Add `-k` and `-rk` (`trdg -c 1000 -w 5 -f 64 -k 5 -rk`)
