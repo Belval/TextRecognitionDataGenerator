@@ -419,8 +419,9 @@ def main():
     if args.language == "ar":
         from arabic_reshaper import ArabicReshaper
         from bidi.algorithm import get_display
-
         arabic_reshaper = ArabicReshaper()
+        # 修改阿拉伯语系文本标签进行修改
+        strings_ar = [get_display(x) for x in strings]
         strings = [
             " ".join(
                 [get_display(arabic_reshaper.reshape(w)) for w in s.split(" ")[::-1]]
@@ -475,9 +476,12 @@ def main():
     ):
         pass
     p.terminate()
-
+    # 修改输出格式，直接返回paddleocr样式
     if args.name_format == 2:
         # Create file with filename-to-label connections
+        # 对阿拉伯语系标签进行修改
+        if args.language == "ar":
+            strings = strings_ar
         with open(
             os.path.join(args.output_dir, "labels.txt"), "w", encoding="utf8"
         ) as f:
@@ -486,7 +490,7 @@ def main():
                 label = strings[i]
                 if args.space_width == 0:
                     label = label.replace(" ", "")
-                f.write("{} {}\n".format(file_name, label))
+                f.write("{0}/images/{1}\t{2}\n".format(args.output_dir, file_name, label))
 
 
 if __name__ == "__main__":
