@@ -43,9 +43,12 @@ for font_path in os.listdir(font_dir):
         charset = set(charlist)
         for char in charlist:
             for table in font['cmap'].tables:
-                if ord(char) in table.cmap.keys() and char in charset:
-                    charset.remove(char)
-        print(f"字体：{font}, 不支持的字符：{charset}")
+                try:
+                    if ord(char) in table.cmap.keys() and char in charset:
+                        charset.remove(char)
+                except TypeError as err:
+                    print(f"Font:{font}, Error:{err}")
+        print(f"字体：{font_path}, 不支持的字符：{charset}")
         if len(charset) == 0:
             shutil.copy(os.path.join(font_dir, font_path), os.path.join(font_dir + "_filter", font_path))
 
