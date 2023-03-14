@@ -490,7 +490,7 @@ def main():
                 label = strings[i]
                 if args.space_width == 0:
                     label = label.replace(" ", "")
-                f.write("{0}/images/{1}\t{2}\n".format(args.output_dir, file_name, label))
+                f.write("{0}/images/{1}\t{2}\n".format(args.output_dir.replace("output/", ""), file_name, label))
 
 
 if __name__ == "__main__":
