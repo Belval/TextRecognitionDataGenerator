@@ -484,7 +484,7 @@ def main():
             os.path.join(args.output_dir, "labels.txt"), "w", encoding="utf8"
         ) as f:
             for i in range(string_count):
-                file_name = f"{str(i)}.{args.extension}"
+                file_name = f"N{str(i)}.{args.extension}"
                 label = strings[i]
                 if args.space_width == 0:
                     label = label.replace(" ", "")
