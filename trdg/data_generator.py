@@ -256,7 +256,7 @@ class FakeTextDataGenerator(object):
         elif name_format == 1:
             name = "{}_{}".format(str(index), text)
         elif name_format == 2:
-            name = str(index)
+            name = f'N{str(index)}'
         else:
             print("{} is not a valid name format. Using default.".format(name_format))
             name = "{}_{}".format(text, str(index))
