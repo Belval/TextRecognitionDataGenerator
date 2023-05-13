@@ -58,6 +58,13 @@ class FakeTextDataGenerator(object):
         image = None
 
         margin_top, margin_left, margin_bottom, margin_right = margins
+        # 更改功能：使得边界值可以随机取值
+        # -----------------
+        margin_top = rnd.randint(0, margin_top)
+        margin_left = rnd.randint(0, margin_left)
+        margin_bottom = rnd.randint(0, margin_bottom)
+        margin_right = rnd.randint(0, margin_right)
+        # -----------------
         horizontal_margin = margin_left + margin_right
         vertical_margin = margin_top + margin_bottom
 

@@ -117,7 +117,7 @@ def create_strings_randomly(
     if num:
         pool += "0123456789"
     if sym:
-        pool += "!\"#$%&'()*+,-./:;?@[\\]^_`{|}~"
+        pool += " 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz。？！，、；：“”‘’『』「」（）[]〔〕【】—…·-～《》〈〉_/!\"#$%&'()*+,.:;<=>?\@^`{|}~«»ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩαβΓγΔδεζηθικλμπσΣΦφΩωΨψ∫﹤﹥≦≧°∞≥≤≠‰±⊥√∑×ⅪⅫⅰⅱⅲⅳⅴⅵⅶⅷⅸⅹ①②③④⑤⑥⑦⑧⑨⑩"
 
     if lang == "cn":
         min_seq_len = 1
