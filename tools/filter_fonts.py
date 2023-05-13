@@ -8,6 +8,7 @@
 import os
 import shutil
 from fontTools.ttLib import TTFont
+import fontTools
 import argparse
 
 # 1. 定义命令行解析器对象
@@ -36,7 +37,10 @@ for font_path in os.listdir(font_dir):
     # 保存结果的字典
     data = {}
     # 读取字体对象
-    font = TTFont(os.path.join(font_dir, font_path))
+    try:
+        font = TTFont(os.path.join(font_dir, font_path))
+    except fontTools.ttLib.TTLibError as err:
+        continue
     # 读取字典并遍历校验每个字符
     with open(dict_path, 'r', encoding='utf8') as fread:
         charlist = [char.replace("\n", "") for char in fread.readlines()]
