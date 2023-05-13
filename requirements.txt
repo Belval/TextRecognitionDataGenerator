@@ -6,3 +6,4 @@ diffimg==0.2.3
 arabic-reshaper==2.1.3
 python-bidi==0.4.2
 wikipedia>=1.4.0
+fonttools
