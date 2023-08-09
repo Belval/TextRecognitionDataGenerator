@@ -45,7 +45,7 @@ class GeneratorFromStrings:
         image_mode: str = "RGB",
         output_bboxes: int = 0,
         rtl: bool = False,
-        fail_retry_count: int = 5,
+        fail_retry_count: int = 100,
         debug = False,
     ):
         self.count = count
@@ -150,8 +150,10 @@ class GeneratorFromStrings:
         if generated_image is None:
             print (f"Tried {self.fail_retry_count} times to generate image of {current_string}")
             print (f"{current_font} But failed")
+            
         elif generated_image is not None and tries > 1:
             print (f"Tries {tries} times Succeed of {current_string}, {current_font}")
+            
         return (generated_image,
             self.orig_strings[(self.generated_count - 1) % len(self.orig_strings)]
             if self.rtl
