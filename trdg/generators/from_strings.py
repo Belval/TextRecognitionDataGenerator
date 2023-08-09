@@ -45,7 +45,7 @@ class GeneratorFromStrings:
         image_mode: str = "RGB",
         output_bboxes: int = 0,
         rtl: bool = False,
-        fail_retry_count: int = 10,
+        fail_retry_count: int = 5,
         debug = False,
     ):
         self.count = count
@@ -106,7 +106,8 @@ class GeneratorFromStrings:
         generated_image = None
         current_string = self.strings[(self.generated_count - 1) % len(self.strings)]
         current_font = self.fonts[(self.generated_count - 1) % len(self.fonts)]
-        for tries in range(self.fail_retry_count):
+        tries = 0
+        while tries < self.fail_retry_count:
             generated_image = FakeTextDataGenerator.generate(
                     self.generated_count,
                     current_string,
@@ -144,14 +145,17 @@ class GeneratorFromStrings:
                 break
             elif self.debug:
                 print (f"Try {tries + 1} to generate image")
+            tries += 1
         
         if generated_image is None:
             print (f"Tried {self.fail_retry_count} times to generate image of {current_string}")
-            print ("But failed")
+            print (f"{current_font} But failed")
+        elif generated_image is not None and tries > 1:
+            print (f"Tries {tries} times Succeed of {current_string}, {current_font}")
         return (generated_image,
             self.orig_strings[(self.generated_count - 1) % len(self.orig_strings)]
             if self.rtl
-            else self.strings[(self.generated_count - 1) % len(self.strings)],
+            else self.strings[current_string],
         )
 
     def reshape_rtl(self, strings: list, rtl_shaper: ArabicReshaper):
