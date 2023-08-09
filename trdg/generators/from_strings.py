@@ -155,7 +155,7 @@ class GeneratorFromStrings:
         return (generated_image,
             self.orig_strings[(self.generated_count - 1) % len(self.orig_strings)]
             if self.rtl
-            else self.strings[current_string],
+            else current_string,
         )
 
     def reshape_rtl(self, strings: list, rtl_shaper: ArabicReshaper):
