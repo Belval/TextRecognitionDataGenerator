@@ -113,7 +113,7 @@ class GeneratorFromStrings:
                     current_string,
                     current_font,
                     None,
-  c                  self.size,
+                    self.size,
                     None,
                     self.skewing_angle,
                     self.random_skew,
