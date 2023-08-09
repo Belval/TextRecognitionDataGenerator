@@ -104,11 +104,13 @@ class GeneratorFromStrings:
             raise StopIteration
         self.generated_count += 1
         generated_image = None
+        current_string = self.strings[(self.generated_count - 1) % len(self.strings)]
+        current_font = self.fonts[(self.generated_count - 1) % len(self.fonts)]
         for tries in range(self.fail_retry_count):
             generated_image = FakeTextDataGenerator.generate(
                     self.generated_count,
-                    self.strings[(self.generated_count - 1) % len(self.strings)],
-                    self.fonts[(self.generated_count - 1) % len(self.fonts)],
+                    current_string,
+                    current_font,
                     None,
                     self.size,
                     None,
@@ -143,6 +145,9 @@ class GeneratorFromStrings:
             elif self.debug:
                 print (f"Try {tries + 1} to generate image")
         
+        if generated_image is None:
+            print (f"Tried {self.fail_retry_count} times to generate image of {current_string}")
+            print ("But failed")
         return (generated_image,
             self.orig_strings[(self.generated_count - 1) % len(self.orig_strings)]
             if self.rtl
