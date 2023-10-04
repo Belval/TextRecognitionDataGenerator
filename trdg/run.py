@@ -416,7 +416,7 @@ def main():
             args.length, args.random, args.count, lang_dict
         )
 
-    if args.language == "ar":
+    if args.language in ("ar", "fa"):
         from arabic_reshaper import ArabicReshaper
         from bidi.algorithm import get_display
 
@@ -482,8 +482,10 @@ def main():
             os.path.join(args.output_dir, "labels.txt"), "w", encoding="utf8"
         ) as f:
             for i in range(string_count):
+                print(str(i))
                 file_name = str(i) + "." + args.extension
                 label = strings[i]
+                print(label)
                 if args.space_width == 0:
                     label = label.replace(" ", "")
                 f.write("{} {}\n".format(file_name, label))
