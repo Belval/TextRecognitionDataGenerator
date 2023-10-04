@@ -441,6 +441,7 @@ def main():
             zip(
                 [i for i in range(0, string_count)],
                 strings,
+                [args.language] * string_count,
                 [fonts[rnd.randrange(0, len(fonts))] for _ in range(0, string_count)],
                 [args.output_dir] * string_count,
                 [args.format] * string_count,
@@ -482,12 +483,17 @@ def main():
             os.path.join(args.output_dir, "labels.txt"), "w", encoding="utf8"
         ) as f:
             for i in range(string_count):
-                print(str(i))
                 file_name = str(i) + "." + args.extension
                 label = strings[i]
-                print(label)
                 if args.space_width == 0:
                     label = label.replace(" ", "")
+                if args.language in ("ar", "fa"):
+                    label = " ".join(
+                        [
+                            get_display(arabic_reshaper.reshape(w))
+                            for w in strings[i].split(" ")[::-1]
+                        ]
+                    )
                 f.write("{} {}\n".format(file_name, label))
 
 
