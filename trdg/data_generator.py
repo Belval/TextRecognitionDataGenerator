@@ -93,7 +93,7 @@ class FakeTextDataGenerator(object):
         )
 
         #############################
-        # Apply distorsion to image #
+        # Apply distortion to image #
         #############################
         if distorsion_type == 0:
             distorted_img = rotated_img  # Mind = blown
