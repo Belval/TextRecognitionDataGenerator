@@ -12,7 +12,7 @@ def _apply_func_distorsion(
     image: Image, mask: Image, vertical: bool, horizontal: bool, max_offset: int, func
 ) -> Tuple:
     """
-    Apply a distorsion to an image
+    Apply a distortion to an image
     """
 
     # Nothing to do!
@@ -104,7 +104,7 @@ def sin(
     image: Image, mask: Image, vertical: bool = False, horizontal: bool = False
 ) -> Tuple:
     """
-    Apply a sine distorsion on one or both of the specified axis
+    Apply a sine distortion on one or both of the specified axis
     """
 
     max_offset = int(image.height**0.5)
@@ -123,7 +123,7 @@ def cos(
     image: Image, mask: Image, vertical: bool = False, horizontal: bool = False
 ) -> Tuple:
     """
-    Apply a cosine distorsion on one or both of the specified axis
+    Apply a cosine distortion on one or both of the specified axis
     """
 
     max_offset = int(image.height**0.5)
@@ -142,7 +142,7 @@ def random(
     image: Image, mask: Image, vertical: bool = False, horizontal: bool = False
 ) -> Tuple:
     """
-    Apply a random distorsion on one or both of the specified axis
+    Apply a random distortion on one or both of the specified axis
     """
 
     max_offset = int(image.height**0.4)
