@@ -99,7 +99,7 @@ def _sample_text(sess, args_text, translation):
 
     phi_data, window_data, kappa_data, stroke_data = [], [], [], []
     sess.run(vs.zero_states)
-    for s in range(1, 60 * len(args_text) + 1):
+    for _ in range(1, 60 * len(args_text) + 1):
         e, pi, mu1, mu2, std1, std2, rho, finish, phi, window, kappa = sess.run(
             [
                 vs.e,

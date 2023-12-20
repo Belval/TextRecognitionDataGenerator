@@ -37,8 +37,8 @@ def quasicrystal(height: int, width: int) -> Image:
     image = Image.new("L", (width, height))
     pixels = image.load()
 
-    frequency = rnd.random() * 30 + 20  # frequency
-    phase = rnd.random() * 2 * math.pi  # phase
+    frequency = rnd.random() * 30 + 20    # frequency
+    phase = rnd.random() * 2 * math.pi    # phase
     rotation_count = rnd.randint(10, 20)  # of rotations
 
     for kw in range(width):
@@ -77,15 +77,19 @@ def image(height: int, width: int, image_dir: str) -> Image:
                 Image.Resampling.LANCZOS,
             )
 
-        if pic.size[0] == width:
-            x = 0
-        else:
-            x = rnd.randint(0, pic.size[0] - width)
-        if pic.size[1] == height:
-            y = 0
-        else:
-            y = rnd.randint(0, pic.size[1] - height)
+        # if pic.size[0] == width:
+        #     x = 0
+        # else:
+        #     x = rnd.randint(0, pic.size[0] - width)
+        # if pic.size[1] == height:
+        #     y = 0
+        # else:
+        #     y = rnd.randint(0, pic.size[1] - height)
 
+        # return pic.crop((x, y, x + width, y + height))
+        
+        x = 0 if pic.size[0] == width else rnd.randint(0, pic.size[0] - width)
+        y = 0 if pic.size[1] == height else rnd.randint(0, pic.size[1] - height)
         return pic.crop((x, y, x + width, y + height))
     else:
         raise Exception("No images where found in the images folder!")

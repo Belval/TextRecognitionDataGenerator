@@ -5,6 +5,6 @@ opencv-python>=4.2.0.32
 tqdm>=4.23.0
 beautifulsoup4>=4.6.0
 diffimg==0.2.3
-tensorflow>=1.13.1,<1.14
 matplotlib>=3.0.2
 seaborn>=0.9.0
+tensorflow=1.13.1,<1.14

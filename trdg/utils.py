@@ -31,9 +31,9 @@ def load_fonts(lang: str) -> List[str]:
 
     if lang in os.listdir(os.path.join(os.path.dirname(__file__), "fonts")):
         return [
-            os.path.join(os.path.dirname(__file__), "fonts/{}".format(lang), font)
+            os.path.join(os.path.dirname(__file__), f"fonts/{lang}", font)
             for font in os.listdir(
-                os.path.join(os.path.dirname(__file__), "fonts/{}".format(lang))
+                os.path.join(os.path.dirname(__file__), f"fonts/{lang}")
             )
         ]
     else:

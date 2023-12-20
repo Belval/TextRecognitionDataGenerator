@@ -93,6 +93,15 @@ You get 1,000 randomly generated images with random text on them like:
 
 By default, they will be generated to `out/` in the current working directory.
 
+
+### Testing (using python)
+The command that used to prepare test image (ground truth) . <br>
+`python3 run.py -c 1  -w 11 -i texts/hu_test.txt --name_format 0  --output_dir "out3/" -f 64 --thread_count 8 --font_dir fonts/hu_test/ `
+To test uints :
+```
+cd TextRecognitionDataGeneratorHuMu23
+python3 tests.py
+```
 ### Text skewing
 
 What if you want random skewing? Add `-k` and `-rk` (`trdg -c 1000 -w 5 -f 64 -k 5 -rk`)
@@ -150,6 +159,20 @@ The text is chosen at random in a dictionary file (that can be found in the *dic
 
 There are a lot of parameters that you can tune to get the results you want, therefore I recommend checking out `trdg -h` for more information.
 
+## Create images with Hungarain  text
+
+It is simple! Just do `trdg -l hu -c 1000 -w 5`!
+
+Generated texts come both in simplified and traditional Hungarain scripts.
+
+Traditional:
+
+![30](samples/30.jpg "0")
+
+Simplified:
+
+![31](samples/31.jpg "1")
+
 ## Create images with Chinese text
 
 It is simple! Just do `trdg -l cn -c 1000 -w 5`!
@@ -184,6 +207,7 @@ The script picks a font at random from the *fonts* directory.
 | fonts/ko | Korean |
 | fonts/ja | Japanese |
 | fonts/th | Thai |
+| fonts/hu | Hungarian |
 
 Simply add/remove fonts until you get the desired output.
 
