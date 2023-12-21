@@ -113,12 +113,17 @@ class FakeTextDataGenerator(object):
                 horizontal=(distorsion_orientation == 1 or distorsion_orientation == 2),
             )
         else:
-            distorted_img, distorted_mask = distorsion_generator.random(
-                rotated_img,
-                rotated_mask,
-                vertical=(distorsion_orientation == 0 or distorsion_orientation == 2),
-                horizontal=(distorsion_orientation == 1 or distorsion_orientation == 2),
-            )
+            import random
+            if random.random() < 0.5:
+                distorted_img = rotated_img  # Mind = blown
+                distorted_mask = rotated_mask
+            else:
+                distorted_img, distorted_mask = distorsion_generator.random(
+                    rotated_img,
+                    rotated_mask,
+                    vertical=(distorsion_orientation == 0 or distorsion_orientation == 2),
+                    horizontal=(distorsion_orientation == 1 or distorsion_orientation == 2),
+                )
 
         ##################################
         # Resize image to desired format #
@@ -270,16 +275,20 @@ class FakeTextDataGenerator(object):
         # Save the image
         if out_dir is not None:
             final_image.save(os.path.join(out_dir, image_name))
+
+            with open(os.path.join(out_dir, "{}.txt".format(name)), "w", encoding='utf8') as f:
+                f.write(text)
+
             if output_mask == 1:
                 final_mask.save(os.path.join(out_dir, mask_name))
             if output_bboxes == 1:
                 bboxes = mask_to_bboxes(final_mask)
-                with open(os.path.join(out_dir, box_name), "w") as f:
+                with open(os.path.join(out_dir, box_name), "w", encoding='utf8') as f:
                     for bbox in bboxes:
                         f.write(" ".join([str(v) for v in bbox]) + "\n")
             if output_bboxes == 2:
                 bboxes = mask_to_bboxes(final_mask, tess=True)
-                with open(os.path.join(out_dir, tess_box_name), "w") as f:
+                with open(os.path.join(out_dir, tess_box_name), "w", encoding='utf8') as f:
                     for bbox, char in zip(bboxes, text):
                         f.write(
                             " ".join([char] + [str(v) for v in bbox] + ["0"]) + "\n"
