@@ -145,5 +145,4 @@ def get_text_height(image_font: ImageFont, text: str) -> int:
     """
     Get the height of a string when rendered with a given font
     """
-    left, top, right, bottom = image_font.getbbox(text)
-    return bottom - top
+    return image_font.getsize(text)[1]
