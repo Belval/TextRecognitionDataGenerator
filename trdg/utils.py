@@ -143,6 +143,6 @@ def get_text_width(image_font: ImageFont, text: str) -> int:
 
 def get_text_height(image_font: ImageFont, text: str) -> int:
     """
-    Get the width of a string when rendered with a given font
+    Get the height of a string when rendered with a given font
     """
     return image_font.getsize(text)[1]
