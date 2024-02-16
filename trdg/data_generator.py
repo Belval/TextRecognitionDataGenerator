@@ -268,23 +268,27 @@ class FakeTextDataGenerator(object):
         tess_box_name = "{}.box".format(name)
 
         # Save the image
-        if out_dir is not None:
-            final_image.save(os.path.join(out_dir, image_name))
-            if output_mask == 1:
-                final_mask.save(os.path.join(out_dir, mask_name))
-            if output_bboxes == 1:
-                bboxes = mask_to_bboxes(final_mask)
-                with open(os.path.join(out_dir, box_name), "w") as f:
-                    for bbox in bboxes:
-                        f.write(" ".join([str(v) for v in bbox]) + "\n")
-            if output_bboxes == 2:
-                bboxes = mask_to_bboxes(final_mask, tess=True)
-                with open(os.path.join(out_dir, tess_box_name), "w") as f:
-                    for bbox, char in zip(bboxes, text):
-                        f.write(
-                            " ".join([char] + [str(v) for v in bbox] + ["0"]) + "\n"
-                        )
-        else:
-            if output_mask == 1:
-                return final_image, final_mask
-            return final_image
+        try:
+            if out_dir is not None:
+                final_image.save(os.path.join(out_dir, image_name))
+                if output_mask == 1:
+                    final_mask.save(os.path.join(out_dir, mask_name))
+                if output_bboxes == 1:
+                    bboxes = mask_to_bboxes(final_mask)
+                    with open(os.path.join(out_dir, box_name), "w") as f:
+                        for bbox in bboxes:
+                            f.write(" ".join([str(v) for v in bbox]) + "\n")
+                if output_bboxes == 2:
+                    bboxes = mask_to_bboxes(final_mask, tess=True)
+                    with open(os.path.join(out_dir, tess_box_name), "w") as f:
+                        for bbox, char in zip(bboxes, text):
+                            f.write(
+                                " ".join([char] + [str(v) for v in bbox] + ["0"]) + "\n"
+                            )
+            else:
+                if output_mask == 1:
+                    return final_image, final_mask
+                return final_image
+
+        except Exception as e:
+            print("Error while saving the image: {}".format(e))

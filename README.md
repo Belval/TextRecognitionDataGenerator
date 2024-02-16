@@ -173,6 +173,15 @@ Output
 ![29](samples/29.jpg "2")
 
 
+## Create images with Hindi text 
+
+It is simple! Just do `trdg -l hi -c 1000 -w 5`!
+
+Output 
+
+![30](samples/30.jpg)
+
+
 ## Add new fonts
 
 The script picks a font at random from the *fonts* directory.
@@ -184,6 +193,7 @@ The script picks a font at random from the *fonts* directory.
 | fonts/ko | Korean |
 | fonts/ja | Japanese |
 | fonts/th | Thai |
+| fonts/hi | Hindi |
 
 Simply add/remove fonts until you get the desired output.
 
