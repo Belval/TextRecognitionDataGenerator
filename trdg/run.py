@@ -377,7 +377,7 @@ def main():
         fonts = [
             os.path.join(args.font_dir, p)
             for p in os.listdir(args.font_dir)
-            if os.path.splitext(p)[1] == ".ttf"
+            if os.path.splitext(p)[1].lower() == ".ttf"
         ]
     elif args.font:
         if os.path.isfile(args.font):
