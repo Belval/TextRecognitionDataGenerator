@@ -45,6 +45,8 @@ class GeneratorFromStrings:
         image_mode: str = "RGB",
         output_bboxes: int = 0,
         rtl: bool = False,
+        fail_retry_count: int = 100,
+        debug = False,
     ):
         self.count = count
         self.strings = strings
@@ -89,7 +91,8 @@ class GeneratorFromStrings:
         self.stroke_width = stroke_width
         self.stroke_fill = stroke_fill
         self.image_mode = image_mode
-
+        self.fail_retry_count = fail_retry_count
+        self.debug = debug
     def __iter__(self):
         return self
 
@@ -100,42 +103,61 @@ class GeneratorFromStrings:
         if self.generated_count == self.count:
             raise StopIteration
         self.generated_count += 1
-        return (
-            FakeTextDataGenerator.generate(
-                self.generated_count,
-                self.strings[(self.generated_count - 1) % len(self.strings)],
-                self.fonts[(self.generated_count - 1) % len(self.fonts)],
-                None,
-                self.size,
-                None,
-                self.skewing_angle,
-                self.random_skew,
-                self.blur,
-                self.random_blur,
-                self.background_type,
-                self.distorsion_type,
-                self.distorsion_orientation,
-                self.is_handwritten,
-                0,
-                self.width,
-                self.alignment,
-                self.text_color,
-                self.orientation,
-                self.space_width,
-                self.character_spacing,
-                self.margins,
-                self.fit,
-                self.output_mask,
-                self.word_split,
-                self.image_dir,
-                self.stroke_width,
-                self.stroke_fill,
-                self.image_mode,
-                self.output_bboxes,
-            ),
+        generated_image = None
+        current_string = self.strings[(self.generated_count - 1) % len(self.strings)]
+        current_font = self.fonts[(self.generated_count - 1) % len(self.fonts)]
+        tries = 0
+        while tries < self.fail_retry_count:
+            generated_image = FakeTextDataGenerator.generate(
+                    self.generated_count,
+                    current_string,
+                    current_font,
+                    None,
+                    self.size,
+                    None,
+                    self.skewing_angle,
+                    self.random_skew,
+                    self.blur,
+                    self.random_blur,
+                    self.background_type,
+                    self.distorsion_type,
+                    self.distorsion_orientation,
+                    self.is_handwritten,
+                    0,
+                    self.width,
+                    self.alignment,
+                    self.text_color,
+                    self.orientation,
+                    self.space_width,
+                    self.character_spacing,
+                    self.margins,
+                    self.fit,
+                    self.output_mask,
+                    self.word_split,
+                    self.image_dir,
+                    self.stroke_width,
+                    self.stroke_fill,
+                    self.image_mode,
+                    self.output_bboxes,
+                    self.debug
+                    )
+            if generated_image is not None:
+                break
+            elif self.debug:
+                print (f"Try {tries + 1} to generate image")
+            tries += 1
+        
+        if generated_image is None:
+            print (f"Tried {self.fail_retry_count} times to generate image of {current_string}")
+            print (f"{current_font} But failed")
+            
+        elif generated_image is not None and tries > 1:
+            print (f"Tries {tries} times Succeed of {current_string}, {current_font}")
+            
+        return (generated_image,
             self.orig_strings[(self.generated_count - 1) % len(self.orig_strings)]
             if self.rtl
-            else self.strings[(self.generated_count - 1) % len(self.strings)],
+            else current_string,
         )
 
     def reshape_rtl(self, strings: list, rtl_shaper: ArabicReshaper):
