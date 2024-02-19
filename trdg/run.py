@@ -416,7 +416,7 @@ def main():
             args.length, args.random, args.count, lang_dict
         )
 
-    if args.language == "ar":
+    if args.language in ("ar", "fa"):
         from arabic_reshaper import ArabicReshaper
         from bidi.algorithm import get_display
 
@@ -441,6 +441,7 @@ def main():
             zip(
                 [i for i in range(0, string_count)],
                 strings,
+                [args.language] * string_count,
                 [fonts[rnd.randrange(0, len(fonts))] for _ in range(0, string_count)],
                 [args.output_dir] * string_count,
                 [args.format] * string_count,
@@ -486,6 +487,13 @@ def main():
                 label = strings[i]
                 if args.space_width == 0:
                     label = label.replace(" ", "")
+                if args.language in ("ar", "fa"):
+                    label = " ".join(
+                        [
+                            get_display(arabic_reshaper.reshape(w))
+                            for w in strings[i].split(" ")[::-1]
+                        ]
+                    )
                 f.write("{} {}\n".format(file_name, label))
 
 
