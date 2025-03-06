@@ -45,7 +45,7 @@ setup(
         "tqdm>=4.23.0",
         "wikipedia>=1.4.0",
         "diffimg==0.2.3",
-        "arabic-reshaper==2.1.3",
+        "arabic-reshaper==3.0.0",
         "python-bidi==0.4.2",
     ],
     entry_points={
