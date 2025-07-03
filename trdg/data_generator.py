@@ -136,7 +136,7 @@ class FakeTextDataGenerator(object):
             resized_mask = distorted_mask.resize(
                 (new_width, size - vertical_margin), Image.Resampling.NEAREST
             )
-            background_width = width if width > 0 else new_width + horizontal_margin
+            background_width = max(width, new_width + horizontal_margin)
             background_height = size
         # Vertical text
         elif orientation == 1:
