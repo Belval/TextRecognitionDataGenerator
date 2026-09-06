@@ -104,7 +104,7 @@ What if you want random skewing? Add `-k` and `-rk` (`trdg -c 1000 -w 5 -f 64 -k
 ![10](samples/10.jpg "10")
 
 ### Text distortion
-You can also add distorsion to the generated text with `-d` and `-do`
+You can also add distortion to the generated text with `-d` and `-do`
 
 ![23](samples/24.jpg "0")
 ![24](samples/25.jpg "1")

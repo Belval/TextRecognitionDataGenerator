@@ -150,7 +150,7 @@ def parse_arguments():
         "-wk",
         "--use_wikipedia",
         action="store_true",
-        help="Use Wikipedia as the source text for the generation, using this paremeter ignores -r, -n, -s",
+        help="Use Wikipedia as the source text for the generation, using this parameter ignores -r, -n, -s",
         default=False,
     )
     parser.add_argument(
@@ -208,7 +208,7 @@ def parse_arguments():
         "--distorsion",
         type=int,
         nargs="?",
-        help="Define a distorsion applied to the resulting image. 0: None (Default), 1: Sine wave, 2: Cosine wave, 3: Random",
+        help="Define a distortion applied to the resulting image. 0: None (Default), 1: Sine wave, 2: Cosine wave, 3: Random",
         default=0,
     )
     parser.add_argument(
@@ -216,7 +216,7 @@ def parse_arguments():
         "--distorsion_orientation",
         type=int,
         nargs="?",
-        help="Define the distorsion's orientation. Only used if -d is specified. 0: Vertical (Up and down), 1: Horizontal (Left and Right), 2: Both",
+        help="Define the distortion's orientation. Only used if -d is specified. 0: Vertical (Up and down), 1: Horizontal (Left and Right), 2: Both",
         default=0,
     )
     parser.add_argument(

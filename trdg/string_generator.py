@@ -29,7 +29,7 @@ def create_strings_from_dict(
     length: int, allow_variable: bool, count: int, lang_dict: List[str]
 ) -> List[str]:
     """
-    Create all strings by picking X random word in the dictionnary
+    Create all strings by picking X random word in the dictionary
     """
 
     dict_len = len(lang_dict)

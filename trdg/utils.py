@@ -12,7 +12,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 def load_dict(path: str) -> List[str]:
-    """Read the dictionnary file and returns all words in it."""
+    """Read the dictionary file and returns all words in it."""
 
     word_dict = []
     with open(
@@ -143,6 +143,7 @@ def get_text_width(image_font: ImageFont, text: str) -> int:
 
 def get_text_height(image_font: ImageFont, text: str) -> int:
     """
-    Get the width of a string when rendered with a given font
+    Get the height of a string when rendered with a given font
     """
-    return image_font.getsize(text)[1]
+    left, top, right, bottom = image_font.getbbox(text)
+    return bottom
