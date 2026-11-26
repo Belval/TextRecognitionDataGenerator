@@ -67,7 +67,9 @@ class Generators(unittest.TestCase):
     def test_generator_from_wikipedia(self):
         generator = GeneratorFromWikipedia()
         i = 0
-        while i < 100:
+        # Each image fetches at least one Wikipedia page (~4 API requests);
+        # keep this small to stay under Wikimedia's rate limits.
+        while i < 10:
             img, lbl = next(generator)
             self.assertTrue(img.size[1] == 32, "Shape is not right")
             i += 1
