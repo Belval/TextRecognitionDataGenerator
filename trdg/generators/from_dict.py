@@ -72,7 +72,7 @@ class GeneratorFromDict:
         :type distorsion_type: int, optional
         :param distorsion_orientation: 0: Vertical (Up and down), 1: Horizontal (Left and Right), 2: Both, defaults to 0
         :type distorsion_orientation: int, optional
-        :param is_handwritten: Generate handwritten crops using an RNN, defaults to False
+        :param is_handwritten: Removed in 1.9.0; must be False, defaults to False
         :type is_handwritten: bool, optional
         :param width: Width of the resulting crop, defaults to -1
         :type width: int, optional

@@ -6,10 +6,10 @@ from PIL import Image, ImageFilter, ImageStat
 from trdg import computer_text_generator, background_generator, distorsion_generator
 from trdg.utils import mask_to_bboxes, make_filename_valid
 
-try:
-    from trdg import handwritten_text_generator
-except ImportError as e:
-    print("Missing modules for handwritten text generation.")
+HANDWRITTEN_REMOVED = (
+    "Handwritten text generation was removed in trdg 1.9.0: it required "
+    "TensorFlow 1.13, which cannot be installed on any supported Python version."
+)
 
 
 class FakeTextDataGenerator(object):
@@ -64,10 +64,9 @@ class FakeTextDataGenerator(object):
         ##########################
         # Create picture of text #
         ##########################
+        # is_handwritten is kept in the signature for backward compatibility
         if is_handwritten:
-            if orientation == 1:
-                raise ValueError("Vertical handwritten text is unavailable")
-            image, mask = handwritten_text_generator.generate(text, text_color)
+            raise ValueError(HANDWRITTEN_REMOVED)
         else:
             image, mask = computer_text_generator.generate(
                 text,
