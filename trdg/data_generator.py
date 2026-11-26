@@ -26,6 +26,7 @@ class FakeTextDataGenerator(object):
         cls,
         index: int,
         text: str,
+        language: str,
         font: str,
         out_dir: str,
         size: int,
@@ -249,6 +250,15 @@ class FakeTextDataGenerator(object):
         # Generate name for resulting image #
         #####################################
         # We remove spaces if space_width == 0
+        if language in ("ar", "fa"):
+            from arabic_reshaper import ArabicReshaper
+            from bidi.algorithm import get_display
+
+            arabic_reshaper = ArabicReshaper()
+            text = " ".join(
+                [get_display(arabic_reshaper.reshape(w)) for w in text.split(" ")[::-1]]
+            )
+
         if space_width == 0:
             text = text.replace(" ", "")
         if name_format == 0:
