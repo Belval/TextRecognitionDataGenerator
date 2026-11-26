@@ -12,7 +12,7 @@ with open(path.join(here, "README.md"), encoding="utf-8") as f:
 
 setup(
     name="trdg",
-    version="1.8.1",
+    version="1.9.0",
     description="TextRecognitionDataGenerator: A synthetic data generator for text recognition",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -40,13 +40,16 @@ setup(
     keywords="synthetic data text-recognition training-set-generator ocr dataset fake text",
     packages=find_packages(exclude=["contrib", "docs", "tests"]),
     include_package_data=True,
+    # Declared explicitly so newer setuptools keep shipping the data folders
+    package_data={"trdg": ["fonts/*/*", "dicts/*", "images/*", "texts/*"]},
+    # Thai fonts (36 MB) would push the package over PyPI's 100 MB file limit
+    exclude_package_data={"trdg": ["fonts/th/*"]},
     install_requires=[
         "pillow>=9.1.0",
         "requests>=2.20.0",
         "opencv-python>=4.2.0.32",
         "tqdm>=4.23.0",
         "wikipedia>=1.4.0",
-        "diffimg==0.2.3",
         "arabic-reshaper>=2.1.4",
         "python-bidi==0.4.2",
     ],

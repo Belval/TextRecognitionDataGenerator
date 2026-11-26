@@ -1,8 +1,8 @@
 include README.md
 include LICENSE
-include trdg/fonts/latin/*
-include trdg/fonts/cn/*
-include trdg/fonts/ja/*
+recursive-include trdg/fonts *
+# Thai fonts (36 MB) would push the package over PyPI's 100 MB file limit
+prune trdg/fonts/th
 include trdg/images/*
 include trdg/dicts/*
 include trdg/texts/*
