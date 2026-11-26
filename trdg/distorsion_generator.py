@@ -3,13 +3,16 @@ import math
 import os
 import random as rnd
 import numpy as np
+from typing import Tuple
 
-from PIL import Image, ImageDraw, ImageFilter
+from PIL import Image
 
 
-def _apply_func_distorsion(image, mask, vertical, horizontal, max_offset, func):
+def _apply_func_distorsion(
+    image: Image, mask: Image, vertical: bool, horizontal: bool, max_offset: int, func
+) -> Tuple:
     """
-        Apply a distorsion to an image
+    Apply a distortion to an image
     """
 
     # Nothing to do!
@@ -97,12 +100,14 @@ def _apply_func_distorsion(image, mask, vertical, horizontal, max_offset, func):
     )
 
 
-def sin(image, mask, vertical=False, horizontal=False):
+def sin(
+    image: Image, mask: Image, vertical: bool = False, horizontal: bool = False
+) -> Tuple:
     """
-        Apply a sine distorsion on one or both of the specified axis
+    Apply a sine distortion on one or both of the specified axis
     """
 
-    max_offset = int(image.height ** 0.5)
+    max_offset = int(image.height**0.5)
 
     return _apply_func_distorsion(
         image,
@@ -114,12 +119,14 @@ def sin(image, mask, vertical=False, horizontal=False):
     )
 
 
-def cos(image, mask, vertical=False, horizontal=False):
+def cos(
+    image: Image, mask: Image, vertical: bool = False, horizontal: bool = False
+) -> Tuple:
     """
-        Apply a cosine distorsion on one or both of the specified axis
+    Apply a cosine distortion on one or both of the specified axis
     """
 
-    max_offset = int(image.height ** 0.5)
+    max_offset = int(image.height**0.5)
 
     return _apply_func_distorsion(
         image,
@@ -131,12 +138,14 @@ def cos(image, mask, vertical=False, horizontal=False):
     )
 
 
-def random(image, mask, vertical=False, horizontal=False):
+def random(
+    image: Image, mask: Image, vertical: bool = False, horizontal: bool = False
+) -> Tuple:
     """
-        Apply a random distorsion on one or both of the specified axis
+    Apply a random distortion on one or both of the specified axis
     """
 
-    max_offset = int(image.height ** 0.4)
+    max_offset = int(image.height**0.4)
 
     return _apply_func_distorsion(
         image,

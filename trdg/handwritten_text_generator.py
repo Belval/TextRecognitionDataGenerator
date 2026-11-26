@@ -14,7 +14,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-def download_model_weights():
+def download_model_weights() -> str:
     from pathlib import Path
     import urllib.request
 

@@ -7,10 +7,16 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
 
-def gaussian_noise(height, width):
-    """
-        Create a background with Gaussian noise (to mimic paper)
-    """
+def gaussian_noise(height: int, width: int) -> Image:
+    """Create a background with Gaussian noise (to mimic paper)
+
+    :param height: Height of the generated image
+    :type height: int
+    :param width: Width of the generated image
+    :type width: int
+    :return: Background generated from gaussian noise
+    :rtype: Image
+    """    
 
     # We create an all white image
     image = np.ones((height, width)) * 255
@@ -21,18 +27,30 @@ def gaussian_noise(height, width):
     return Image.fromarray(image).convert("RGBA")
 
 
-def plain_white(height, width):
-    """
-        Create a plain white background
-    """
+def plain_white(height: int, width: int) -> Image:
+    """Create a plain white background
+
+    :param height: Height of the generated image
+    :type height: int
+    :param width: Width of the generated image
+    :type width: int
+    :return: White background
+    :rtype: Image
+    """    
 
     return Image.new("L", (width, height), 255).convert("RGBA")
 
 
-def quasicrystal(height, width):
-    """
-        Create a background with quasicrystal (https://en.wikipedia.org/wiki/Quasicrystal)
-    """
+def quasicrystal(height: int, width: int) -> Image:
+    """Create a background with quasicrystal (https://en.wikipedia.org/wiki/Quasicrystal)
+
+    :param height: Height of the generated image
+    :type height: int
+    :param width: Width of the generated image
+    :type width: int
+    :return: Quasicrystal background
+    :rtype: Image
+    """    
 
     image = Image.new("L", (width, height))
     pixels = image.load()
@@ -55,10 +73,20 @@ def quasicrystal(height, width):
     return image.convert("RGBA")
 
 
-def image(height, width, image_dir):
-    """
-        Create a background with a image
-    """
+def image(height: int, width: int, image_dir: str) -> Image:
+    """Create a background with a image
+
+    :param height: Height of the generated image
+    :type height: int
+    :param width: Width of the generated image
+    :type width: int
+    :param image_dir: Image directory containing images to be used as background
+    :type image_dir: str
+    :raises Exception: Exception on empty image directory
+    :return: Image background
+    :rtype: Image
+    """    
+
     images = os.listdir(image_dir)
 
     if len(images) > 0:
@@ -68,11 +96,13 @@ def image(height, width, image_dir):
 
         if pic.size[0] < width:
             pic = pic.resize(
-                [width, int(pic.size[1] * (width / pic.size[0]))], Image.ANTIALIAS
+                [width, int(pic.size[1] * (width / pic.size[0]))],
+                Image.Resampling.LANCZOS,
             )
         if pic.size[1] < height:
             pic = pic.resize(
-                [int(pic.size[0] * (height / pic.size[1])), height], Image.ANTIALIAS
+                [int(pic.size[0] * (height / pic.size[1])), height],
+                Image.Resampling.LANCZOS,
             )
 
         if pic.size[0] == width:
