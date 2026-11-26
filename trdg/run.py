@@ -416,7 +416,7 @@ def main():
             args.length, args.random, args.count, lang_dict
         )
 
-    if args.language == "ar":
+    if args.language == "ar" or args.language == "ug":
         from arabic_reshaper import ArabicReshaper
         from bidi.algorithm import get_display
 
