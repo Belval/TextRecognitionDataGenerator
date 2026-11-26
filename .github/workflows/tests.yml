@@ -36,8 +36,11 @@ jobs:
           python -m pip install . coverage
 
       # The CLI tests invoke `python3 run.py`, which resolves to this job's Python
+      # Wikipedia rate-limits shared runner IPs, so only one job hits the network
       - name: Run tests
         run: python -m coverage run tests.py
+        env:
+          TRDG_SKIP_NETWORK_TESTS: ${{ matrix.python-version != '3.14' && '1' || '0' }}
 
       - name: Generate coverage report
         if: matrix.python-version == '3.14'

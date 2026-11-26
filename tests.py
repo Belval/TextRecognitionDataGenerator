@@ -60,6 +60,10 @@ class Generators(unittest.TestCase):
             self.assertTrue(img.size[1] == 32, "Shape is not right")
             i += 1
 
+    @unittest.skipIf(
+        os.environ.get("TRDG_SKIP_NETWORK_TESTS") == "1",
+        "Network tests disabled (TRDG_SKIP_NETWORK_TESTS=1)",
+    )
     def test_generator_from_wikipedia(self):
         generator = GeneratorFromWikipedia()
         i = 0
@@ -83,6 +87,10 @@ class Generators(unittest.TestCase):
         next(generator)
         self.assertRaises(StopIteration, generator.next)
 
+    @unittest.skipIf(
+        os.environ.get("TRDG_SKIP_NETWORK_TESTS") == "1",
+        "Network tests disabled (TRDG_SKIP_NETWORK_TESTS=1)",
+    )
     def test_generator_from_wikipedia_stops(self):
         generator = GeneratorFromWikipedia(count=1)
         next(generator)
@@ -90,6 +98,10 @@ class Generators(unittest.TestCase):
 
 
 class DataGenerator(unittest.TestCase):
+    @unittest.skipIf(
+        os.environ.get("TRDG_SKIP_NETWORK_TESTS") == "1",
+        "Network tests disabled (TRDG_SKIP_NETWORK_TESTS=1)",
+    )
     def test_create_string_from_wikipedia(self):
         """
             Test that the function returns different output if called twice.

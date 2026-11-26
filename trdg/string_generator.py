@@ -70,7 +70,7 @@ def get_random_page_content() -> str:
         except ValueError:
             if attempt == WIKIPEDIA_MAX_RETRIES - 1:
                 raise
-            time.sleep(2 ** attempt)
+            time.sleep(2 ** (attempt + 1))
 
 
 def create_strings_from_wikipedia(
