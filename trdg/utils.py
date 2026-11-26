@@ -111,26 +111,14 @@ def draw_bounding_boxes(
 
 
 def make_filename_valid(value: str, allow_unicode: bool = False) -> str:
-    """
-    Code adapted from: https://docs.djangoproject.com/en/4.0/_modules/django/utils/text/#slugify
 
-    Convert to ASCII if 'allow_unicode' is False. Convert spaces or repeated
-    dashes to single dashes. Remove characters that aren't alphanumerics,
-    underscores, or hyphens. Convert to lowercase. Also strip leading and
-    trailing whitespace, dashes, and underscores.
-    """
-    value = str(value)
-    if allow_unicode:
-        value = unicodedata.normalize("NFKC", value)
-    else:
-        value = (
-            unicodedata.normalize("NFKD", value)
-            .encode("ascii", "ignore")
-            .decode("ascii")
-        )
-    value = re.sub(r"[^\w\s-]", "", value)
+    #remove spaces if in last character only
+    value = re.sub(r'\s+$', '', value)
 
-    # Image names will be shortened to avoid exceeding the max filename length
+    #replacing invalid characters with underscores
+    value = re.sub(r'[:?<>|*$`]', '', value)
+
+    # Truncate the resulting string to a maximum length of 200 characters
     return value[:200]
 
 
