@@ -130,20 +130,6 @@ Maybe you want another background? Add `-b` to define one of the three available
 
 When using image background (3). A image from the images/ folder will be randomly selected and the text will be written on it.
 
-### Handwritten
-
-Or maybe you are working on an OCR for handwritten text? Add `-hw`! (Experimental)
-
-![18](samples/18.jpg "0")
-![19](samples/19.jpg "1")
-![20](samples/20.jpg "2")
-![21](samples/21.jpg "3")
-![22](samples/22.jpg "4")
-
-It uses a Tensorflow model trained using [this excellent project](https://github.com/Grzego/handwriting-generation) by Grzego.
-
-**The project does not require TensorFlow to run if you aren't using this feature**
-
 ### Dictionary
 
 The text is chosen at random in a dictionary file (that can be found in the *dicts* folder) and drawn on a white background made with Gaussian noise. The resulting image is saved as [text]\_[index].jpg
@@ -232,5 +218,4 @@ If anything is missing, unclear, or simply not working, open an issue on the rep
 
 ## What is left to do?
 - Better background generation
-- Better handwritten text generation
 - More customization parameters (mostly regarding background)

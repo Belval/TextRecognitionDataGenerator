@@ -180,7 +180,7 @@ def parse_arguments():
         "-hw",
         "--handwritten",
         action="store_true",
-        help='Define if the data will be "handwritten" by an RNN',
+        help="Removed in 1.9.0: handwritten text generation is no longer available",
     )
     parser.add_argument(
         "-na",
@@ -351,6 +351,13 @@ def main():
 
     # Argument parsing
     args = parse_arguments()
+
+    if args.handwritten:
+        sys.exit(
+            "Handwritten text generation (-hw) was removed in trdg 1.9.0: it "
+            "required TensorFlow 1.13, which cannot be installed on any supported "
+            "Python version."
+        )
 
     # Create the directory if it does not exist.
     try:

@@ -502,7 +502,7 @@ class DataGenerator(unittest.TestCase):
 
         os.remove("tests/out/TEST TEST TEST_8.jpg")
 
-    def test_raise_if_handwritten_and_vertical(self):
+    def test_raise_if_handwritten(self):
         try:
             FakeTextDataGenerator.generate(
                 9,
@@ -532,9 +532,9 @@ class DataGenerator(unittest.TestCase):
                 False,
                 os.path.join(os.path.split(os.path.realpath(__file__))[0], "trdg/images"),
             )
-            raise Exception("Vertical handwritten did not throw")
-        except ValueError:
-            pass
+            raise Exception("Handwritten did not throw")
+        except ValueError as e:
+            self.assertIn("removed", str(e))
 
     def test_generate_vertical_text(self):
         FakeTextDataGenerator.generate(
@@ -1437,11 +1437,12 @@ class CommandLineInterface(unittest.TestCase):
             )
         empty_directory("tests/out/")
 
-    def test_handwritten(self):
-        args = ["python3", "run.py", "-c", "1", "--output_dir", "../tests/out/"]
-        subprocess.Popen(args, cwd="trdg/").wait()
-        self.assertTrue(len(os.listdir("tests/out/")) == 1)
-        empty_directory("tests/out/")
+    def test_handwritten_removed(self):
+        args = ["python3", "run.py", "-hw", "-c", "1", "--output_dir", "../tests/out_hw/"]
+        p = subprocess.run(args, cwd="trdg/", capture_output=True, text=True)
+        self.assertNotEqual(p.returncode, 0)
+        self.assertIn("removed", p.stderr)
+        self.assertFalse(os.path.exists("tests/out_hw/"))
 
     def test_personalfont(self):
         args = [
