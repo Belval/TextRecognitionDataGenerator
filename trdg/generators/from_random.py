@@ -8,8 +8,6 @@ from trdg.utils import load_dict, load_fonts
 
 
 class GeneratorFromRandom:
-    """Generator that uses randomly generated words"""
-
     def __init__(
         self,
         count: int = -1,
@@ -47,6 +45,72 @@ class GeneratorFromRandom:
         image_mode: str = "RGB",
         output_bboxes: int = 0,
     ):
+        """Generator that creates words from random characters
+
+        :param count: Number of samples to pre-generate, defaults to -1
+        :type count: int, optional
+        :param length: Number of words in the generated crop, defaults to 1
+        :type length: int, optional
+        :param allow_variable: Allow a variable number of words in the crop, defaults to False
+        :type allow_variable: bool, optional
+        :param use_letters: Use letters in the random character pool, defaults to True
+        :type use_letters: bool, optional
+        :param use_numbers: Use numbers in the random character pool, defaults to True
+        :type use_numbers: bool, optional
+        :param use_symbols: Use symbols in the random character pool, defaults to True
+        :type use_symbols: bool, optional
+        :type fonts: List[str], optional
+        :param language: Language ISO code, defaults to "en"
+        :type language: str, optional
+        :param size: Text crop height (if horizontal) or width (if vertical), defaults to 32
+        :type size: int, optional
+        :param skewing_angle: Rotate the generated text, defaults to 0
+        :type skewing_angle: int, optional
+        :param random_skew: Rotate the generated text by a random value in [-skewing_angle, skewing_angle], defaults to False
+        :type random_skew: bool, optional
+        :param blur: Blur the generated text, defaults to 0
+        :type blur: int, optional
+        :param random_blur: Blur the generated text by a random value in [-blur, blur], defaults to False
+        :type random_blur: bool, optional
+        :param background_type: 0: Gaussian Noise, 1: Plain white, 2: Quasicrystal, 3: Image, defaults to 0
+        :type background_type: int, optional
+        :param distorsion_type: 0: None (Default), 1: Sine wave, 2: Cosine wave, 3: Random, defaults to 0
+        :type distorsion_type: int, optional
+        :param distorsion_orientation: 0: Vertical (Up and down), 1: Horizontal (Left and Right), 2: Both, defaults to 0
+        :type distorsion_orientation: int, optional
+        :param is_handwritten: Generate handwritten crops using an RNN, defaults to False
+        :type is_handwritten: bool, optional
+        :param width: Width of the resulting crop, defaults to -1
+        :type width: int, optional
+        :param alignment: 0: left, 1: center, 2: right. Only used if the width parameter is set, defaults to 1
+        :type alignment: int, optional
+        :param text_color: Text color, should be either a single hex color or a range in the ?,?, defaults to "#282828"
+        :type text_color: str, optional
+        :param orientation: Orientation of the text. 0: Horizontal, 1: Vertical, defaults to 0
+        :type orientation: int, optional
+        :param space_width: Width of the spaces between words. 2.0 means twice the normal space width, defaults to 1.0
+        :type space_width: float, optional
+        :param character_spacing: Width of the spaces between characters. 2 means two pixels, defaults to 0
+        :type character_spacing: int, optional
+        :param margins: Margins around the text when rendered. In pixels, defaults to (5, 5, 5, 5)
+        :type margins: Tuple[int, int, int, int], optional
+        :param fit: Apply a tight crop around the rendered text, defaults to False
+        :type fit: bool, optional
+        :param output_mask: Define if the generator will return masks for the text, defaults to False
+        :type output_mask: bool, optional
+        :param word_split: Split on words instead of on characters (preserves ligatures, no character spacing), defaults to False
+        :type word_split: bool, optional
+        :param image_dir: Image directory to use when background is set to image, defaults to os.path.join( "..", os.path.split(os.path.realpath(__file__))[0], "images" )
+        :type image_dir: str, optional
+        :param stroke_width: Width of the text strokes, defaults to 0
+        :type stroke_width: int, optional
+        :param stroke_fill: Color of the contour of the strokes, if stroke_width is bigger than 0, defaults to "#282828"
+        :type stroke_fill: str, optional
+        :param image_mode: Image mode to be used. RGB is default, L means 8-bit grayscale images, 1 means 1-bit binary images stored with one pixel per byte, defaults to "RGB"
+        :type image_mode: str, optional
+        :param output_bboxes: Define if the generator will return bounding boxes for the text, 1: Bounding box file, 2: Tesseract format, defaults to 0
+        :type output_bboxes: int, optional
+        """    
         self.generated_count = 0
         self.count = count
         self.length = length

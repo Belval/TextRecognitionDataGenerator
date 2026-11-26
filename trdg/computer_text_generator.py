@@ -32,6 +32,34 @@ def generate(
     stroke_width: int = 0,
     stroke_fill: str = "#282828",
 ) -> Tuple:
+    """
+    :param text: _description_
+    :type text: str
+    :param font: _description_
+    :type font: str
+    :param text_color: _description_
+    :type text_color: str
+    :param font_size: _description_
+    :type font_size: int
+    :param orientation: _description_
+    :type orientation: int
+    :param space_width: _description_
+    :type space_width: int
+    :param character_spacing: _description_
+    :type character_spacing: int
+    :param fit: _description_
+    :type fit: bool
+    :param word_split: _description_
+    :type word_split: bool
+    :param stroke_width: _description_, defaults to 0
+    :type stroke_width: int, optional
+    :param stroke_fill: _description_, defaults to "#282828"
+    :type stroke_fill: str, optional
+    :raises ValueError: _description_
+    :return: _description_
+    :rtype: Tuple
+    """
+      
     if orientation == 0:
         return _generate_horizontal_text(
             text,

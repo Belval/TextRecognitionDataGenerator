@@ -8,9 +8,15 @@ from PIL import Image, ImageDraw, ImageFilter
 
 
 def gaussian_noise(height: int, width: int) -> Image:
-    """
-    Create a background with Gaussian noise (to mimic paper)
-    """
+    """Create a background with Gaussian noise (to mimic paper)
+
+    :param height: Height of the generated image
+    :type height: int
+    :param width: Width of the generated image
+    :type width: int
+    :return: Background generated from gaussian noise
+    :rtype: Image
+    """    
 
     # We create an all white image
     image = np.ones((height, width)) * 255
@@ -22,17 +28,29 @@ def gaussian_noise(height: int, width: int) -> Image:
 
 
 def plain_white(height: int, width: int) -> Image:
-    """
-    Create a plain white background
-    """
+    """Create a plain white background
+
+    :param height: Height of the generated image
+    :type height: int
+    :param width: Width of the generated image
+    :type width: int
+    :return: White background
+    :rtype: Image
+    """    
 
     return Image.new("L", (width, height), 255).convert("RGBA")
 
 
 def quasicrystal(height: int, width: int) -> Image:
-    """
-    Create a background with quasicrystal (https://en.wikipedia.org/wiki/Quasicrystal)
-    """
+    """Create a background with quasicrystal (https://en.wikipedia.org/wiki/Quasicrystal)
+
+    :param height: Height of the generated image
+    :type height: int
+    :param width: Width of the generated image
+    :type width: int
+    :return: Quasicrystal background
+    :rtype: Image
+    """    
 
     image = Image.new("L", (width, height))
     pixels = image.load()
@@ -56,9 +74,19 @@ def quasicrystal(height: int, width: int) -> Image:
 
 
 def image(height: int, width: int, image_dir: str) -> Image:
-    """
-    Create a background with a image
-    """
+    """Create a background with a image
+
+    :param height: Height of the generated image
+    :type height: int
+    :param width: Width of the generated image
+    :type width: int
+    :param image_dir: Image directory containing images to be used as background
+    :type image_dir: str
+    :raises Exception: Exception on empty image directory
+    :return: Image background
+    :rtype: Image
+    """    
+
     images = os.listdir(image_dir)
 
     if len(images) > 0:
