@@ -17,6 +17,7 @@ TH_TONE_MARKS = [
 ]
 TH_UNDER_VOWELS = ["0xe38", "0xe39", "\0xe3A"]
 TH_UPPER_VOWELS = ["0xe31", "0xe34", "0xe35", "0xe36", "0xe37"]
+DIACRITICAL_MARKS = [str(hex(x)) for x in range(0x300, 0x36F)]
 
 
 def generate(
@@ -70,6 +71,17 @@ def _compute_character_width(image_font: ImageFont, character: str) -> int:
     # Casting as int to preserve the old behavior
     return round(image_font.getlength(character))
 
+def _combine_diacritical_marks(splitted_text):
+    diacrit_carry = ''
+    new_text = []
+    for p in reversed(splitted_text):
+        if "{0:#x}".format(ord(p)) in DIACRITICAL_MARKS:
+            diacrit_carry = p
+        else:
+            new_text.append(p+diacrit_carry)
+            diacrit_carry = ''
+    return list(reversed(new_text))
+
 
 def _generate_horizontal_text(
     text: str,
@@ -96,6 +108,7 @@ def _generate_horizontal_text(
     else:
         splitted_text = text
 
+    splitted_text = _combine_diacritical_marks(splitted_text)
     piece_widths = [
         _compute_character_width(image_font, p) if p != " " else space_width
         for p in splitted_text
@@ -105,6 +118,12 @@ def _generate_horizontal_text(
         text_width += character_spacing * (len(text) - 1)
 
     text_height = max([get_text_height(image_font, p) for p in splitted_text])
+    text_y = 0
+    if stroke_width > 0:
+        # push anchor y down to fully draw stroke
+        text_y = stroke_width
+        text_width += stroke_width
+        text_height += stroke_width * 2
 
     txt_img = Image.new("RGBA", (text_width, text_height), (0, 0, 0, 0))
     txt_mask = Image.new("RGB", (text_width, text_height), (0, 0, 0))
@@ -133,7 +152,7 @@ def _generate_horizontal_text(
 
     for i, p in enumerate(splitted_text):
         txt_img_draw.text(
-            (sum(piece_widths[0:i]) + i * character_spacing * int(not word_split), 0),
+            (sum(piece_widths[0:i]) + i * character_spacing * int(not word_split), text_y),
             p,
             fill=fill,
             font=image_font,
@@ -141,7 +160,7 @@ def _generate_horizontal_text(
             stroke_fill=stroke_fill,
         )
         txt_mask_draw.text(
-            (sum(piece_widths[0:i]) + i * character_spacing * int(not word_split), 0),
+            (sum(piece_widths[0:i]) + i * character_spacing * int(not word_split), text_y),
             p,
             fill=((i + 1) // (255 * 255), (i + 1) // 255, (i + 1) % 255),
             font=image_font,
