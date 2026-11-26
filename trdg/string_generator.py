@@ -1,8 +1,17 @@
 import random as rnd
 import string
+import time
 from typing import List
 
 import wikipedia
+
+# Wikimedia's API policy requires a descriptive User-Agent; the wikipedia
+# library's shared default one gets rate-limited (HTTP 429).
+wikipedia.set_user_agent(
+    "trdg (https://github.com/Belval/TextRecognitionDataGenerator)"
+)
+
+WIKIPEDIA_MAX_RETRIES = 5
 
 
 def create_strings_from_file(filename: str, count: int) -> List[str]:
@@ -43,13 +52,25 @@ def create_strings_from_dict(
     return strings
 
 
-def get_random_page_content() -> str:
+def _get_random_page_content() -> str:
     page_title = wikipedia.random(1)
     try:
         page_content = wikipedia.page(page_title).summary
     except (wikipedia.DisambiguationError, wikipedia.PageError):
-        return get_random_page_content()
+        return _get_random_page_content()
     return page_content
+
+
+def get_random_page_content() -> str:
+    # When rate-limited, the Wikipedia API returns a non-JSON body, which the
+    # wikipedia library surfaces as a JSON decode error (a ValueError).
+    for attempt in range(WIKIPEDIA_MAX_RETRIES):
+        try:
+            return _get_random_page_content()
+        except ValueError:
+            if attempt == WIKIPEDIA_MAX_RETRIES - 1:
+                raise
+            time.sleep(2 ** (attempt + 1))
 
 
 def create_strings_from_wikipedia(
