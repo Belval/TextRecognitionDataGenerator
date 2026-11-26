@@ -82,15 +82,18 @@ class FakeTextDataGenerator(object):
                 stroke_width,
                 stroke_fill,
             )
-        random_angle = rnd.randint(0 - skewing_angle, skewing_angle)
 
-        rotated_img = image.rotate(
-            skewing_angle if not random_skew else random_angle, expand=1
-        )
-
-        rotated_mask = mask.rotate(
-            skewing_angle if not random_skew else random_angle, expand=1
-        )
+        if random_skew:
+            if skewing_angle < 0:
+                raise ValueError(
+                    f"if random_angle=True, skewing_angle must be positive. {skewing_angle=}"
+                )
+            random_angle = rnd.randint(0 - skewing_angle, skewing_angle)
+            rotated_img = image.rotate(random_angle, expand=1)
+            rotated_mask = mask.rotate(random_angle, expand=1)
+        else:
+            rotated_img = image.rotate(skewing_angle, expand=1)
+            rotated_mask = mask.rotate(skewing_angle, expand=1)
 
         #############################
         # Apply distortion to image #
