@@ -54,6 +54,7 @@ class FakeTextDataGenerator(object):
         stroke_fill: str = "#282828",
         image_mode: str = "RGB",
         output_bboxes: int = 0,
+        debug = False
     ) -> Image:
         image = None
 
@@ -189,10 +190,11 @@ class FakeTextDataGenerator(object):
             background_img_px_mean = sum(background_img_st.mean) / 3
 
             if abs(resized_img_px_mean - background_img_px_mean) < 15:
-                print("value of mean pixel is too similar. Ignore this image")
+                if debug:
+                    print("value of mean pixel is too similar. Ignore this image")
 
-                print("resized_img_st \n {}".format(resized_img_st.mean))
-                print("background_img_st \n {}".format(background_img_st.mean))
+                    print("resized_img_st \n {}".format(resized_img_st.mean))
+                    print("background_img_st \n {}".format(background_img_st.mean))
 
                 return
         except Exception as err:
@@ -258,7 +260,8 @@ class FakeTextDataGenerator(object):
         elif name_format == 2:
             name = str(index)
         else:
-            print("{} is not a valid name format. Using default.".format(name_format))
+            if debug:
+                print("{} is not a valid name format. Using default.".format(name_format))
             name = "{}_{}".format(text, str(index))
 
         name = make_filename_valid(name, allow_unicode=True)
